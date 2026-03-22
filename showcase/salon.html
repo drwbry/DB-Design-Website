@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumière Salon &amp; Spa — Rebuilt by DB Design</title>
+  <meta name="description" content="Lumière Salon & Spa — luxury hair, skin, and wellness experiences in a serene setting." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/shared.css" />
+  <style>
+    :root {
+      --espresso: #1C1410; --espresso-soft: #251A14;
+      --espresso-card: #2A1F18;
+      --blush: #E8D5C4; --blush-dim: rgba(232,213,196,0.6);
+      --blush-muted: rgba(232,213,196,0.3);
+      --champagne: #C9A96E; --champagne-light: #DFC08A;
+      --champagne-dim: rgba(201,169,110,0.15);
+      --border: rgba(232,213,196,0.1); --border-gold: rgba(201,169,110,0.25);
+      --ff-display: 'Bodoni Moda', Georgia, serif;
+      --ff-body: 'Raleway', system-ui, sans-serif;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--espresso);color:var(--blush);font-family:var(--ff-body);overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    ul{list-style:none}
+    .back-btn{background:rgba(28,20,16,0.85);color:var(--blush);border:1px solid var(--border)}
+
+    /* NAV */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
+    .nav.scrolled{background:rgba(28,20,16,0.92);backdrop-filter:blur(18px);border-bottom-color:var(--border)}
+    .nav__inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:80px}
+    .nav__logo{font-family:var(--ff-display);font-size:1.4rem;font-style:italic;color:var(--blush);letter-spacing:0.02em}
+    .nav__logo span{color:var(--champagne)}
+    .nav__links{display:flex;align-items:center;gap:2.5rem}
+    .nav__link{font-size:.78rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blush-muted);transition:color .2s;position:relative}
+    .nav__link::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--champagne);transition:width .3s ease}
+    .nav__link:hover, .nav__link:focus-visible{color:var(--blush);outline:none}
+    .nav__link:hover::after, .nav__link:focus-visible::after{width:100%}
+    .nav__book{font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--espresso);background:var(--champagne);padding:.55rem 1.3rem;transition:background .2s,transform .2s}
+    .nav__book:hover, .nav__book:focus-visible{background:var(--champagne-light);transform:translateY(-1px);outline:none;box-shadow:0 0 0 2px var(--espresso), 0 0 0 4px var(--champagne)}
+
+    /* HERO */
+    .hero{min-height:100vh;background:var(--espresso);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:8rem 2rem}
+    .hero__ornament{position:absolute;pointer-events:none}
+    .hero__ornament--1{top:-100px;right:-150px;width:500px;height:500px;border:1px solid rgba(201,169,110,0.12);border-radius:50%}
+    .hero__ornament--2{top:50px;right:-50px;width:300px;height:300px;border:1px solid rgba(201,169,110,0.08);border-radius:50%}
+    .hero__ornament--3{bottom:-80px;left:-100px;width:400px;height:400px;border:1px solid rgba(201,169,110,0.06);border-radius:50%}
+    .hero__ornament--4{bottom:20%;left:10%;width:2px;height:120px;background:linear-gradient(to bottom,transparent,var(--champagne-dim),transparent)}
+    .hero__inner{max-width:900px;margin:0 auto;text-align:center;position:relative;z-index:1}
+    .hero__pre{display:inline-flex;align-items:center;gap:1rem;font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--champagne);margin-bottom:2rem}
+    .hero__pre::before,.hero__pre::after{content:'';display:inline-block;width:32px;height:1px;background:var(--champagne);opacity:.5}
+    .hero__headline{font-family:var(--ff-display);font-size:clamp(3rem,8vw,7rem);font-weight:900;line-height:1.05;color:var(--blush);margin-bottom:1rem}
+    .hero__headline em{font-style:italic;color:var(--champagne)}
+    .hero__divider{display:flex;align-items:center;justify-content:center;gap:1rem;margin:1.5rem 0;color:var(--champagne);font-size:.7rem;letter-spacing:.3em}
+    .hero__divider::before,.hero__divider::after{content:'';flex:1;max-width:80px;height:1px;background:linear-gradient(to right,transparent,var(--champagne-dim))}
+    .hero__sub{font-size:1.05rem;color:var(--blush-dim);line-height:1.85;max-width:520px;margin:0 auto 3rem;font-weight:300;font-style:italic}
+    .hero__actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+    .btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--champagne);color:var(--espresso);padding:.9rem 2.2rem;font-family:var(--ff-body);font-size:.82rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;transition:background .25s ease, transform .25s ease, box-shadow .25s ease}
+    .btn-primary:hover, .btn-primary:focus-visible{background:var(--champagne-light);transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,169,110,0.3);outline:none}
+    .btn-primary:focus-visible{box-shadow:0 10px 30px rgba(201,169,110,0.3), 0 0 0 2px var(--espresso), 0 0 0 4px var(--champagne)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--blush);padding:.9rem 2.2rem;font-family:var(--ff-body);font-size:.82rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--border-gold);transition:border-color .25s ease, color .25s ease, transform .25s ease}
+    .btn-ghost:hover, .btn-ghost:focus-visible{border-color:var(--champagne);color:var(--champagne);outline:none}
+    .hero__scroll{margin-top:4rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blush-muted);display:flex;flex-direction:column;align-items:center;gap:.8rem}
+    .hero__scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--champagne-dim),transparent);animation:scroll-drop 2s ease-in-out infinite}
+    @keyframes scroll-drop{0%{transform:scaleY(1);transform-origin:top}50%{transform:scaleY(0.4);transform-origin:top}51%{transform:scaleY(0);transform-origin:bottom}52%{transform:scaleY(0);transform-origin:bottom}100%{transform:scaleY(1);transform-origin:bottom}}
+
+    /* SERVICES */
+    .services-section{padding:9rem 2rem;background:var(--espresso-soft)}
+    .services-inner{max-width:1200px;margin:0 auto}
+    .section-tag{font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--champagne);display:inline-block;margin-bottom:1rem}
+    .section-title{font-family:var(--ff-display);font-size:clamp(2rem,5vw,3.8rem);font-weight:700;line-height:1.1;color:var(--blush);margin-bottom:1.2rem}
+    .section-title em{font-style:italic;color:var(--champagne)}
+    .section-sub{font-size:1rem;color:var(--blush-dim);max-width:480px;line-height:1.8;font-weight:300}
+    .section-header{margin-bottom:4rem}
+    .section-header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:4rem}
+
+    .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;border:1.5px solid var(--border)}
+    .service-item{padding:2.5rem;border:none;background:var(--espresso-soft);border-right:1.5px solid var(--border);border-bottom:1.5px solid var(--border);transition:background .3s}
+    .service-item:hover{background:var(--espresso-card)}
+    .service-item:nth-child(3n){border-right:none}
+    .service-item:nth-last-child(-n+3){border-bottom:none}
+    .service-item__num{font-family:var(--ff-display);font-size:.9rem;color:var(--champagne);margin-bottom:1rem;opacity:.5}
+    .service-item__name{font-family:var(--ff-display);font-size:1.3rem;font-style:italic;color:var(--blush);margin-bottom:.6rem}
+    .service-item__desc{font-size:.85rem;color:var(--blush-muted);line-height:1.7;margin-bottom:1rem;font-weight:300}
+    .service-item__price{font-size:.8rem;font-weight:600;letter-spacing:.08em;color:var(--champagne)}
+
+    /* GALLERY */
+    .gallery-section{padding:8rem 2rem;background:var(--espresso)}
+    .gallery-inner{max-width:1200px;margin:0 auto}
+    .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,180px);gap:0.8rem}
+    .gallery-item{border-radius:2px;overflow:hidden;position:relative;transition:opacity .3s}
+    .gallery-item:hover{opacity:.85}
+    .gallery-item:nth-child(1){grid-column:1/3;grid-row:1/3;min-height:368px}
+    .gallery-item:nth-child(2){grid-column:3}
+    .gallery-item:nth-child(3){grid-column:4}
+    .gallery-item:nth-child(4){grid-column:3}
+    .gallery-item:nth-child(5){grid-column:4}
+    .gallery-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem}
+    .gallery-bg--1{background:linear-gradient(135deg,#3D2615,#5A3A25)}
+    .gallery-bg--2{background:linear-gradient(135deg,#2A1F1A,#3D2D24)}
+    .gallery-bg--3{background:linear-gradient(135deg,#C9A96E22,#B89050);font-size:1.8rem}
+    .gallery-bg--4{background:linear-gradient(135deg,#251E19,#35291E)}
+    .gallery-bg--5{background:linear-gradient(135deg,#1C1C18,#2E2820)}
+
+    /* BOOK CTA */
+    .book-section{padding:9rem 2rem;background:var(--espresso-soft);text-align:center;position:relative;overflow:hidden}
+    .book-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(201,169,110,0.08) 0%,transparent 70%);pointer-events:none}
+    .book-inner{position:relative;z-index:1;max-width:700px;margin:0 auto}
+    .book-title{font-family:var(--ff-display);font-size:clamp(2.5rem,6vw,5rem);font-weight:900;line-height:1.1;color:var(--blush);margin-bottom:1.5rem}
+    .book-title em{font-style:italic;color:var(--champagne)}
+    .book-sub{font-size:1rem;color:var(--blush-dim);line-height:1.8;font-weight:300;margin-bottom:2.5rem}
+
+    .db-credit{text-align:center;padding:2rem;border-top:1px solid var(--border);font-size:.76rem;color:var(--blush-muted)}
+    .db-credit a{color:var(--champagne);font-weight:600}
+
+    @media(max-width:768px){
+      .services-grid{grid-template-columns:1fr}
+      .service-item{border-right:none}
+      .service-item:nth-child(3n){border-right:none}
+      .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+      .gallery-item:nth-child(1){grid-column:1/3;grid-row:auto}
+    }
+  </style>
+</head>
+<body>
+  <a href="../index.html" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
+    DB Design
+  </a>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="salon.html" class="nav__logo"><span>Lumi</span>ère</a>
+      <ul class="nav__links">
+        <li><a href="#services" class="nav__link">Services</a></li>
+        <li><a href="#gallery" class="nav__link">Gallery</a></li>
+        <li><a href="#book" class="nav__link">About</a></li>
+        <li><a href="#book" class="nav__book">Book Now</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__ornament hero__ornament--1"></div>
+    <div class="hero__ornament hero__ornament--2"></div>
+    <div class="hero__ornament hero__ornament--3"></div>
+    <div class="hero__ornament hero__ornament--4"></div>
+    <div class="hero__inner">
+      <div class="hero__pre">Salon &amp; Spa · Est. 2014</div>
+      <h1 class="hero__headline">Where beauty<br/>becomes <em>art.</em></h1>
+      <div class="hero__divider">✦</div>
+      <p class="hero__sub">A sanctuary for those who believe that feeling beautiful is an act of self-respect. Welcome to Lumière — where every visit is a ritual.</p>
+      <div class="hero__actions">
+        <a href="#book" class="btn-primary">Book an Appointment</a>
+        <a href="#services" class="btn-ghost">Explore Services</a>
+      </div>
+      <div class="hero__scroll">
+        <div class="hero__scroll-line"></div>
+        Discover
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div class="services-inner">
+      <div class="section-header-row">
+        <div class="reveal">
+          <span class="section-tag">Our Services</span>
+          <h2 class="section-title">Crafted for you,<br/><em>every time.</em></h2>
+        </div>
+        <p class="section-sub reveal reveal-delay-2" style="text-align:right">Each service is a personalized experience, curated by our senior stylists and wellness practitioners.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-item reveal">
+          <div class="service-item__num">01</div>
+          <div class="service-item__name">Signature Cut &amp; Style</div>
+          <p class="service-item__desc">A consultation-led cut with blow-dry finish. Includes deep conditioning treatment.</p>
+          <div class="service-item__price">From $85</div>
+        </div>
+        <div class="service-item reveal reveal-delay-1">
+          <div class="service-item__num">02</div>
+          <div class="service-item__name">Color &amp; Highlights</div>
+          <p class="service-item__desc">Balayage, full color, or foil highlights tailored to your skin tone and lifestyle.</p>
+          <div class="service-item__price">From $140</div>
+        </div>
+        <div class="service-item reveal reveal-delay-2">
+          <div class="service-item__num">03</div>
+          <div class="service-item__name">Luxury Facial</div>
+          <p class="service-item__desc">60-minute European facial with enzymatic peel, jade roller massage, and LED therapy.</p>
+          <div class="service-item__price">From $110</div>
+        </div>
+        <div class="service-item reveal reveal-delay-1">
+          <div class="service-item__num">04</div>
+          <div class="service-item__name">Hot Stone Massage</div>
+          <p class="service-item__desc">Volcanic basalt stones melt muscle tension while aromatherapy eases the mind.</p>
+          <div class="service-item__price">From $130</div>
+        </div>
+        <div class="service-item reveal reveal-delay-2">
+          <div class="service-item__num">05</div>
+          <div class="service-item__name">Nail Artistry</div>
+          <p class="service-item__desc">Gel manicure and pedicure with premium polish, cuticle care, and hand treatment.</p>
+          <div class="service-item__price">From $60</div>
+        </div>
+        <div class="service-item reveal reveal-delay-3">
+          <div class="service-item__num">06</div>
+          <div class="service-item__name">Bridal Package</div>
+          <p class="service-item__desc">Full-day experience: hair, makeup, facial, and a complimentary champagne welcome.</p>
+          <div class="service-item__price">From $480</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="gallery">
+    <div class="gallery-inner">
+      <div class="section-header reveal" style="margin-bottom:2.5rem">
+        <span class="section-tag">Gallery</span>
+        <h2 class="section-title">The <em>work</em></h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item reveal"><div class="gallery-bg gallery-bg--1">💇‍♀️</div></div>
+        <div class="gallery-item reveal reveal-delay-1"><div class="gallery-bg gallery-bg--2">🌸</div></div>
+        <div class="gallery-item reveal reveal-delay-2"><div class="gallery-bg gallery-bg--3">✨</div></div>
+        <div class="gallery-item reveal reveal-delay-3"><div class="gallery-bg gallery-bg--4">🧖‍♀️</div></div>
+        <div class="gallery-item reveal reveal-delay-4"><div class="gallery-bg gallery-bg--5">💅</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOK CTA -->
+  <section class="book-section" id="book">
+    <div class="book-inner reveal">
+      <span class="section-tag">Book Your Visit</span>
+      <h2 class="book-title">You deserve<br/><em>this.</em></h2>
+      <p class="book-sub">Every appointment opens with a complimentary consultation and a glass of something lovely. Reserve your spot today.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+        <a href="#" class="btn-primary">Book Online</a>
+        <a href="tel:+15559876543" class="btn-ghost">📞 Call Studio</a>
+      </div>
+      <p style="margin-top:2rem;font-size:.8rem;color:var(--blush-muted)">456 Willow Lane · Open Tue–Sat, 9am–7pm</p>
+    </div>
+  </section>
+
+  <div class="db-credit">Website rebuilt by <a href="../index.html">DB Design</a> as part of our AI vibe coding volunteer initiative.</div>
+
+  <script src="../js/shared.js"></script>
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+  </script>
+</body>
+</html>

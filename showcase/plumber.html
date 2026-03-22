@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Peak Flow Plumbing — Rebuilt by DB Design</title>
+  <meta name="description" content="Peak Flow Plumbing — fast, reliable plumbing services. Call us 24/7." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/shared.css" />
+  <style>
+    :root {
+      --navy: #1A2744; --navy-mid: #253358;
+      --orange: #FF6B2B; --orange-dark: #E55A1F;
+      --light: #F5F5F5; --white: #FFFFFF;
+      --text: #1A2744; --text-mid: rgba(26,39,68,0.65);
+      --border: rgba(26,39,68,0.1);
+      --ff-display: 'Bebas Neue', Impact, sans-serif;
+      --ff-body: 'Inter', system-ui, sans-serif;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--light);color:var(--text);font-family:var(--ff-body);overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    ul{list-style:none}
+    .back-btn{background:var(--navy);color:var(--white);border:none}
+
+    /* NAV */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--navy)}
+    .nav__inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:72px}
+    .nav__logo{display:flex;align-items:center;gap:0.5rem}
+    .nav__logo-text{font-family:var(--ff-display);font-size:1.5rem;letter-spacing:0.05em;color:var(--white)}
+    .nav__logo-text span{color:var(--orange)}
+    .nav__links{display:flex;align-items:center;gap:2.5rem}
+    .nav__link{font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);transition:color .2s}
+    .nav__link:hover, .nav__link:focus-visible{color:var(--white);outline:none}
+    .nav__call{display:inline-flex;align-items:center;gap:0.4rem;background:var(--orange);color:white;padding:.5rem 1.3rem;border-radius:4px;font-size:.85rem;font-weight:700;letter-spacing:.04em;transition:background .2s,transform .2s}
+    .nav__call:hover, .nav__call:focus-visible{background:var(--orange-dark);transform:translateY(-1px);outline:none;box-shadow:0 0 0 2px var(--navy), 0 0 0 4px var(--orange)}
+
+    /* HERO */
+    .hero{min-height:100vh;background:var(--navy);display:flex;flex-direction:column;position:relative;overflow:hidden}
+    .hero__stripes{position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 60px,rgba(255,107,43,0.03) 60px,rgba(255,107,43,0.03) 62px)}
+    .hero__glow{position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(ellipse,rgba(255,107,43,0.15) 0%,transparent 60%);pointer-events:none}
+    .hero__main{flex:1;display:flex;align-items:center;padding:9rem 2rem 4rem;position:relative;z-index:1}
+    .hero__inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+
+    .hero__badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,107,43,0.15);border:1px solid rgba(255,107,43,0.3);border-radius:4px;padding:.4rem .9rem;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:1.5rem}
+    .hero__badge-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:blink 1.5s ease-in-out infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+    .hero__headline{font-family:var(--ff-display);font-size:clamp(4rem,9vw,8rem);line-height:.95;letter-spacing:.01em;color:var(--white);margin-bottom:2rem}
+    .hero__headline .accent{color:var(--orange)}
+    .hero__headline .outline{-webkit-text-stroke:1px rgba(255,255,255,0.3);color:transparent}
+
+    .hero__sub{font-size:1rem;color:rgba(255,255,255,0.55);line-height:1.7;max-width:400px;margin-bottom:2.5rem}
+    .hero__actions{display:flex;flex-direction:column;gap:1rem;max-width:360px}
+
+    .btn-call{display:flex;align-items:center;justify-content:center;gap:.5rem;background:var(--orange);color:white;padding:1.1rem 2rem;border-radius:4px;font-family:var(--ff-body);font-size:1.1rem;font-weight:700;letter-spacing:.02em;transition:background .2s ease, transform .2s ease, box-shadow .2s ease;position:relative;overflow:hidden}
+    .btn-call:hover, .btn-call:focus-visible{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,107,43,0.4);outline:none}
+    .btn-call:focus-visible{box-shadow:0 10px 30px rgba(255,107,43,0.4), 0 0 0 2px var(--navy), 0 0 0 4px var(--orange)}
+    .btn-services{display:flex;align-items:center;justify-content:center;background:transparent;color:rgba(255,255,255,0.7);padding:1rem 2rem;border-radius:4px;font-family:var(--ff-body);font-size:.95rem;font-weight:600;border:1px solid rgba(255,255,255,0.15);letter-spacing:.04em;transition:border-color .2s ease, color .2s ease}
+    .btn-services:hover, .btn-services:focus-visible{border-color:var(--orange);color:var(--orange);outline:none}
+
+    .hero__trust{display:flex;flex-direction:column;gap:1.2rem}
+    .trust-badge{display:flex;align-items:center;gap:1.2rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid var(--orange);border-radius:4px;padding:1.2rem 1.5rem;transition:background .2s}
+    .trust-badge:hover{background:rgba(255,255,255,0.06)}
+    .trust-badge__icon{font-size:1.8rem;flex-shrink:0}
+    .trust-badge__title{font-weight:700;font-size:.95rem;color:var(--white);margin-bottom:.2rem}
+    .trust-badge__sub{font-size:.8rem;color:rgba(255,255,255,0.45)}
+
+    .hero__stats-bar{position:relative;z-index:1;background:rgba(255,255,255,0.05);border-top:1px solid rgba(255,255,255,0.08)}
+    .stats-bar-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:repeat(4,1fr)}
+    .stat-item{padding:1.5rem 2rem;border-right:1px solid rgba(255,255,255,0.08);text-align:center}
+    .stat-item:last-child{border-right:none}
+    .stat-item__num{font-family:var(--ff-display);font-size:2.2rem;color:var(--orange);letter-spacing:.02em;line-height:1}
+    .stat-item__label{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:.3rem}
+
+    /* SERVICES */
+    .services-section{padding:8rem 2rem}
+    .services-inner{max-width:1200px;margin:0 auto}
+    .section-tag{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);display:inline-block;margin-bottom:.8rem}
+    .section-title{font-family:var(--ff-display);font-size:clamp(2.5rem,6vw,4.5rem);letter-spacing:.02em;color:var(--navy);line-height:1;margin-bottom:1rem}
+    .section-sub{font-size:1rem;color:var(--text-mid);max-width:480px;line-height:1.7}
+    .section-header{margin-bottom:4rem}
+
+    .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .service-card{background:white;border:1px solid var(--border);border-radius:6px;padding:2rem;transition:border-color .3s,transform .3s var(--ease-out),box-shadow .3s;position:relative;overflow:hidden}
+    .service-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--orange);transform:scaleY(0);transform-origin:bottom;transition:transform .3s ease}
+    .service-card:hover{transform:translateY(-4px);box-shadow:0 15px 40px rgba(26,39,68,0.1);border-color:rgba(255,107,43,0.3)}
+    .service-card:hover::before{transform:scaleY(1)}
+    .service-card__icon{font-size:2rem;margin-bottom:1rem}
+    .service-card__name{font-weight:700;font-size:1rem;color:var(--navy);margin-bottom:.6rem}
+    .service-card__desc{font-size:.85rem;color:var(--text-mid);line-height:1.65}
+
+    /* EMERGENCY */
+    .emergency{background:var(--orange);padding:5rem 2rem;text-align:center;position:relative;overflow:hidden}
+    .emergency::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 25px,rgba(0,0,0,0.04) 25px,rgba(0,0,0,0.04) 26px)}
+    .emergency__inner{position:relative;z-index:1}
+    .emergency__label{font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:1rem}
+    .emergency__title{font-family:var(--ff-display);font-size:clamp(3rem,7vw,6rem);color:white;line-height:1;letter-spacing:.02em;margin-bottom:1.5rem}
+    .emergency__sub{font-size:1rem;color:rgba(255,255,255,0.75);margin-bottom:2.5rem}
+    .btn-emergency{display:inline-flex;align-items:center;gap:.6rem;background:white;color:var(--orange);padding:1.1rem 2.5rem;border-radius:4px;font-family:var(--ff-body);font-size:1.1rem;font-weight:800;letter-spacing:.02em;transition:transform .2s, box-shadow .2s;animation:emergency-pulse 2.5s ease-in-out infinite}
+    .btn-emergency:hover, .btn-emergency:focus-visible{transform:scale(1.03);box-shadow:0 12px 30px rgba(0,0,0,0.2);outline:none;animation:none}
+    @keyframes emergency-pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,0.4)}50%{box-shadow:0 0 0 16px rgba(255,255,255,0)}}
+
+    .db-credit{text-align:center;padding:2rem;background:var(--navy);font-size:.78rem;color:rgba(255,255,255,0.3)}
+    .db-credit a{color:var(--orange);font-weight:700}
+
+    @media(max-width:768px){
+      .hero__inner{grid-template-columns:1fr}
+      .hero__trust{display:none}
+      .stats-bar-inner{grid-template-columns:repeat(2,1fr)}
+      .services-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <a href="../index.html" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
+    DB Design
+  </a>
+
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="plumber.html" class="nav__logo">
+        <span style="font-size:1.4rem">🔧</span>
+        <span class="nav__logo-text">PEAK <span>FLOW</span></span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="#services" class="nav__link">Services</a></li>
+        <li><a href="#contact" class="nav__link">Contact</a></li>
+        <li><a href="tel:+15551234567" class="nav__call">📞 (555) 123-4567</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero__stripes"></div>
+    <div class="hero__glow"></div>
+    <div class="hero__main">
+      <div class="hero__inner">
+        <div>
+          <div class="hero__badge"><span class="hero__badge-dot"></span>Available 24/7</div>
+          <h1 class="hero__headline">WE FIX<br/><span class="accent">IT</span> <span class="outline">FAST.</span></h1>
+          <p class="hero__sub">From dripping faucets to burst pipes, Peak Flow gets to you fast — and gets it right the first time. Serving the metro area since 2003.</p>
+          <div class="hero__actions">
+            <a href="tel:+15551234567" class="btn-call">📞 Call Now — (555) 123-4567</a>
+            <a href="#services" class="btn-services">View All Services ↓</a>
+          </div>
+        </div>
+        <div class="hero__trust">
+          <div class="trust-badge"><div class="trust-badge__icon">⚡</div><div><div class="trust-badge__title">Same-Day Service</div><div class="trust-badge__sub">Most jobs completed same day</div></div></div>
+          <div class="trust-badge"><div class="trust-badge__icon">🪪</div><div><div class="trust-badge__title">Licensed &amp; Insured</div><div class="trust-badge__sub">State-certified master plumbers</div></div></div>
+          <div class="trust-badge"><div class="trust-badge__icon">💯</div><div><div class="trust-badge__title">Upfront Pricing</div><div class="trust-badge__sub">No surprise fees, ever</div></div></div>
+          <div class="trust-badge"><div class="trust-badge__icon">⭐</div><div><div class="trust-badge__title">4.9★ on Google</div><div class="trust-badge__sub">340+ verified reviews</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero__stats-bar">
+      <div class="stats-bar-inner">
+        <div class="stat-item"><div class="stat-item__num"><span data-count="20">0</span>+</div><div class="stat-item__label">Years in Business</div></div>
+        <div class="stat-item"><div class="stat-item__num"><span data-count="8400">0</span>+</div><div class="stat-item__label">Jobs Completed</div></div>
+        <div class="stat-item"><div class="stat-item__num"><span data-count="99">0</span>%</div><div class="stat-item__label">Satisfaction Rate</div></div>
+        <div class="stat-item"><div class="stat-item__num">24/7</div><div class="stat-item__label">Emergency Service</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services-section" id="services">
+    <div class="services-inner">
+      <div class="section-header reveal">
+        <span class="section-tag">What We Do</span>
+        <h2 class="section-title">FULL SERVICE<br/>PLUMBING</h2>
+        <p class="section-sub">Residential and commercial plumbing from minor repairs to full system installations.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal reveal-delay-1"><div class="service-card__icon">🚿</div><div class="service-card__name">Drain Cleaning</div><p class="service-card__desc">Slow or clogged drains cleared fast with professional hydro-jetting and rooter equipment.</p></div>
+        <div class="service-card reveal reveal-delay-2"><div class="service-card__icon">🔧</div><div class="service-card__name">Leak Detection &amp; Repair</div><p class="service-card__desc">Non-invasive leak detection finds hidden leaks before they become disasters.</p></div>
+        <div class="service-card reveal reveal-delay-3"><div class="service-card__icon">🌡️</div><div class="service-card__name">Water Heater Service</div><p class="service-card__desc">Installation, repair, and replacement of traditional and tankless water heaters.</p></div>
+        <div class="service-card reveal reveal-delay-1"><div class="service-card__icon">🏠</div><div class="service-card__name">Pipe Replacement</div><p class="service-card__desc">From galvanized to copper to PEX — we re-pipe homes cleanly and efficiently.</p></div>
+        <div class="service-card reveal reveal-delay-2"><div class="service-card__icon">🚽</div><div class="service-card__name">Toilet &amp; Fixture Install</div><p class="service-card__desc">New fixture installations done right, including bidets, smart toilets, and accessible fixtures.</p></div>
+        <div class="service-card reveal reveal-delay-3"><div class="service-card__icon">🏢</div><div class="service-card__name">Commercial Plumbing</div><p class="service-card__desc">Full commercial services including grease trap maintenance and backflow prevention.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="emergency" id="contact">
+    <div class="emergency__inner">
+      <div class="emergency__label">🔴 Emergency Line</div>
+      <h2 class="emergency__title">PIPE BURST?<br/>WE'RE COMING.</h2>
+      <p class="emergency__sub">24/7 emergency dispatch. Average response time: 42 minutes.</p>
+      <a href="tel:+15551234567" class="btn-emergency">📞 (555) 123-4567</a>
+    </div>
+  </section>
+
+  <div class="db-credit">Website rebuilt by <a href="../index.html">DB Design</a> as part of our AI vibe coding volunteer initiative.</div>
+  <script src="../js/shared.js"></script>
+</body>
+</html>

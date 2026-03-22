@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sweet Crumb Bakery — Rebuilt by DB Design</title>
+  <meta name="description" content="Sweet Crumb Bakery — artisan baked goods and café in the heart of our community." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../styles/shared.css" />
+  <style>
+    /* ============================================================
+       Sweet Crumb Bakery — Warm Artisan Organic Aesthetic
+       Colors: Cream #FDF6EC | Terracotta #C9926B | Sage #7A9E82 | Cocoa #4A3728
+       Fonts: Cormorant Garamond (display) + Nunito (body)
+    ============================================================ */
+    :root {
+      --cream: #FDF6EC;
+      --cream-dark: #F0E6D0;
+      --cream-card: #FBF2E5;
+      --terra: #C9926B;
+      --terra-deep: #A87050;
+      --terra-light: rgba(201, 146, 107, 0.12);
+      --sage: #7A9E82;
+      --sage-light: rgba(122, 158, 130, 0.15);
+      --cocoa: #4A3728;
+      --cocoa-mid: #7A5C48;
+      --text: #4A3728;
+      --text-mid: #7A5C48;
+      --text-light: rgba(74, 55, 40, 0.5);
+      --border: rgba(74, 55, 40, 0.1);
+      --ff-display: 'Cormorant Garamond', Georgia, serif;
+      --ff-body: 'Nunito', system-ui, sans-serif;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: var(--ff-body);
+      overflow-x: hidden;
+      position: relative;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* Noise grain texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+      z-index: 99999;
+    }
+
+    /* Back button */
+    .back-btn {
+      background: rgba(253, 246, 236, 0.85);
+      color: var(--cocoa);
+      border: 1px solid var(--border);
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 2rem;
+      transition: background 0.4s ease;
+    }
+    .nav.scrolled {
+      background: rgba(253,246,236,0.9);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .nav__inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .nav__logo {
+      font-family: var(--ff-display);
+      font-size: 1.6rem; font-weight: 700; font-style: italic;
+      color: var(--terra-deep);
+    }
+    .nav__links { display: flex; gap: 2rem; }
+    .nav__link {
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em;
+      color: var(--text-mid);
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    .nav__link::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 1.5px; background: var(--terra);
+      transition: width 0.3s ease;
+    }
+    .nav__link:hover, .nav__link:focus-visible { color: var(--terra-deep); outline: none; }
+    .nav__link:hover::after, .nav__link:focus-visible::after { width: 100%; }
+    .nav__order {
+      background: var(--terra); color: white;
+      padding: 0.55rem 1.3rem; border-radius: 100px;
+      font-size: 0.82rem; font-weight: 700; letter-spacing: 0.04em;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .nav__order:hover, .nav__order:focus-visible { background: var(--terra-deep); transform: translateY(-1px); outline: none; box-shadow: 0 0 0 2px var(--cream), 0 0 0 4px var(--terra); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #FDF6EC 0%, #F5E6CC 60%, #EDD9B8 100%);
+      display: flex; align-items: center;
+      overflow: hidden; position: relative; padding: 8rem 2rem 6rem;
+    }
+    .hero__deco-circle {
+      position: absolute; border-radius: 50%;
+      opacity: 0.15; pointer-events: none;
+    }
+    .hero__deco-circle--1 {
+      width: 500px; height: 500px;
+      border: 2px solid var(--terra);
+      top: -80px; right: -120px;
+    }
+    .hero__deco-circle--2 {
+      width: 280px; height: 280px;
+      background: var(--sage);
+      bottom: -60px; left: -60px;
+    }
+    .hero__deco-circle--3 {
+      width: 180px; height: 180px;
+      background: var(--terra);
+      top: 40%; right: 60px;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-18px); }
+    }
+
+    .hero__inner {
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .hero__tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--sage);
+      margin-bottom: 1.2rem;
+    }
+    .hero__tag::before {
+      content: ''; display: inline-block;
+      width: 24px; height: 1.5px; background: var(--sage);
+    }
+    .hero__headline {
+      font-family: var(--ff-display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700; line-height: 1.1;
+      color: var(--cocoa);
+      margin-bottom: 1.5rem;
+    }
+    .hero__headline em {
+      font-style: italic; color: var(--terra-deep);
+    }
+    .hero__sub {
+      font-size: 1.05rem; color: var(--text-mid);
+      line-height: 1.75; margin-bottom: 2.5rem; max-width: 420px;
+    }
+    .hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--terra); color: white;
+      padding: 0.9rem 2rem; border-radius: 100px;
+      font-family: var(--ff-body); font-size: 0.9rem; font-weight: 700;
+      transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .btn-primary:hover, .btn-primary:focus-visible { background: var(--terra-deep); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,146,107,0.35); outline: none; }
+    .btn-primary:focus-visible { box-shadow: 0 8px 25px rgba(201,146,107,0.35), 0 0 0 2px var(--cream), 0 0 0 4px var(--terra); }
+    .btn-ghost {
+      background: transparent; color: var(--cocoa);
+      padding: 0.9rem 2rem; border-radius: 100px;
+      font-family: var(--ff-body); font-size: 0.9rem; font-weight: 600;
+      border: 1.5px solid var(--border);
+      transition: border-color 0.25s ease, color 0.25s ease;
+    }
+    .btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--terra); color: var(--terra); outline: none; }
+
+    /* Hero visual */
+    .hero__visual {
+      position: relative;
+    }
+    .hero__card-stack {
+      position: relative; height: 440px;
+    }
+    .hero__img-card {
+      position: absolute; border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(74, 55, 40, 0.18);
+    }
+    .hero__img-card--main {
+      width: 70%; height: 340px;
+      top: 40px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(145deg, #D4A882, #B07850);
+      display: flex; align-items: center; justify-content: center;
+      animation: float 7s ease-in-out infinite;
+    }
+    .hero__img-card--side {
+      width: 44%; height: 220px;
+      bottom: 0; right: 0;
+      background: linear-gradient(145deg, #7A9E82, #5C8064);
+      display: flex; align-items: center; justify-content: center;
+      animation: float 5s ease-in-out 1s infinite;
+    }
+    .hero__img-emoji { font-size: 4rem; }
+    .hero__img-emoji--sm { font-size: 2.5rem; }
+
+    /* ── MENU SECTION ── */
+    .menu-section { padding: 8rem 2rem; background: var(--cream); }
+    .menu-inner { max-width: 1200px; margin: 0 auto; }
+    .section-tag {
+      display: inline-block; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--terra); margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.15;
+      color: var(--cocoa); margin-bottom: 1rem;
+    }
+    .section-title em { font-style: italic; color: var(--terra-deep); }
+    .section-sub { font-size: 1rem; color: var(--text-mid); max-width: 480px; line-height: 1.7; }
+    .section-header { margin-bottom: 4rem; }
+
+    .menu-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem;
+    }
+    .menu-card {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      transition: transform 0.35s var(--ease-out), box-shadow 0.35s ease;
+    }
+    .menu-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(74,55,40,0.12);
+    }
+    .menu-card__img {
+      height: 180px; display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+    }
+    .menu-card__img--1 { background: linear-gradient(135deg, #F5D9B8, #E8C49A); }
+    .menu-card__img--2 { background: linear-gradient(135deg, #CCDEC8, #AACCB0); }
+    .menu-card__img--3 { background: linear-gradient(135deg, #E8C0A0, #D4A080); }
+    .menu-card__body { padding: 1.5rem; }
+    .menu-card__name {
+      font-family: var(--ff-display); font-size: 1.3rem; font-weight: 700; font-style: italic;
+      color: var(--cocoa); margin-bottom: 0.4rem;
+    }
+    .menu-card__desc { font-size: 0.85rem; color: var(--text-mid); line-height: 1.65; margin-bottom: 1rem; }
+    .menu-card__price { font-size: 1rem; font-weight: 700; color: var(--terra); }
+
+    /* ── ABOUT ── */
+    .about-section {
+      padding: 8rem 2rem;
+      background: linear-gradient(135deg, #F5EDD8 0%, #EDE0C8 100%);
+    }
+    .about-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .about-visual {
+      position: relative; height: 400px;
+    }
+    .about-blob {
+      position: absolute; border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%;
+      width: 320px; height: 320px;
+    }
+    .about-blob--1 {
+      background: linear-gradient(135deg, var(--terra-light), rgba(201,146,107,0.25));
+      top: 0; left: 0;
+      animation: morph 8s ease-in-out infinite;
+    }
+    .about-blob--2 {
+      background: var(--sage-light);
+      bottom: 20px; right: 20px;
+      width: 240px; height: 240px;
+      animation: morph 6s ease-in-out 2s infinite;
+    }
+    @keyframes morph {
+      0%, 100% { border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%; }
+      33% { border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%; }
+      66% { border-radius: 55% 45% 60% 40% / 40% 60% 45% 55%; }
+    }
+    .about-emoji {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-size: 5rem;
+    }
+    .about__quote {
+      font-family: var(--ff-display); font-size: 1.6rem; font-style: italic;
+      font-weight: 600; color: var(--cocoa); line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+    .about__quote::before { content: '"'; color: var(--terra); font-size: 2.5rem; line-height: 0; vertical-align: -0.4em; }
+    .about__text { font-size: 0.97rem; color: var(--text-mid); line-height: 1.8; margin-bottom: 1.5rem; }
+    .about__sig { font-family: var(--ff-display); font-style: italic; font-size: 1.2rem; color: var(--terra-deep); }
+
+    /* ── HOURS CTA ── */
+    .hours-section {
+      padding: 7rem 2rem;
+      background: var(--cocoa);
+    }
+    .hours-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .hours-title {
+      font-family: var(--ff-display); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; font-style: italic;
+      color: var(--cream); margin-bottom: 0.8rem;
+    }
+    .hours-sub { font-size: 1rem; color: rgba(253,246,236,0.6); line-height: 1.7; }
+    .hours-list { list-style: none; }
+    .hours-list li {
+      display: flex; justify-content: space-between;
+      padding: 0.8rem 0; border-bottom: 1px solid rgba(253,246,236,0.08);
+      font-size: 0.9rem; color: rgba(253,246,236,0.7);
+    }
+    .hours-list li span:last-child { color: var(--terra); font-weight: 700; }
+
+    /* ── DB Badge ── */
+    .db-credit {
+      text-align: center; padding: 2rem;
+      background: var(--cream-dark);
+      font-size: 0.78rem; color: var(--text-light);
+    }
+    .db-credit a { color: var(--terra); font-weight: 700; }
+
+    @media (max-width: 768px) {
+      .hero__inner, .about-inner, .hours-inner { grid-template-columns: 1fr; }
+      .hero__visual { display: none; }
+      .menu-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="../index.html" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M5 12l7-7M5 12l7 7"/>
+    </svg>
+    DB Design
+  </a>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="bakery.html" class="nav__logo">Sweet Crumb</a>
+      <ul class="nav__links">
+        <li><a href="#menu" class="nav__link">Menu</a></li>
+        <li><a href="#about" class="nav__link">Our Story</a></li>
+        <li><a href="#hours" class="nav__link">Hours</a></li>
+        <li><a href="#hours" class="nav__order">Order Now</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__deco-circle hero__deco-circle--1"></div>
+    <div class="hero__deco-circle hero__deco-circle--2"></div>
+    <div class="hero__deco-circle hero__deco-circle--3"></div>
+
+    <div class="hero__inner">
+      <div class="hero__copy">
+        <div class="hero__tag">Artisan Bakery &amp; Café</div>
+        <h1 class="hero__headline">
+          Baked with love,<br/>
+          <em>every morning.</em>
+        </h1>
+        <p class="hero__sub">
+          From our hearth to your hands — Sweet Crumb has been crafting small-batch pastries, fresh-ground coffees, and seasonal breads since 2011.
+        </p>
+        <div class="hero__actions">
+          <a href="#menu" class="btn-primary">Browse the Menu</a>
+          <a href="#about" class="btn-ghost">Our Story</a>
+        </div>
+      </div>
+
+      <div class="hero__visual">
+        <div class="hero__card-stack">
+          <div class="hero__img-card hero__img-card--main">
+            <span class="hero__img-emoji">🥐</span>
+          </div>
+          <div class="hero__img-card hero__img-card--side">
+            <span class="hero__img-emoji--sm">☕</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu-section" id="menu">
+    <div class="menu-inner">
+      <div class="section-header reveal">
+        <span class="section-tag">Fresh Today</span>
+        <h2 class="section-title">This morning's <em>favorites</em></h2>
+        <p class="section-sub">Made fresh each day from locally-sourced ingredients. No preservatives, no shortcuts — just real food.</p>
+      </div>
+
+      <div class="menu-grid">
+        <div class="menu-card reveal reveal-delay-1">
+          <div class="menu-card__img menu-card__img--1">🥐</div>
+          <div class="menu-card__body">
+            <div class="menu-card__name">Almond Croissant</div>
+            <p class="menu-card__desc">Flaky, buttery layers filled with house-made almond cream and topped with toasted flakes.</p>
+            <div class="menu-card__price">$4.25</div>
+          </div>
+        </div>
+        <div class="menu-card reveal reveal-delay-2">
+          <div class="menu-card__img menu-card__img--2">🍞</div>
+          <div class="menu-card__body">
+            <div class="menu-card__name">Country Sourdough</div>
+            <p class="menu-card__desc">100-hour fermented starter, stone-baked crust. A loaf that earns its place at any table.</p>
+            <div class="menu-card__price">$8.50</div>
+          </div>
+        </div>
+        <div class="menu-card reveal reveal-delay-3">
+          <div class="menu-card__img menu-card__img--3">🧁</div>
+          <div class="menu-card__body">
+            <div class="menu-card__name">Seasonal Cupcake</div>
+            <p class="menu-card__desc">This month: carrot cake with brown butter cream cheese frosting and candied walnut.</p>
+            <div class="menu-card__price">$3.75</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-inner">
+      <div class="about-visual reveal reveal--left">
+        <div class="about-blob about-blob--1"></div>
+        <div class="about-blob about-blob--2"></div>
+        <div class="about-emoji">🧑‍🍳</div>
+      </div>
+      <div class="reveal reveal--right">
+        <span class="section-tag">Our Story</span>
+        <blockquote class="about__quote">
+          Baking is our love language.
+        </blockquote>
+        <p class="about__text">
+          Sweet Crumb started in a farmhouse kitchen in 2011 when Maria Chen began selling sourdough at the local farmers market. What started with one table and two loaves has grown into a beloved neighborhood cornerstone — but the recipe hasn't changed.
+        </p>
+        <p class="about__text">
+          Every item on our menu is made in-house, every morning, by a small team that genuinely loves what they do. We source from six local farms and two regional roasters.
+        </p>
+        <div class="about__sig">— Maria Chen, Founder</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOURS -->
+  <section class="hours-section" id="hours">
+    <div class="hours-inner">
+      <div class="reveal">
+        <span class="section-tag" style="color:#C9926B">Find Us</span>
+        <h2 class="hours-title">Come say hello</h2>
+        <p class="hours-sub">123 Elm Street, Maplewood<br/>Parking available behind the building.<br/>Dogs welcome on the patio! 🐾</p>
+        <br/><br/>
+        <a href="#" class="btn-primary">Get Directions</a>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <ul class="hours-list">
+          <li><span>Monday</span><span>7am – 3pm</span></li>
+          <li><span>Tuesday</span><span>7am – 3pm</span></li>
+          <li><span>Wednesday</span><span>7am – 3pm</span></li>
+          <li><span>Thursday</span><span>7am – 3pm</span></li>
+          <li><span>Friday</span><span>7am – 5pm</span></li>
+          <li><span>Saturday</span><span>8am – 4pm</span></li>
+          <li><span>Sunday</span><span style="color:rgba(253,246,236,0.4)">Closed</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="db-credit">
+    Website rebuilt by <a href="../index.html">DB Design</a> as part of our AI vibe coding volunteer initiative.
+  </div>
+
+  <script src="../js/shared.js"></script>
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+  </script>
+</body>
+</html>
