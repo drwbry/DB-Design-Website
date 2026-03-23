@@ -393,6 +393,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0;
   border-top: 1px solid var(--border);
   background: rgba(10, 10, 10, 0.6);
   padding: 0.8rem 0;
