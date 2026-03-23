@@ -415,76 +415,55 @@ body {
    MISSION
    ============================================================ */
 .mission {
-  padding: 8rem 0;
+  padding: 6rem 0;
   position: relative;
 }
 
-.stats-grid {
+.mission__rule {
+  width: 2rem;
+  height: 2px;
+  background: var(--gold);
+  margin: 2rem 0;
+}
+
+.mission__steps {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
 }
 
-.stat-card {
+.step-card {
   background: var(--black-card);
   border: 1px solid var(--border);
+  border-left: 2px solid var(--gold);
   border-radius: 8px;
-  padding: 2.5rem 2rem;
-  transition: border-color 0.3s ease, transform 0.3s var(--ease-out-quart), box-shadow 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  padding: 1.5rem;
 }
 
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.stat-card:hover {
-  border-color: var(--border-gold);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-}
-
-.stat-card:hover::before {
-  opacity: 1;
-}
-
-.stat-card__icon {
-  font-size: 2rem;
-  margin-bottom: 1.2rem;
-}
-
-.stat-card__number {
-  font-family: var(--ff-display);
-  font-size: 3.5rem;
-  font-weight: 900;
+.step-card__number {
+  font-family: var(--ff-body);
+  font-size: 0.75rem;
+  font-weight: 700;
   color: var(--gold);
-  line-height: 1;
+  opacity: 0.5;
+  letter-spacing: 0.1em;
   margin-bottom: 0.5rem;
 }
 
-.stat-card__label {
-  font-size: 0.9rem;
+.step-card__title {
   font-weight: 600;
   color: var(--cream);
-  margin-bottom: 0.8rem;
-  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
 }
 
-.stat-card__desc {
+.step-card__desc {
   font-size: 0.85rem;
   color: var(--cream-muted);
   line-height: 1.65;
 }
 
 @media (max-width: 768px) {
-  .stats-grid {
+  .mission__steps {
     grid-template-columns: 1fr;
   }
 }
@@ -720,95 +699,6 @@ body {
     grid-template-columns: 1fr;
     max-width: 480px;
     margin: 0 auto;
-  }
-}
-
-/* ============================================================
-   HOW IT WORKS
-   ============================================================ */
-.how {
-  padding: 8rem 0;
-  background: var(--black-soft);
-  position: relative;
-}
-
-.how::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(rgba(212, 168, 83, 0.02) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(212, 168, 83, 0.02) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2px;
-  position: relative;
-}
-
-.step {
-  display: flex;
-  gap: 1.8rem;
-  padding: 2.5rem;
-  border: 1px solid var(--border);
-  background: var(--black);
-  transition: border-color 0.3s ease, background 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.step::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
-  transform: scaleX(0);
-  transition: transform 0.4s ease;
-}
-
-.step:hover {
-  border-color: var(--border-gold);
-  background: var(--black-card);
-}
-
-.step:hover::after {
-  transform: scaleX(1);
-}
-
-.step__number {
-  font-family: var(--ff-display);
-  font-size: 3rem;
-  font-weight: 900;
-  color: rgba(212, 168, 83, 0.12);
-  line-height: 1;
-  flex-shrink: 0;
-  transition: color 0.3s ease;
-}
-
-.step:hover .step__number {
-  color: rgba(212, 168, 83, 0.25);
-}
-
-.step__title {
-  font-family: var(--ff-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--cream);
-  margin-bottom: 0.7rem;
-}
-
-.step__desc {
-  font-size: 0.9rem;
-  color: var(--cream-muted);
-  line-height: 1.7;
-}
-
-@media (max-width: 768px) {
-  .steps {
-    grid-template-columns: 1fr;
   }
 }
 
