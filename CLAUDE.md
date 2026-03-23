@@ -4,7 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-A multi-page static HTML/CSS/JS showcase website for **DB Design**, a volunteer initiative that rebuilds outdated local business websites using AI vibe coding. No frameworks, no build tools — pure HTML, CSS, and Vanilla JS.
+A showcase website for **DB Design**, a volunteer initiative that rebuilds outdated local business websites using AI vibe coding. The site demonstrates DB Design's capabilities and serves as a template for future client sites.
+
+## Target Stack (migration in progress)
+
+The site is being migrated from static HTML/CSS/JS to a production-ready stack:
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Astro (static output) |
+| CMS | Sanity.io (embedded Studio) |
+| Hosting | Coolify on OVHcloud VPS |
+| Deploy | GitHub → Coolify auto-deploy on push |
+
+- **Build command:** `npm run build`
+- **Output directory:** `dist`
+
+Until the Astro migration is complete, the current codebase is pure HTML/CSS/JS (no build tools). New feature work should target the Astro version unless explicitly scoped to the static prototype.
 
 ## Running Locally
 
