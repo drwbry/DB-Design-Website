@@ -17,8 +17,8 @@
 
 ## Versions
 
-- **Node:** 20 LTS — `.nvmrc` contains `20`, `package.json` `engines` field: `{ "node": ">=20.0.0" }`
-- **Astro:** 5.x latest stable at time of execution (`npm create astro@latest`, "empty" template). Lock the version via `package-lock.json` — do not re-scaffold to get a different version later.
+- **Node:** `.nvmrc` contains `24` (current environment). `package.json` `engines` field: `{ "node": "^20.0.0 || ^22.0.0 || ^24.0.0" }` — supports Node 20, 22, and 24.
+- **Astro:** 5.x latest stable. **Do not re-scaffold if `package-lock.json` already exists** — use the existing Astro 5.x environment and run `npm install` to restore dependencies.
 
 ---
 
@@ -41,15 +41,14 @@ src/
   styles/
     shared.css              ← moved from styles/shared.css
     hub.css                 ← moved from styles/hub.css
-public/
   scripts/
-    shared.js               ← moved from js/shared.js (served as-is, not bundled)
-    main.js                 ← moved from js/main.js (served as-is, not bundled)
+    shared.js               ← moved from js/shared.js (Astro-bundled)
+    main.js                 ← moved from js/main.js (Astro-bundled)
 ```
 
 URLs are unchanged: `/` for hub, `/showcase/bakery`, `/showcase/plumber`, `/showcase/salon`.
 
-**Note on `public/`:** The current static site has no local image or font assets (all images are Unsplash CDN URLs). Check for a favicon at the project root and move it to `public/` if one exists. Otherwise `public/` contains only the `scripts/` directory.
+**Note on `public/`:** The current static site has no local image or font assets (all images are Unsplash CDN URLs). Check for a favicon at the project root and move it to `public/` if one exists. Otherwise `public/` is initially empty.
 
 ---
 
@@ -65,11 +64,11 @@ Props: `title: string`, `description?: string`
   - `<meta name="viewport" content="width=device-width, initial-scale=1.0" />`
   - `<title>{title}</title>`
   - If `description` prop is provided: `<meta name="description" content={description} />`. If omitted, the tag is not rendered.
-  - Google Fonts preconnect hints (`fonts.googleapis.com`, `fonts.gstatic.com`) — **preconnect only, no font `<link>` tags here**
-  - `<slot name="head" />` — allows pages to inject additional `<head>` content (used by `index.astro` for hub font `<link>` tags)
+  - Google Fonts preconnect hints (`fonts.googleapis.com`, `fonts.gstatic.com`) — placed **before** the `head` slot so preconnects are always established early, reducing FOUT on all pages
+  - `<slot name="head" />` — allows pages to inject additional `<head>` content (used by `index.astro` for hub font `<link>` tags; showcase pages inject their own font `<link>` tags here instead of relying solely on CSS `@import`, which loads fonts later and worsens FOUT)
 - Imports `shared.css` in frontmatter: `import '../styles/shared.css'`
-- Loads `shared.js` in `<body>`: `<script src="/scripts/shared.js"></script>` — all pages use `.reveal` and `[data-count]` features from `shared.js`
-- `<slot />` in `<body>` for page content (after the `shared.js` script tag)
+- Imports `shared.js` via a `<script>` tag in the component: `import '../scripts/shared.js'` inside a `<script>` block — Astro bundles it as a deferred ES module. The `DOMContentLoaded` listener inside `shared.js` is safe: Astro emits `type="module"` scripts which are deferred, and `DOMContentLoaded` fires *after* deferred/module scripts execute, so the listener registers before the event fires.
+- `<slot />` in `<body>` for page content
 
 ### ShowcaseLayout.astro
 
@@ -120,19 +119,19 @@ The href is `/` (root-relative), not `../index.html`. Astro's static routing res
 
 - `shared.css` — imported in `BaseLayout.astro` frontmatter (`import '../styles/shared.css'`). Applies globally to all pages.
 - `hub.css` — imported in `index.astro` frontmatter only (`import '../styles/hub.css'`). Must not be imported in `BaseLayout` — it would bleed onto showcase pages.
-- **Hub fonts (Playfair Display, DM Sans):** `index.astro` injects Google Fonts `<link>` tags via the named `<slot name="head" />` in `BaseLayout`. These tags live only in `index.astro`, not in any layout.
-- **Showcase page fonts:** Each showcase page's `<style is:global>` block already contains `@import url(...)` for its own Google Fonts. These move verbatim into the `.astro` file — no changes needed.
+- **Hub fonts (Playfair Display, DM Sans):** `index.astro` injects Google Fonts `<link>` tags via `<link slot="head" ...>` into `BaseLayout`'s named head slot. These tags live only in `index.astro`.
+- **Showcase page fonts:** Each showcase page injects its own Google Fonts `<link>` tags via `<link slot="head" ...>` into `ShowcaseLayout` → `BaseLayout`'s named head slot. This ensures fonts load early (before CSS is parsed), reducing FOUT. Any existing CSS `@import url(...)` for fonts in the showcase `<style is:global>` blocks should be removed to avoid duplicate requests.
 - Each showcase page's existing `<style>` block moves verbatim into its `.astro` file wrapped in `<style is:global>`. Astro scopes `<style>` blocks by default, which breaks `:root` CSS custom property declarations and global class selectors — `is:global` bypasses scoping entirely, preserving identical behavior to the current static files.
 
 ---
 
 ## JS Strategy
 
-All scripts live in `public/scripts/` and are loaded via plain `<script src="...">` tags. Astro does not process or bundle them — behavior is identical to the current static site.
+Scripts live in `src/scripts/` and are imported into Astro `<script>` blocks. Astro bundles them as deferred ES modules — minified, content-hashed, and deduplicated across pages.
 
-- **`shared.js`** — `<script src="/scripts/shared.js"></script>` in `BaseLayout.astro` body
-- **`main.js`** — `<script src="/scripts/main.js"></script>` in `index.astro` at the bottom of the page body
-- **Bakery inline scripts** (date rendering, tab scroll, IntersectionObserver) — defined in the bakery implementation plan; used verbatim in `bakery.astro` with `<script is:inline>`. Astro normally processes inline `<script>` blocks as ES modules — `is:inline` prevents this and preserves the scripts' current non-module behavior. These are the scripts from the **implementation plan**, not from the current `bakery.html` (which has only a nav scroll listener).
+- **`shared.js`** — imported in `BaseLayout.astro` via `<script>` block: `import '../scripts/shared.js'`. Runs on every page. The `DOMContentLoaded` listener inside is safe with Astro's module bundling (see BaseLayout section above).
+- **`main.js`** — imported in `index.astro` via `<script>` block: `import '../scripts/main.js'`. Hub only.
+- **Bakery inline scripts** (date rendering, tab scroll, IntersectionObserver) — defined in the bakery implementation plan; used verbatim in `bakery.astro` with `<script is:inline>`. These manipulate specific DOM elements by ID and are placed at the bottom of the body (DOM already available), so `is:inline` is correct here. These are the scripts from the **implementation plan**, not from the current `bakery.html` (which has only a nav scroll listener).
 
 ---
 
@@ -177,8 +176,9 @@ Plumber and salon receive the same structural treatment — port as-is, no redes
 
 ### Files deleted after migration
 
+Once `npm run dev` shows the site working correctly across all pages:
 - `styles/` directory (contents moved to `src/styles/`)
-- `js/` directory (contents moved to `public/scripts/`)
+- `js/` directory (contents moved to `src/scripts/`)
 - `index.html`
 - `showcase/` directory (contents moved to `src/pages/showcase/`)
 
