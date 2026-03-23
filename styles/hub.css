@@ -384,23 +384,18 @@ body {
   50% { height: 28px; opacity: 0.5; }
 }
 
-/* Ticker */
-.hero__ticker {
+/* Stat Bar */
+.hero__stat-bar {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  overflow: hidden;
-  border-top: 1px solid var(--border);
-  background: rgba(10,10,10,0.6);
-  padding: 0.8rem 0;
-}
-
-.hero__ticker-track {
   display: flex;
-  gap: 2.5rem;
-  white-space: nowrap;
-  animation: ticker 25s linear infinite;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--border);
+  background: rgba(10, 10, 10, 0.6);
+  padding: 0.8rem 0;
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -408,14 +403,12 @@ body {
   color: var(--cream-muted);
 }
 
-.ticker-dot {
-  color: var(--gold);
-  font-size: 0.6rem;
-}
-
-@keyframes ticker {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+.hero__stat-bar__divider {
+  display: inline-block;
+  width: 1px;
+  height: 2rem;
+  background: var(--border);
+  margin: 0 2.5rem;
 }
 
 /* ============================================================
