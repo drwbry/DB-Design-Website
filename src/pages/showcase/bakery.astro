@@ -1,0 +1,852 @@
+---
+import ShowcaseLayout from '../../layouts/ShowcaseLayout.astro';
+---
+<ShowcaseLayout
+  title="Sweet Crumb Bakery — Rebuilt by DB Design"
+  description="Sweet Crumb Bakery — artisan baked goods and café in the heart of our community."
+  backColor="#4A3728"
+  backBg="rgba(253, 246, 236, 0.85)"
+>
+  <Fragment slot="head">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  </Fragment>
+
+  <style is:global>
+    /* ============================================================
+       Sweet Crumb Bakery — Warm Artisan Organic Aesthetic
+       Colors: Cream #FDF6EC | Terracotta #C9926B | Sage #7A9E82 | Cocoa #4A3728
+       Fonts: Cormorant Garamond (display) + Nunito (body)
+    ============================================================ */
+    :root {
+      --cream: #FDF6EC;
+      --cream-dark: #F0E6D0;
+      --cream-card: #FBF2E5;
+      --terra: #C9926B;
+      --terra-deep: #A87050;
+      --terra-light: rgba(201, 146, 107, 0.12);
+      --sage: #7A9E82;
+      --sage-light: rgba(122, 158, 130, 0.15);
+      --cocoa: #4A3728;
+      --cocoa-mid: #7A5C48;
+      --text: #4A3728;
+      --text-mid: #7A5C48;
+      --text-light: rgba(74, 55, 40, 0.5);
+      --border: rgba(74, 55, 40, 0.1);
+      --ff-display: 'Cormorant Garamond', Georgia, serif;
+      --ff-body: 'Nunito', system-ui, sans-serif;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: var(--ff-body);
+      overflow-x: hidden;
+      position: relative;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* Noise grain texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+      z-index: 99999;
+    }
+
+    /* Back button override */
+    .back-btn { border: 1px solid var(--border); }
+
+    /* ── NAV ── */
+    .bakery-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 2rem;
+      transition: background 0.4s ease;
+    }
+    .bakery-nav.scrolled {
+      background: rgba(253,246,236,0.9);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .nav__inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .nav__logo {
+      font-family: var(--ff-display);
+      font-size: 1.6rem; font-weight: 700; font-style: italic;
+      color: var(--terra-deep);
+    }
+    .nav__links { display: flex; gap: 2rem; }
+    .nav__link {
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em;
+      color: var(--text-mid);
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    .nav__link::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 1.5px; background: var(--terra);
+      transition: width 0.3s ease;
+    }
+    .nav__link:hover, .nav__link:focus-visible { color: var(--terra-deep); outline: none; }
+    .nav__link:hover::after, .nav__link:focus-visible::after { width: 100%; }
+    .nav__order {
+      background: var(--terra); color: white;
+      padding: 0.55rem 1.3rem; border-radius: 100px;
+      font-size: 0.82rem; font-weight: 700; letter-spacing: 0.04em;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .nav__order:hover, .nav__order:focus-visible { background: var(--terra-deep); transform: translateY(-1px); outline: none; box-shadow: 0 0 0 2px var(--cream), 0 0 0 4px var(--terra); }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      background: var(--terra); color: white;
+      padding: 0.9rem 2rem; border-radius: 100px;
+      font-family: var(--ff-body); font-size: 0.9rem; font-weight: 700;
+      transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .btn-primary:hover, .btn-primary:focus-visible { background: var(--terra-deep); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,146,107,0.35); outline: none; }
+    .btn-primary:focus-visible { box-shadow: 0 8px 25px rgba(201,146,107,0.35), 0 0 0 2px var(--cream), 0 0 0 4px var(--terra); }
+    .btn-ghost {
+      background: transparent; color: var(--cocoa);
+      padding: 0.9rem 2rem; border-radius: 100px;
+      font-family: var(--ff-body); font-size: 0.9rem; font-weight: 600;
+      border: 1.5px solid var(--border);
+      transition: border-color 0.25s ease, color 0.25s ease;
+    }
+    .btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--terra); color: var(--terra); outline: none; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #FDF6EC 0%, #F0E0C4 100%);
+      padding: 5rem 2rem 3.5rem;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; right: -80px; top: -80px;
+      width: 340px; height: 340px;
+      border-radius: 50%; border: 2px solid var(--terra);
+      opacity: 0.1; pointer-events: none;
+    }
+    .hero__inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3rem; align-items: center;
+    }
+    .hero__tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--sage);
+      margin-bottom: 1rem;
+    }
+    .hero__tag::before {
+      content: ''; display: inline-block;
+      width: 22px; height: 1.5px; background: var(--sage);
+    }
+    .hero__headline {
+      font-family: var(--ff-display);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 700; line-height: 1.1;
+      color: var(--cocoa); margin-bottom: 1rem;
+    }
+    .hero__headline em { font-style: italic; color: var(--terra-deep); }
+    .hero__sub {
+      font-size: 1rem; color: var(--text-mid);
+      line-height: 1.75; margin-bottom: 2rem; max-width: 400px;
+    }
+    .hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* Hero image */
+    .hero__img-wrap {
+      position: relative; border-radius: 16px;
+      overflow: hidden; aspect-ratio: 4 / 3;
+      box-shadow: 0 16px 48px rgba(74, 55, 40, 0.18);
+    }
+    .hero__img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .hero__img-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(74, 55, 40, 0.55), transparent);
+      color: rgba(253, 246, 236, 0.9);
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 1.5rem 1rem 0.7rem;
+    }
+
+    /* ── SPECIALS STRIP ── */
+    .specials-section {
+      background: var(--cream-dark);
+      padding: 2rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .specials-inner { max-width: 1200px; margin: 0 auto; }
+    .specials__header {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+    .specials__label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--terra); white-space: nowrap;
+    }
+    .specials__rule { flex: 1; height: 1px; background: var(--border); }
+    .specials__date { font-size: 0.72rem; color: var(--text-mid); white-space: nowrap; }
+    .specials__grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    }
+    .special-card {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 1rem;
+      display: flex; gap: 0.75rem; align-items: flex-start;
+    }
+    .special-card__emoji { font-size: 1.8rem; flex-shrink: 0; line-height: 1; }
+    .special-card__body { flex: 1; }
+    .special-badge {
+      display: inline-block;
+      background: var(--terra); color: white;
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.15rem 0.45rem; border-radius: 4px;
+      margin-bottom: 0.35rem;
+    }
+    .special-card__name {
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--cocoa); margin-bottom: 0.2rem;
+    }
+    .special-card__desc {
+      font-size: 0.75rem; color: var(--text-mid);
+      line-height: 1.5; margin-bottom: 0.35rem;
+    }
+    .special-card__price { font-size: 0.82rem; font-weight: 700; color: var(--terra); }
+
+    /* ── MENU SECTION ── */
+    .menu-section { padding: 0 2rem 5rem; background: var(--cream); }
+    .menu-inner { max-width: 1200px; margin: 0 auto; }
+
+    /* Menu header row */
+    .menu-header {
+      padding: 2rem 0 0;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .menu-title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; font-style: italic;
+      color: var(--cocoa);
+    }
+
+    /* PDF download link */
+    .pdf-link {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      font-size: 0.75rem; font-weight: 600;
+      color: var(--text-mid);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.9rem;
+      border-radius: 100px;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .pdf-link:hover, .pdf-link:focus-visible {
+      border-color: var(--terra);
+      color: var(--terra-deep);
+      outline: none;
+    }
+
+    /* Tab bar */
+    .tab-bar {
+      display: flex;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 2rem;
+      position: sticky; top: 72px;
+      background: var(--cream); z-index: 10;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+    .tab {
+      padding: 0.7rem 1.3rem;
+      font-family: var(--ff-body); font-size: 0.8rem; font-weight: 600;
+      color: var(--text-mid);
+      border: none; background: none; cursor: pointer;
+      border-bottom: 2px solid transparent; margin-bottom: -2px;
+      white-space: nowrap;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .tab:hover { color: var(--cocoa); }
+    .tab--active { color: var(--terra-deep); border-bottom-color: var(--terra); }
+
+    /* Category sections */
+    .menu-category { margin-bottom: 3rem; }
+    .category-heading {
+      font-family: var(--ff-display);
+      font-size: 1.3rem; font-weight: 700; font-style: italic;
+      color: var(--cocoa);
+      margin-bottom: 1rem; padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Item grid */
+    .item-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem;
+    }
+    .menu-item {
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 0.9rem 1rem;
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 0.75rem;
+      transition: box-shadow 0.2s ease;
+    }
+    .menu-item:hover { box-shadow: 0 4px 16px rgba(74, 55, 40, 0.08); }
+    .item-left { flex: 1; min-width: 0; }
+    .item-name-row {
+      display: flex; align-items: center;
+      gap: 0.4rem; flex-wrap: wrap;
+      margin-bottom: 0.25rem;
+    }
+    .item-name { font-size: 0.87rem; font-weight: 700; color: var(--cocoa); }
+    .item-badge {
+      display: inline-block;
+      background: var(--terra); color: white;
+      font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 0.13rem 0.38rem; border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .item-desc { font-size: 0.74rem; color: var(--text-mid); line-height: 1.55; }
+    .item-price { font-size: 0.87rem; font-weight: 700; color: var(--terra); flex-shrink: 0; }
+
+    /* ── ABOUT ── */
+    .about-section {
+      padding: 8rem 2rem;
+      background: linear-gradient(135deg, #F5EDD8 0%, #EDE0C8 100%);
+    }
+    .about-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .about-visual { display: flex; align-items: center; justify-content: center; }
+    .about-img-wrap {
+      width: 100%; max-width: 400px;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 16px 48px rgba(74, 55, 40, 0.18);
+    }
+    .about-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .section-tag {
+      display: inline-block; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--terra); margin-bottom: 0.8rem;
+    }
+    .about__quote {
+      font-family: var(--ff-display); font-size: 1.6rem; font-style: italic;
+      font-weight: 600; color: var(--cocoa); line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+    .about__quote::before { content: '\201C'; color: var(--terra); font-size: 2.5rem; line-height: 0; vertical-align: -0.4em; }
+    .about__text { font-size: 0.97rem; color: var(--text-mid); line-height: 1.8; margin-bottom: 1.5rem; }
+    .about__sig { font-family: var(--ff-display); font-style: italic; font-size: 1.2rem; color: var(--terra-deep); }
+
+    /* ── HOURS CTA ── */
+    .hours-section {
+      padding: 7rem 2rem;
+      background: var(--cocoa);
+    }
+    .hours-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .hours-title {
+      font-family: var(--ff-display); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; font-style: italic;
+      color: var(--cream); margin-bottom: 0.8rem;
+    }
+    .hours-sub { font-size: 1rem; color: rgba(253,246,236,0.6); line-height: 1.7; }
+    .hours-list { list-style: none; }
+    .hours-list li {
+      display: flex; justify-content: space-between;
+      padding: 0.8rem 0; border-bottom: 1px solid rgba(253,246,236,0.08);
+      font-size: 0.9rem; color: rgba(253,246,236,0.7);
+    }
+    .hours-list li span:last-child { color: var(--terra); font-weight: 700; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--cream-dark);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      /* Hero */
+      .hero__inner { grid-template-columns: 1fr; }
+      .hero__img-wrap { display: none; }
+
+      /* Specials */
+      .specials__grid { grid-template-columns: 1fr; }
+
+      /* Menu tabs */
+      .tab-bar { flex-wrap: nowrap; }
+
+      /* Menu items */
+      .item-grid { grid-template-columns: 1fr; }
+
+      /* About & Hours */
+      .about-inner { grid-template-columns: 1fr; }
+      .hours-inner { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <!-- NAV -->
+  <nav class="bakery-nav" id="nav">
+    <div class="nav__inner">
+      <a href="/showcase/bakery" class="nav__logo">Sweet Crumb</a>
+      <ul class="nav__links">
+        <li><a href="#menu" class="nav__link">Menu</a></li>
+        <li><a href="#about" class="nav__link">Our Story</a></li>
+        <li><a href="#hours" class="nav__link">Hours</a></li>
+        <li><a href="#hours" class="nav__order">Order Now</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero__inner">
+      <div class="hero__copy">
+        <div class="hero__tag">Artisan Bakery &amp; Café · Est. 2011</div>
+        <h1 class="hero__headline">
+          Baked with love,<br/>
+          <em>every morning.</em>
+        </h1>
+        <p class="hero__sub">
+          Small-batch pastries, fresh-ground coffee, and seasonal breads — made in-house, daily.
+        </p>
+        <div class="hero__actions">
+          <a href="#menu" class="btn-primary">Browse the Menu</a>
+          <a href="#about" class="btn-ghost">Our Story</a>
+        </div>
+      </div>
+      <div class="hero__img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&q=80"
+          alt="Fresh croissants and pastries cooling on a rack at Sweet Crumb Bakery"
+        />
+        <div class="hero__img-caption">Fresh from the oven daily</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECIALS -->
+  <section class="specials-section" id="specials">
+    <div class="specials-inner">
+      <div class="specials__header">
+        <span class="specials__label">Today's Specials</span>
+        <div class="specials__rule"></div>
+        <span class="specials__date" id="specials-date"></span>
+      </div>
+      <div class="specials__grid">
+        <div class="special-card">
+          <span class="special-card__emoji">🥐</span>
+          <div class="special-card__body">
+            <span class="special-badge">Special</span>
+            <div class="special-card__name">Almond Croissant</div>
+            <div class="special-card__desc">House almond cream, toasted flakes, powdered sugar</div>
+            <div class="special-card__price">$4.25</div>
+          </div>
+        </div>
+        <div class="special-card">
+          <span class="special-card__emoji">🍵</span>
+          <div class="special-card__body">
+            <span class="special-badge">Special</span>
+            <div class="special-card__name">Matcha Latte</div>
+            <div class="special-card__desc">Ceremonial grade, oat milk, lightly sweetened</div>
+            <div class="special-card__price">$5.75</div>
+          </div>
+        </div>
+        <div class="special-card">
+          <span class="special-card__emoji">🍞</span>
+          <div class="special-card__body">
+            <span class="special-badge">Special</span>
+            <div class="special-card__name">Walnut Rye Loaf</div>
+            <div class="special-card__desc">Baked Tue/Thu/Sat only — limited quantity</div>
+            <div class="special-card__price">$11.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu-section" id="menu">
+    <div class="menu-inner">
+
+      <!-- Menu header -->
+      <div class="menu-header reveal">
+        <h2 class="menu-title">Our Menu</h2>
+        <a href="#" class="pdf-link" aria-label="Download PDF menu">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 15V3m0 12l-4-4m4 4l4-4"/>
+            <path d="M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/>
+          </svg>
+          Download PDF Menu
+        </a>
+      </div>
+
+      <!-- Tab bar -->
+      <div class="tab-bar" role="tablist" aria-label="Menu categories">
+        <button class="tab tab--active" data-target="pastries" role="tab" aria-selected="true">Pastries</button>
+        <button class="tab" data-target="breads" role="tab" aria-selected="false">Breads</button>
+        <button class="tab" data-target="sandwiches" role="tab" aria-selected="false">Sandwiches</button>
+        <button class="tab" data-target="beverages" role="tab" aria-selected="false">Beverages</button>
+      </div>
+
+      <!-- Pastries -->
+      <div class="menu-category" id="pastries">
+        <h3 class="category-heading">Pastries</h3>
+        <div class="item-grid">
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row">
+                <span class="item-name">Almond Croissant</span>
+                <span class="item-badge">Special</span>
+              </div>
+              <div class="item-desc">House almond cream, toasted flakes, powdered sugar</div>
+            </div>
+            <span class="item-price">$4.25</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Plain Croissant</span></div>
+              <div class="item-desc">Laminated dough, cultured butter, baked fresh daily</div>
+            </div>
+            <span class="item-price">$3.50</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Seasonal Muffin</span></div>
+              <div class="item-desc">Ask us what's in today — changes weekly</div>
+            </div>
+            <span class="item-price">$3.25</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Carrot Cake Cupcake</span></div>
+              <div class="item-desc">Brown butter cream cheese frosting, candied walnut</div>
+            </div>
+            <span class="item-price">$3.75</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Kouign-Amann</span></div>
+              <div class="item-desc">Caramelized sugar, flaky layers — limited daily</div>
+            </div>
+            <span class="item-price">$4.75</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Cinnamon Morning Bun</span></div>
+              <div class="item-desc">Orange zest glaze, turbinado sugar crust</div>
+            </div>
+            <span class="item-price">$4.00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breads -->
+      <div class="menu-category" id="breads">
+        <h3 class="category-heading">Breads</h3>
+        <div class="item-grid">
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Country Sourdough</span></div>
+              <div class="item-desc">100-hour fermented starter, stone-baked crust</div>
+            </div>
+            <span class="item-price">$8.50</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row">
+                <span class="item-name">Walnut Rye Loaf</span>
+                <span class="item-badge">Special</span>
+              </div>
+              <div class="item-desc">Baked Tue/Thu/Sat only — limited quantity</div>
+            </div>
+            <span class="item-price">$11.00</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Seeded Baguette</span></div>
+              <div class="item-desc">Poppy, sesame, and sunflower — crisp crust</div>
+            </div>
+            <span class="item-price">$4.00</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Olive Focaccia</span></div>
+              <div class="item-desc">Castelvetrano olives, rosemary, flaked salt</div>
+            </div>
+            <span class="item-price">$6.50</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Honey Oat Sandwich Loaf</span></div>
+              <div class="item-desc">Soft crumb, lightly sweetened, great for toast</div>
+            </div>
+            <span class="item-price">$7.00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sandwiches -->
+      <div class="menu-category" id="sandwiches">
+        <h3 class="category-heading">Sandwiches</h3>
+        <div class="item-grid">
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">The Classic BLT</span></div>
+              <div class="item-desc">Applewood bacon, heirloom tomato, butter lettuce, aioli on sourdough</div>
+            </div>
+            <span class="item-price">$13.00</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Smoked Turkey &amp; Brie</span></div>
+              <div class="item-desc">Apple slices, whole grain mustard, arugula on honey oat</div>
+            </div>
+            <span class="item-price">$14.50</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Roasted Veggie &amp; Hummus</span></div>
+              <div class="item-desc">Zucchini, red pepper, spinach, house hummus on focaccia</div>
+            </div>
+            <span class="item-price">$12.00</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Ham &amp; Gruyère</span></div>
+              <div class="item-desc">Black forest ham, Dijon, cornichons on baguette</div>
+            </div>
+            <span class="item-price">$13.50</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Beverages -->
+      <div class="menu-category" id="beverages">
+        <h3 class="category-heading">Beverages</h3>
+        <div class="item-grid">
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Drip Coffee</span></div>
+              <div class="item-desc">Single-origin, rotates weekly — ask your barista</div>
+            </div>
+            <span class="item-price">$3.25</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Cortado</span></div>
+              <div class="item-desc">Equal parts espresso and steamed whole milk</div>
+            </div>
+            <span class="item-price">$4.50</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Oat Milk Latte</span></div>
+              <div class="item-desc">Double shot, house oat milk, your choice of syrup</div>
+            </div>
+            <span class="item-price">$6.00</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row">
+                <span class="item-name">Matcha Latte</span>
+                <span class="item-badge">Special</span>
+              </div>
+              <div class="item-desc">Ceremonial grade, oat milk, lightly sweetened</div>
+            </div>
+            <span class="item-price">$5.75</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Chai</span></div>
+              <div class="item-desc">House-spiced concentrate, steamed milk</div>
+            </div>
+            <span class="item-price">$5.25</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Cold Brew</span></div>
+              <div class="item-desc">18-hour steep, served over ice — straight or with oat milk</div>
+            </div>
+            <span class="item-price">$5.00</span>
+          </div>
+          <div class="menu-item">
+            <!-- <div class="item-img-slot"></div> -->
+            <div class="item-left">
+              <div class="item-name-row"><span class="item-name">Orange Juice</span></div>
+              <div class="item-desc">Freshly squeezed, seasonal citrus</div>
+            </div>
+            <span class="item-price">$4.50</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-inner">
+      <div class="about-visual reveal reveal--left">
+        <div class="about-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=80"
+            alt="Maria Chen, founder of Sweet Crumb Bakery, in the kitchen"
+          />
+        </div>
+      </div>
+      <div class="reveal reveal--right">
+        <span class="section-tag">Our Story</span>
+        <blockquote class="about__quote">
+          Baking is our love language.
+        </blockquote>
+        <p class="about__text">
+          Sweet Crumb started in a farmhouse kitchen in 2011 when Maria Chen began selling sourdough at the local farmers market. What started with one table and two loaves has grown into a beloved neighborhood cornerstone — but the recipe hasn't changed.
+        </p>
+        <p class="about__text">
+          Every item on our menu is made in-house, every morning, by a small team that genuinely loves what they do. We source from six local farms and two regional roasters.
+        </p>
+        <div class="about__sig">— Maria Chen, Founder</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOURS -->
+  <section class="hours-section" id="hours">
+    <div class="hours-inner">
+      <div class="reveal">
+        <span class="section-tag" style="color:#C9926B">Find Us</span>
+        <h2 class="hours-title">Come say hello</h2>
+        <p class="hours-sub">123 Elm Street, Maplewood<br/>Parking available behind the building.<br/>Dogs welcome on the patio! 🐾</p>
+        <br/><br/>
+        <a href="#" class="btn-primary">Get Directions</a>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <ul class="hours-list">
+          <li><span>Monday</span><span>7am – 3pm</span></li>
+          <li><span>Tuesday</span><span>7am – 3pm</span></li>
+          <li><span>Wednesday</span><span>7am – 3pm</span></li>
+          <li><span>Thursday</span><span>7am – 3pm</span></li>
+          <li><span>Friday</span><span>7am – 5pm</span></li>
+          <li><span>Saturday</span><span>8am – 4pm</span></li>
+          <li><span>Sunday</span><span style="color:rgba(253,246,236,0.4)">Closed</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    // Nav scroll
+    const nav = document.querySelector('.bakery-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Specials date
+    document.getElementById('specials-date').textContent =
+      new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+
+    // ── MENU TABS ──
+    (function () {
+      const tabs = document.querySelectorAll('.tab');
+      const categories = document.querySelectorAll('.menu-category');
+      let isScrollingProgrammatically = false;
+
+      // Tab click: scroll to category
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const target = document.getElementById(tab.dataset.target);
+          if (!target) return;
+
+          isScrollingProgrammatically = true;
+          setActiveTab(tab);
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+          // Clear flag after scroll settles
+          clearTimeout(window._tabScrollTimer);
+          window._tabScrollTimer = setTimeout(() => {
+            isScrollingProgrammatically = false;
+          }, 800);
+        });
+      });
+
+      // Active tab highlight on scroll
+      const observer = new IntersectionObserver(entries => {
+        if (isScrollingProgrammatically) return;
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            const matchingTab = document.querySelector(`.tab[data-target="${id}"]`);
+            if (matchingTab) setActiveTab(matchingTab);
+          }
+        });
+      }, {
+        threshold: 0.3,
+        rootMargin: '-72px 0px 0px 0px'
+      });
+
+      categories.forEach(cat => observer.observe(cat));
+
+      function setActiveTab(activeTab) {
+        tabs.forEach(t => {
+          t.classList.remove('tab--active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        activeTab.classList.add('tab--active');
+        activeTab.setAttribute('aria-selected', 'true');
+      }
+    })();
+  </script>
+
+</ShowcaseLayout>
