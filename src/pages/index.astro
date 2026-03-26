@@ -1,23 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/hub.css';
-import { sanityClient } from '../lib/sanityClient';
-
-const showcaseProjects = await sanityClient.fetch<Array<{
-  name: string;
-  slug: string;
-  category: string;
-  description: string;
-  paletteColors: string[];
-}>>(`
-  *[_type == "showcaseProject"] | order(order asc) {
-    name,
-    "slug": slug.current,
-    category,
-    description,
-    paletteColors
-  }
-`);
 ---
 <BaseLayout
   title="DB Design — AI Vibe Coding for Local Businesses"
@@ -139,38 +122,98 @@ const showcaseProjects = await sanityClient.fetch<Array<{
 
       <div class="projects-grid">
 
-        {showcaseProjects.map((project) => (
-          <a href={`/showcase/${project.slug}`} class="project-card" id={`card-${project.slug}`} data-theme={project.slug}>
-            <div class="project-card__visual">
-              <div class={`project-card__mock project-card__mock--${project.slug}`}>
-                <div class="mock-nav"></div>
-                <div class="mock-hero">
-                  <div class="mock-headline"></div>
-                  <div class="mock-sub"></div>
-                  <div class="mock-btn"></div>
-                </div>
-                <div class="mock-cards">
-                  <div class="mock-card"></div>
-                  <div class="mock-card"></div>
-                  <div class="mock-card"></div>
-                </div>
+        <a href="/showcase/bakery" class="project-card" id="card-bakery" data-theme="bakery">
+          <div class="project-card__visual">
+            <div class="project-card__mock project-card__mock--bakery">
+              <div class="mock-nav"></div>
+              <div class="mock-hero">
+                <div class="mock-headline"></div>
+                <div class="mock-sub"></div>
+                <div class="mock-btn"></div>
               </div>
-              <div class="project-card__overlay">
-                <span class="project-card__view">View Site →</span>
+              <div class="mock-cards">
+                <div class="mock-card"></div>
+                <div class="mock-card"></div>
+                <div class="mock-card"></div>
               </div>
             </div>
-            <div class="project-card__info">
-              <div class="project-card__tag">{project.category}</div>
-              <h3 class="project-card__name">{project.name}</h3>
-              <p class="project-card__desc">{project.description}</p>
-              <div class="project-card__palette">
-                {project.paletteColors.map((color) => (
-                  <span class="swatch" style={`background:${color}`}></span>
-                ))}
+            <div class="project-card__overlay">
+              <span class="project-card__view">View Site →</span>
+            </div>
+          </div>
+          <div class="project-card__info">
+            <div class="project-card__tag">Bakery & Café</div>
+            <h3 class="project-card__name">Sweet Crumb Bakery</h3>
+            <p class="project-card__desc">Warm, artisan aesthetic with floating pastry animations and an online menu experience.</p>
+            <div class="project-card__palette">
+              <span class="swatch" style="background:#FDF6EC"></span>
+              <span class="swatch" style="background:#C9926B"></span>
+              <span class="swatch" style="background:#7A9E82"></span>
+            </div>
+          </div>
+        </a>
+
+        <a href="/showcase/plumber" class="project-card" id="card-plumber" data-theme="plumber">
+          <div class="project-card__visual">
+            <div class="project-card__mock project-card__mock--plumber">
+              <div class="mock-nav"></div>
+              <div class="mock-hero">
+                <div class="mock-headline"></div>
+                <div class="mock-sub"></div>
+                <div class="mock-btn"></div>
+              </div>
+              <div class="mock-cards">
+                <div class="mock-card"></div>
+                <div class="mock-card"></div>
+                <div class="mock-card"></div>
               </div>
             </div>
-          </a>
-        ))}
+            <div class="project-card__overlay">
+              <span class="project-card__view">View Site →</span>
+            </div>
+          </div>
+          <div class="project-card__info">
+            <div class="project-card__tag">Home Services</div>
+            <h3 class="project-card__name">Peak Flow Plumbing</h3>
+            <p class="project-card__desc">Bold, conversion-focused industrial design with animated trust signals and emergency CTA.</p>
+            <div class="project-card__palette">
+              <span class="swatch" style="background:#1A2744"></span>
+              <span class="swatch" style="background:#FF6B2B"></span>
+              <span class="swatch" style="background:#F5F5F5"></span>
+            </div>
+          </div>
+        </a>
+
+        <a href="/showcase/salon" class="project-card" id="card-salon" data-theme="salon">
+          <div class="project-card__visual">
+            <div class="project-card__mock project-card__mock--salon">
+              <div class="mock-nav"></div>
+              <div class="mock-hero">
+                <div class="mock-headline"></div>
+                <div class="mock-sub"></div>
+                <div class="mock-btn"></div>
+              </div>
+              <div class="mock-cards">
+                <div class="mock-card"></div>
+                <div class="mock-card"></div>
+                <div class="mock-card"></div>
+              </div>
+            </div>
+            <div class="project-card__overlay">
+              <span class="project-card__view">View Site →</span>
+            </div>
+          </div>
+          <div class="project-card__info">
+            <div class="project-card__tag">Beauty & Wellness</div>
+            <h3 class="project-card__name">Lumière Salon & Spa</h3>
+            <p class="project-card__desc">Luxe editorial aesthetic with champagne tones, masonry gallery, and elegant booking flow.</p>
+            <div class="project-card__palette">
+              <span class="swatch" style="background:#1C1410"></span>
+              <span class="swatch" style="background:#E8D5C4"></span>
+              <span class="swatch" style="background:#C9A96E"></span>
+            </div>
+          </div>
+        </a>
 
       </div>
     </div>
