@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cincinnatiwebfoundry.com/sitemap-index.xml

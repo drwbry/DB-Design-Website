@@ -1,0 +1,234 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/hub.css';
+---
+<BaseLayout
+  title="About — The Web Foundry"
+  description="The Web Foundry is a volunteer initiative using AI vibe coding to rebuild outdated local business websites for free. Meet the team behind the mission."
+>
+  <Fragment slot="head">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  </Fragment>
+
+  <nav class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="/" class="nav__logo logo-b">
+        <span class="logo-b__name">The Web Foundry</span>
+        <span class="logo-b__locale">Cincinnati</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="/#mission" class="nav__link">Mission</a></li>
+        <li><a href="/#showcase" class="nav__link">Work</a></li>
+        <li><a href="/#contact" class="nav__cta">Get in Touch</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <section class="about-hero">
+      <div class="container">
+        <div class="about-hero__inner reveal">
+          <span class="section-tag">About Us</span>
+          <h1 class="about-hero__title">We build websites<br/>for the people<br/><em>who build communities.</em></h1>
+          <p class="about-hero__sub">The Web Foundry is a volunteer initiative based in Cincinnati. We use AI-powered development to completely rebuild outdated local business websites — for free. No strings attached, no ongoing fees. Just a better web for the businesses that make our neighborhoods special.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-why">
+      <div class="container">
+        <div class="about-why__inner">
+          <div class="reveal">
+            <h2 class="about-why__title">Why we do this</h2>
+            <p class="about-why__text">Small businesses are the backbone of every community. They sponsor little league teams, know your name when you walk in, and make neighborhoods feel like home. But too often, their online presence doesn't reflect who they are — it's a website from 2009 that barely works on a phone.</p>
+            <p class="about-why__text">Meanwhile, technology has moved fast. AI tools now let us build in hours what used to take weeks. We think that speed should benefit the people who need it most — not just the ones who can afford a $15,000 redesign.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-how">
+      <div class="container">
+        <div class="about-how__inner reveal">
+          <h2 class="about-how__title">How it works</h2>
+          <p class="about-how__text">We call it <strong>AI vibe coding</strong> — using modern AI development tools to rapidly prototype, iterate, and ship polished websites. We volunteer our time, pair with business owners to capture their vision, and deliver a site that actually represents what they do. Every site is custom. Every site is free.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-team">
+      <div class="container">
+        <div class="about-team__inner">
+          <h2 class="about-team__title reveal">The Team</h2>
+          <div class="about-team__grid">
+            <div class="team-card reveal reveal-delay-1">
+              <div class="team-card__photo-placeholder" aria-label="Founder photo placeholder"></div>
+              <h3 class="team-card__name">Dreux Bontempo</h3>
+              <p class="team-card__role">Co-Founder</p>
+              <p class="team-card__bio">Cincinnati-based technologist passionate about putting modern tools to work for the community.</p>
+            </div>
+            <div class="team-card reveal reveal-delay-2">
+              <div class="team-card__photo-placeholder" aria-label="Co-founder photo placeholder"></div>
+              <h3 class="team-card__name">Partner Name</h3>
+              <p class="team-card__role">Co-Founder</p>
+              <p class="team-card__bio">Bio coming soon.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-cta">
+      <div class="container">
+        <div class="about-cta__inner reveal">
+          <h2 class="about-cta__title">Know a business that deserves better?</h2>
+          <a href="/#contact" class="btn btn--primary">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__logo logo-a">
+        <span class="logo-a__primary">The Web</span>
+        <span class="logo-a__secondary">Foundry</span>
+      </div>
+      <p class="footer__tagline">AI Vibe Coding for the people.</p>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy Policy</a>
+      </nav>
+      <p class="footer__copy">© 2026 The Web Foundry — Cincinnati. Built with ❤️ and AI.</p>
+    </div>
+  </footer>
+
+  <style is:global>
+    .about-hero {
+      padding: 8rem 0 4rem;
+      background: var(--black);
+    }
+    .about-hero__title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--cream);
+      margin: 1rem 0 1.5rem;
+    }
+    .about-hero__title em {
+      color: var(--gold);
+      font-style: italic;
+    }
+    .about-hero__sub {
+      font-family: var(--ff-body);
+      font-size: 1.05rem;
+      color: var(--cream-dim);
+      line-height: 1.8;
+      max-width: 640px;
+    }
+
+    .about-why {
+      padding: 5rem 0;
+      background: var(--black-soft);
+      border-top: 1px solid var(--border);
+    }
+    .about-why__title,
+    .about-how__title,
+    .about-team__title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 1.2rem;
+    }
+    .about-why__text,
+    .about-how__text {
+      font-family: var(--ff-body);
+      font-size: 1rem;
+      color: var(--cream-dim);
+      line-height: 1.8;
+      max-width: 640px;
+      margin-bottom: 1rem;
+    }
+
+    .about-how {
+      padding: 5rem 0;
+      background: var(--black);
+      border-top: 1px solid var(--border);
+    }
+    .about-how__text strong {
+      color: var(--gold);
+    }
+
+    .about-team {
+      padding: 5rem 0;
+      background: var(--black-soft);
+      border-top: 1px solid var(--border);
+    }
+    .about-team__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .team-card {
+      background: var(--black-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .team-card__photo-placeholder {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--black-soft), rgba(212, 168, 83, 0.15));
+      border: 2px solid var(--border);
+      margin: 0 auto 1.2rem;
+    }
+    .team-card__name {
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.2rem;
+    }
+    .team-card__role {
+      font-family: var(--ff-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .team-card__bio {
+      font-family: var(--ff-body);
+      font-size: 0.9rem;
+      color: var(--cream-dim);
+      line-height: 1.6;
+    }
+
+    .about-cta {
+      padding: 5rem 0;
+      background: var(--black);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .about-cta__title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+    }
+  </style>
+
+  <script>
+    import '../scripts/main.js';
+  </script>
+</BaseLayout>

@@ -7,6 +7,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.1",
     "@sanity/client": "^7.20.0",
     "@sanity/image-url": "^2.0.3",
     "astro": "^5.0.0"

@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/hub.css';
+---
+<BaseLayout
+  title="Privacy Policy — The Web Foundry"
+  description="Privacy policy for The Web Foundry website. We respect your privacy and collect minimal data."
+>
+  <Fragment slot="head">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  </Fragment>
+
+  <nav class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="/" class="nav__logo logo-b">
+        <span class="logo-b__name">The Web Foundry</span>
+        <span class="logo-b__locale">Cincinnati</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="/#mission" class="nav__link">Mission</a></li>
+        <li><a href="/#showcase" class="nav__link">Work</a></li>
+        <li><a href="/#contact" class="nav__cta">Get in Touch</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <section class="privacy">
+      <div class="container">
+        <div class="privacy__inner">
+          <h1 class="privacy__title">Privacy Policy</h1>
+          <p class="privacy__updated">Last updated: March 2026</p>
+
+          <div class="privacy__body">
+            <h2>Overview</h2>
+            <p>The Web Foundry ("we", "us", "our") operates the website at cincinnatiwebfoundry.com. We respect your privacy and are committed to being transparent about our data practices.</p>
+
+            <h2>What We Collect</h2>
+            <p>This is a static website. We do not use cookies, tracking pixels, or analytics scripts. We do not collect personal information through this website unless you voluntarily contact us via email.</p>
+
+            <h2>Contact Information</h2>
+            <p>If you contact us by email, we retain your message and email address solely for the purpose of responding to your inquiry. We do not share your contact information with third parties.</p>
+
+            <h2>Third-Party Services</h2>
+            <p>This site uses the following third-party services:</p>
+            <ul>
+              <li><strong>Google Fonts</strong> — for web typography. Google may collect usage data per their privacy policy.</li>
+              <li><strong>Sanity.io</strong> — for content management. Content is fetched at build time; no visitor data is sent to Sanity.</li>
+              <li><strong>Unsplash</strong> — for stock photography on showcase pages. Images are loaded directly from Unsplash's CDN.</li>
+            </ul>
+
+            <h2>Showcase Sites</h2>
+            <p>The showcase pages on this website (bakery, plumber, salon) are fictional demonstrations created to illustrate our web design capabilities. They are not real businesses and do not collect any data.</p>
+
+            <h2>Hosting</h2>
+            <p>This site is hosted on a virtual private server managed by us. Standard server logs (IP address, browser type, pages requested) may be collected by the hosting infrastructure for security and operational purposes. These logs are not used for tracking or marketing.</p>
+
+            <h2>Children's Privacy</h2>
+            <p>This website is not directed at children under 13. We do not knowingly collect information from children.</p>
+
+            <h2>Changes</h2>
+            <p>We may update this policy from time to time. Changes will be reflected on this page with an updated date.</p>
+
+            <h2>Contact</h2>
+            <p>Questions about this policy? Reach out at <a href="mailto:hello@dbdesign.dev">hello@dbdesign.dev</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__logo logo-a">
+        <span class="logo-a__primary">The Web</span>
+        <span class="logo-a__secondary">Foundry</span>
+      </div>
+      <p class="footer__tagline">AI Vibe Coding for the people.</p>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy Policy</a>
+      </nav>
+      <p class="footer__copy">© 2026 The Web Foundry — Cincinnati. Built with ❤️ and AI.</p>
+    </div>
+  </footer>
+
+  <style is:global>
+    .privacy {
+      padding: 8rem 0 5rem;
+      background: var(--black);
+    }
+    .privacy__title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+    .privacy__updated {
+      font-family: var(--ff-body);
+      font-size: 0.8rem;
+      color: var(--cream-dim);
+      margin-bottom: 3rem;
+    }
+    .privacy__body {
+      max-width: 680px;
+    }
+    .privacy__body h2 {
+      font-family: var(--ff-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin: 2rem 0 0.6rem;
+    }
+    .privacy__body h2:first-child {
+      margin-top: 0;
+    }
+    .privacy__body p {
+      font-family: var(--ff-body);
+      font-size: 0.95rem;
+      color: var(--cream-dim);
+      line-height: 1.8;
+      margin-bottom: 0.8rem;
+    }
+    .privacy__body ul {
+      list-style: disc;
+      padding-left: 1.5rem;
+      margin-bottom: 0.8rem;
+    }
+    .privacy__body li {
+      font-family: var(--ff-body);
+      font-size: 0.95rem;
+      color: var(--cream-dim);
+      line-height: 1.8;
+      margin-bottom: 0.3rem;
+    }
+    .privacy__body a {
+      color: var(--gold);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .privacy__body a:hover {
+      color: var(--cream);
+    }
+  </style>
+
+  <script>
+    import '../scripts/main.js';
+  </script>
+</BaseLayout>

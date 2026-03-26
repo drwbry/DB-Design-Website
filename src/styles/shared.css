@@ -1,5 +1,5 @@
 /* ============================================================
-   shared.css — DB Design shared reset + utilities
+   shared.css — The Web Foundry shared reset + utilities
    ============================================================ */
 
 *, *::before, *::after {
@@ -120,7 +120,7 @@ button {
 }
 
 /* ============================================================
-   DB Design Badge — "Built with DB Design" ribbon
+   The Web Foundry Badge — "Built with The Web Foundry" ribbon
    ============================================================ */
 
 .db-badge {
@@ -144,6 +144,29 @@ button {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+/* ============================================================
+   Skip Link (accessibility)
+   ============================================================ */
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 10000;
+  padding: 0.6rem 1.2rem;
+  background: #D4A853;
+  color: #0A0A0A;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 0 0 6px 6px;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 0;
 }
 
 @media (max-width: 768px) {
