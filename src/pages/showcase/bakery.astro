@@ -422,6 +422,30 @@ const categories: { name: string; items: { name: string; description?: string; p
       .about-inner { grid-template-columns: 1fr; }
       .hours-inner { grid-template-columns: 1fr; }
     }
+
+    /* ── Contact ── */
+    .contact-section { padding: 7rem 2rem; background: var(--cream); }
+    .contact-inner { max-width: 640px; margin: 0 auto; }
+    .contact-title {
+      font-family: var(--ff-display); font-style: italic;
+      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700;
+      color: var(--cocoa); margin-bottom: 0.6rem;
+    }
+    .contact-sub { font-size: 0.97rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 2.5rem; }
+    .contact-form .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
+    .contact-form label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-mid); }
+    .contact-form input, .contact-form textarea {
+      background: var(--cream-card); border: 1.5px solid var(--border); border-radius: 8px;
+      color: var(--text); font-family: var(--ff-body); font-size: 0.95rem;
+      padding: 0.8rem 1rem; width: 100%; transition: border-color 0.2s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--terra); }
+    .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--text-light); }
+    textarea { resize: vertical; min-height: 110px; }
+    .contact-submit { margin-top: 0.5rem; }
+    .contact-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .bakery-form-error { color: #c0392b; font-size: 0.82rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: rgba(192,57,43,0.06); border: 1px solid rgba(192,57,43,0.2); border-radius: 6px; }
+    .bakery-form-success { color: var(--sage); font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem; padding: 0.75rem 1rem; background: var(--sage-light); border: 1px solid rgba(122,158,130,0.3); border-radius: 6px; }
   </style>
 
   <!-- NAV -->
@@ -432,6 +456,7 @@ const categories: { name: string; items: { name: string; description?: string; p
         <li><a href="#menu" class="nav__link">Menu</a></li>
         <li><a href="#about" class="nav__link">Our Story</a></li>
         <li><a href="#hours" class="nav__link">Hours</a></li>
+        <li><a href="#contact" class="nav__link">Contact</a></li>
         <li><a href="#hours" class="nav__order">Order Now</a></li>
       </ul>
     </div>
@@ -614,6 +639,35 @@ const categories: { name: string; items: { name: string; description?: string; p
     </div>
   </section>
 
+  <!-- ── CONTACT ── -->
+  <section class="contact-section" id="contact">
+    <div class="contact-inner">
+      <div class="contact-header reveal">
+        <span class="section-tag">Say Hello</span>
+        <h2 class="contact-title">Start the conversation</h2>
+        <p class="contact-sub">Have a question, a catering inquiry, or just want to say hi? We'd love to hear from you.</p>
+      </div>
+      <form id="bakery-contact-form" class="contact-form reveal reveal-delay-1" novalidate>
+        <input type="checkbox" name="botcheck" style="display:none">
+        <div class="form-group">
+          <label for="b-name">Your Name *</label>
+          <input type="text" id="b-name" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="b-email">Email Address *</label>
+          <input type="email" id="b-email" name="email" required placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label for="b-message">Message</label>
+          <textarea id="b-message" name="message" rows="5" placeholder="How can we help?"></textarea>
+        </div>
+        <div class="bakery-form-error" id="bakery-form-error" hidden></div>
+        <div class="bakery-form-success" id="bakery-form-success" hidden>Thank you! We'll be in touch soon.</div>
+        <button type="submit" class="btn-primary contact-submit" id="bakery-submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
   <script is:inline>
     // Nav scroll
     const nav = document.querySelector('.bakery-nav');
@@ -676,6 +730,36 @@ const categories: { name: string; items: { name: string; description?: string; p
         activeTab.classList.add('tab--active');
         activeTab.setAttribute('aria-selected', 'true');
       }
+    })();
+
+    // ── Contact Form ──
+    (function() {
+      const form = document.getElementById('bakery-contact-form');
+      const btn = document.getElementById('bakery-submit');
+      const errorEl = document.getElementById('bakery-form-error');
+      const successEl = document.getElementById('bakery-form-success');
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+        btn.disabled = true; btn.textContent = 'Sending…';
+        errorEl.hidden = true; successEl.hidden = true;
+        const payload = Object.fromEntries(new FormData(form));
+        payload.secret = 'WORKER_SECRET_VALUE';
+        payload.subject = 'New Inquiry — Sweet Crumb Bakery';
+        try {
+          const res = await fetch('WORKER_URL', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json();
+          if (data.success) { form.reset(); successEl.hidden = false; btn.textContent = 'Sent!'; }
+          else throw new Error(data.message || 'Something went wrong.');
+        } catch (err) {
+          errorEl.textContent = err.message; errorEl.hidden = false;
+          btn.disabled = false; btn.textContent = 'Send Message';
+        }
+      });
     })();
   </script>
 

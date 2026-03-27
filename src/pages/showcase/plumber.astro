@@ -150,6 +150,24 @@ const hours = (plumberData?.hours && plumberData.hours.length > 0)
       .stats-bar-inner{grid-template-columns:repeat(2,1fr)}
       .services-grid{grid-template-columns:1fr}
     }
+
+    /* ── Contact ── */
+    .contact-section { padding: 7rem 2rem; background: var(--navy); }
+    .contact-inner { max-width: 640px; margin: 0 auto; }
+    .contact-form .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
+    .contact-form label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .contact-form input, .contact-form textarea {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 4px;
+      color: var(--white); font-family: var(--ff-body); font-size: 0.95rem;
+      padding: 0.85rem 1rem; width: 100%; transition: border-color 0.2s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--orange); }
+    .contact-form input::placeholder, .contact-form textarea::placeholder { color: rgba(255,255,255,0.25); }
+    textarea { resize: vertical; min-height: 110px; }
+    .contact-submit { width: 100%; justify-content: center; margin-top: 0.5rem; }
+    .contact-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .plumber-form-error { color: #FF6B6B; font-size: 0.82rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.2); border-radius: 4px; }
+    .plumber-form-success { color: var(--orange); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 1rem; padding: 0.75rem 1rem; background: rgba(255,107,43,0.08); border: 1px solid rgba(255,107,43,0.25); border-radius: 4px; }
   </style>
 
   <nav class="nav">
@@ -244,4 +262,66 @@ const hours = (plumberData?.hours && plumberData.hours.length > 0)
       <a href="tel:+15551234567" class="btn-emergency">📞 (555) 123-4567</a>
     </div>
   </section>
+
+  <!-- ── CONTACT FORM ── -->
+  <section class="contact-section" id="contact-form">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Get In Touch</span>
+        <h2 class="section-title">GET A QUOTE</h2>
+        <p class="section-sub">Not an emergency? Send a message and we'll get back to you within one business day.</p>
+      </div>
+      <div class="contact-inner reveal reveal-delay-1">
+        <form id="plumber-contact-form" class="contact-form" novalidate>
+          <input type="checkbox" name="botcheck" style="display:none">
+          <div class="form-group">
+            <label for="p-name">Your Name *</label>
+            <input type="text" id="p-name" name="name" required placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label for="p-email">Email Address *</label>
+            <input type="email" id="p-email" name="email" required placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label for="p-message">Describe the Issue</label>
+            <textarea id="p-message" name="message" rows="5" placeholder="Tell us what's going on..."></textarea>
+          </div>
+          <div class="plumber-form-error" id="plumber-form-error" hidden></div>
+          <div class="plumber-form-success" id="plumber-form-success" hidden>Got it — we'll be in touch soon!</div>
+          <button type="submit" class="btn-call contact-submit" id="plumber-submit">Send Message ➜</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+<script is:inline>
+(function() {
+  const form = document.getElementById('plumber-contact-form');
+  const btn = document.getElementById('plumber-submit');
+  const errorEl = document.getElementById('plumber-form-error');
+  const successEl = document.getElementById('plumber-form-success');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    btn.disabled = true; btn.textContent = 'Sending…';
+    errorEl.hidden = true; successEl.hidden = true;
+    const payload = Object.fromEntries(new FormData(form));
+    payload.secret = 'WORKER_SECRET_VALUE';
+    payload.subject = 'New Inquiry — Peak Flow Plumbing';
+    try {
+      const res = await fetch('WORKER_URL', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.success) { form.reset(); successEl.hidden = false; btn.textContent = 'Sent!'; }
+      else throw new Error(data.message || 'Something went wrong.');
+    } catch (err) {
+      errorEl.textContent = err.message; errorEl.hidden = false;
+      btn.disabled = false; btn.textContent = 'Send Message ➜';
+    }
+  });
+})();
+</script>
 </ShowcaseLayout>

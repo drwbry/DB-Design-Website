@@ -21,7 +21,7 @@ import '../styles/hub.css';
       <ul class="nav__links">
         <li><a href="#mission" class="nav__link">Mission</a></li>
         <li><a href="#showcase" class="nav__link">Work</a></li>
-        <li><a href="#contact" class="nav__cta">Get in Touch</a></li>
+        <li><button class="nav__cta js-open-modal">Get in Touch</button></li>
         <li><a href="/about" class="nav__link">About</a></li>
       </ul>
       <button class="nav__hamburger" id="hamburger" aria-label="Menu">
@@ -58,7 +58,7 @@ import '../styles/hub.css';
 
       <div class="hero__actions reveal reveal-delay-4">
         <a href="#showcase" class="btn btn--primary">See the Work</a>
-        <a href="#contact" class="btn btn--ghost">Let's Talk</a>
+        <button class="btn btn--ghost js-open-modal">Let's Talk</button>
       </div>
 
       <div class="hero__scroll-hint reveal reveal-delay-6" aria-hidden="true">
@@ -257,10 +257,10 @@ import '../styles/hub.css';
         <span class="section-tag section-tag--light">Let's Talk</span>
         <h2 class="cta-section__title">Ready for a website<br/>that works as hard as you do?</h2>
         <p class="cta-section__sub">Reach out — we'd love to learn about your business and show you what's possible.</p>
-        <a href="mailto:hello@dbdesign.dev" class="btn btn--cta">
-          hello@dbdesign.dev
+        <button class="btn btn--cta js-open-modal">
+          Let's get started
           <span class="btn-arrow">→</span>
-        </a>
+        </button>
       </div>
     </div>
   </section>
@@ -287,4 +287,88 @@ import '../styles/hub.css';
   <script>
     import '../scripts/main.js';
   </script>
+
+  <!-- ── Contact Modal ── -->
+  <div class="modal-overlay" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-card">
+      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+
+      <div class="modal-body" id="modal-body">
+        <span class="section-tag">Let's Talk</span>
+        <h2 class="modal-title" id="modal-title">Tell us about<br/><em>your business</em></h2>
+
+        <form id="contact-form" novalidate>
+          <input type="checkbox" name="botcheck" style="display:none">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-name">Your Name *</label>
+              <input type="text" id="f-name" name="name" required autocomplete="name" placeholder="Maria Chen">
+            </div>
+            <div class="form-group">
+              <label for="f-email">Email Address *</label>
+              <input type="email" id="f-email" name="email" required autocomplete="email" placeholder="maria@example.com">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="f-phone">Phone (optional)</label>
+            <input type="tel" id="f-phone" name="phone" autocomplete="tel" placeholder="(513) 555-0100">
+          </div>
+
+          <fieldset class="form-fieldset">
+            <legend>Who is this for?</legend>
+            <div class="form-radios">
+              <label class="radio-label">
+                <input type="radio" name="who_for" value="My business" checked>
+                <span>My business</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="who_for" value="Someone else's business">
+                <span>Someone else's business</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-fieldset">
+            <legend>Do you have an existing website?</legend>
+            <div class="form-radios">
+              <label class="radio-label">
+                <input type="radio" name="has_website" value="yes" id="has-website-yes">
+                <span>Yes</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="has_website" value="no" id="has-website-no" checked>
+                <span>No</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="form-group" id="url-field" hidden>
+            <label for="f-url">Website URL</label>
+            <input type="url" id="f-url" name="website_url" placeholder="https://yourbusiness.com">
+          </div>
+
+          <div class="form-group">
+            <label for="f-message">Anything else you'd like us to know?</label>
+            <textarea id="f-message" name="message" rows="4" placeholder="Tell us about your business, goals, timeline..."></textarea>
+          </div>
+
+          <div class="form-error" id="form-error" hidden></div>
+
+          <button type="submit" class="btn btn--primary form-submit" id="form-submit-btn">
+            Send Message <span class="btn-arrow">→</span>
+          </button>
+        </form>
+      </div>
+
+      <div class="modal-success" id="modal-success" hidden>
+        <div class="modal-success__icon">✓</div>
+        <h3 class="modal-success__title">Message received!</h3>
+        <p class="modal-success__sub">We'll be in touch within 24 hours. Check your email for a confirmation.</p>
+        <button class="btn btn--ghost" id="modal-success-close">Close</button>
+      </div>
+    </div>
+  </div>
+
 </BaseLayout>

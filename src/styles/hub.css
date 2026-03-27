@@ -998,3 +998,114 @@ body {
   font-size: 0.75rem;
   color: rgba(240, 235, 224, 0.2);
 }
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+/* Overlay */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s var(--ease-out-quart);
+}
+.modal-overlay.is-open { opacity: 1; pointer-events: auto; }
+.modal-overlay[hidden] { display: none; }
+
+/* Card */
+.modal-card {
+  background: var(--black-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 10px;
+  padding: 3rem;
+  width: 100%; max-width: 620px; max-height: 90vh;
+  overflow-y: auto; position: relative;
+  transform: scale(0.94) translateY(16px);
+  transition: transform 0.4s var(--ease-out-expo);
+}
+.modal-overlay.is-open .modal-card { transform: scale(1) translateY(0); }
+
+/* Close button */
+.modal-close {
+  position: absolute; top: 1.2rem; right: 1.2rem;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--cream-muted); font-size: 1rem; border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+}
+.modal-close:hover { color: var(--cream); background: var(--border); }
+
+/* Title */
+.modal-title {
+  font-family: var(--ff-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700; line-height: 1.15; color: var(--cream);
+  margin-bottom: 2rem;
+}
+.modal-title em { font-style: italic; color: var(--gold); }
+
+/* Form layout */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
+.form-group label, .form-fieldset legend {
+  font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--cream-muted);
+}
+.form-group input, .form-group textarea {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  border-radius: 4px; color: var(--cream);
+  font-family: var(--ff-body); font-size: 0.95rem;
+  padding: 0.75rem 1rem; width: 100%;
+  transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--gold); }
+.form-group input::placeholder, .form-group textarea::placeholder { color: var(--cream-muted); }
+textarea { resize: vertical; min-height: 100px; }
+
+/* Fieldsets */
+.form-fieldset { border: none; margin-bottom: 1.2rem; }
+.form-fieldset legend { margin-bottom: 0.6rem; display: block; }
+.form-radios { display: flex; gap: 1.5rem; }
+.radio-label { display: flex; align-items: center; gap: 0.45rem; font-size: 0.9rem; color: var(--cream-dim); cursor: pointer; }
+.radio-label input[type="radio"] { accent-color: var(--gold); width: 16px; height: 16px; cursor: pointer; }
+
+/* Error / submit */
+.form-error {
+  color: #FF6B6B; font-size: 0.82rem; margin-bottom: 1rem;
+  padding: 0.6rem 1rem;
+  background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.25); border-radius: 4px;
+}
+.form-submit { width: 100%; justify-content: center; margin-top: 0.5rem; }
+.form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* Success state */
+.modal-success {
+  text-align: center; padding: 3rem 1rem;
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+}
+.modal-success__icon {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(212,168,83,0.15); border: 1px solid var(--border-gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; color: var(--gold);
+}
+.modal-success__title { font-family: var(--ff-display); font-size: 1.8rem; color: var(--cream); }
+.modal-success__sub { font-size: 0.95rem; color: var(--cream-dim); line-height: 1.7; max-width: 380px; }
+
+/* nav__cta as button — reset button defaults, keep existing .nav__cta visual styles */
+button.nav__cta {
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .modal-card { padding: 2rem 1.5rem; }
+  .form-row { grid-template-columns: 1fr; }
+  .form-radios { flex-direction: column; gap: 0.75rem; }
+}

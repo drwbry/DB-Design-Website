@@ -136,6 +136,23 @@ const galleryImages = salonData?.gallery ?? [];
       .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
       .gallery-item:nth-child(1){grid-column:1/3;grid-row:auto}
     }
+
+    /* ── Contact Form ── */
+    .contact-form { text-align: left; margin-top: 2.5rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .contact-form .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
+    .contact-form label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blush-muted); }
+    .contact-form input, .contact-form textarea {
+      background: transparent; border: 1px solid var(--border-gold);
+      color: var(--blush); font-family: var(--ff-body); font-size: 0.95rem; font-weight: 300;
+      padding: 0.8rem 1rem; width: 100%; transition: border-color 0.25s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--champagne); }
+    .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--blush-muted); }
+    textarea { resize: vertical; min-height: 110px; }
+    .contact-submit { width: 100%; justify-content: center; margin-top: 0.5rem; letter-spacing: 0.12em; }
+    .contact-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .salon-form-error { color: #FF8A8A; font-size: 0.82rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: rgba(255,138,138,0.06); border: 1px solid rgba(255,138,138,0.2); }
+    .salon-form-success { color: var(--champagne); font-size: 0.88rem; font-weight: 600; letter-spacing: 0.08em; margin-bottom: 1rem; padding: 0.75rem 1rem; background: var(--champagne-dim); border: 1px solid var(--border-gold); text-align: center; }
   </style>
 
   <!-- NAV -->
@@ -146,6 +163,7 @@ const galleryImages = salonData?.gallery ?? [];
         <li><a href="#services" class="nav__link">Services</a></li>
         <li><a href="#gallery" class="nav__link">Gallery</a></li>
         <li><a href="#book" class="nav__link">About</a></li>
+        <li><a href="#book" class="nav__link">Contact</a></li>
         <li><a href="#book" class="nav__book">Book Now</a></li>
       </ul>
     </div>
@@ -260,11 +278,25 @@ const galleryImages = salonData?.gallery ?? [];
       <span class="section-tag">Book Your Visit</span>
       <h2 class="book-title">You deserve<br/><em>this.</em></h2>
       <p class="book-sub">Every appointment opens with a complimentary consultation and a glass of something lovely. Reserve your spot today.</p>
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-        <a href="#" class="btn-primary">Book Online</a>
-        <a href="tel:+15559876543" class="btn-ghost">📞 Call Studio</a>
-      </div>
-      <p style="margin-top:2rem;font-size:.8rem;color:var(--blush-muted)">456 Willow Lane · Open Tue–Sat, 9am–7pm</p>
+      <form id="salon-contact-form" class="contact-form" novalidate>
+        <input type="checkbox" name="botcheck" style="display:none">
+        <div class="form-group">
+          <label for="s-name">Your Name *</label>
+          <input type="text" id="s-name" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="s-email">Email Address *</label>
+          <input type="email" id="s-email" name="email" required placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label for="s-message">Your Inquiry</label>
+          <textarea id="s-message" name="message" rows="5" placeholder="Tell us what you're looking for..."></textarea>
+        </div>
+        <div class="salon-form-error" id="salon-form-error" hidden></div>
+        <div class="salon-form-success" id="salon-form-success" hidden>Thank you — we'll be in touch shortly.</div>
+        <button type="submit" class="btn-primary contact-submit" id="salon-submit">Send Inquiry</button>
+      </form>
+      <p style="margin-top:2rem;font-size:.8rem;color:var(--blush-muted);text-align:center">456 Willow Lane · Open Tue–Sat, 9am–7pm</p>
     </div>
   </section>
 
@@ -273,6 +305,36 @@ const galleryImages = salonData?.gallery ?? [];
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 40);
     }, { passive: true });
+
+    // ── Contact Form ──
+    (function() {
+      const form = document.getElementById('salon-contact-form');
+      const btn = document.getElementById('salon-submit');
+      const errorEl = document.getElementById('salon-form-error');
+      const successEl = document.getElementById('salon-form-success');
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+        btn.disabled = true; btn.textContent = 'Sending…';
+        errorEl.hidden = true; successEl.hidden = true;
+        const payload = Object.fromEntries(new FormData(form));
+        payload.secret = 'WORKER_SECRET_VALUE';
+        payload.subject = 'New Inquiry — Lumière Salon & Spa';
+        try {
+          const res = await fetch('WORKER_URL', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json();
+          if (data.success) { form.reset(); successEl.hidden = false; btn.textContent = 'Sent'; }
+          else throw new Error(data.message || 'Something went wrong.');
+        } catch (err) {
+          errorEl.textContent = err.message; errorEl.hidden = false;
+          btn.disabled = false; btn.textContent = 'Send Inquiry';
+        }
+      });
+    })();
   </script>
 
 </ShowcaseLayout>
