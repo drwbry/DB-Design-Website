@@ -318,10 +318,10 @@ const galleryImages = salonData?.gallery ?? [];
         btn.disabled = true; btn.textContent = 'Sending…';
         errorEl.hidden = true; successEl.hidden = true;
         const payload = Object.fromEntries(new FormData(form));
-        payload.secret = 'WORKER_SECRET_VALUE';
+        payload.secret = '35ab29bc42c1c3287683c70880a92b5ee76efd811c74ba9c';
         payload.subject = 'New Inquiry — Lumière Salon & Spa';
         try {
-          const res = await fetch('WORKER_URL', {
+          const res = await fetch('https://web-foundry-form-relay.cincinnati-web-foundry.workers.dev', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
             body: JSON.stringify(payload),
