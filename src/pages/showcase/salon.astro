@@ -247,7 +247,7 @@ const galleryImages = salonData?.gallery ?? [];
     <div class="gallery-inner">
       <div class="section-header reveal" style="margin-bottom:2.5rem">
         <span class="section-tag">Gallery</span>
-        <h2 class="section-title">The <em>work</em></h2>
+        <h2 class="section-title">Your <em>Transformation</em></h2>
       </div>
       <div class="gallery-grid">
         {galleryImages.length > 0 ? galleryImages.map((item, i) => (
@@ -261,11 +261,11 @@ const galleryImages = salonData?.gallery ?? [];
           </div>
         )) : (
           <>
-            <div class="gallery-item reveal"><div class="gallery-bg gallery-bg--1">💇‍♀️</div></div>
-            <div class="gallery-item reveal reveal-delay-1"><div class="gallery-bg gallery-bg--2">🌸</div></div>
-            <div class="gallery-item reveal reveal-delay-2"><div class="gallery-bg gallery-bg--3">✨</div></div>
-            <div class="gallery-item reveal reveal-delay-3"><div class="gallery-bg gallery-bg--4">🧖‍♀️</div></div>
-            <div class="gallery-item reveal reveal-delay-4"><div class="gallery-bg gallery-bg--5">💅</div></div>
+            <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&h=600&fit=crop&auto=format" alt="Hair styling" class="gallery-photo" loading="lazy"/></div>
+            <div class="gallery-item reveal reveal-delay-1"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&h=300&fit=crop&auto=format" alt="Nail care" class="gallery-photo" loading="lazy"/></div>
+            <div class="gallery-item reveal reveal-delay-2"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400&h=300&fit=crop&auto=format" alt="Facial treatment" class="gallery-photo" loading="lazy"/></div>
+            <div class="gallery-item reveal reveal-delay-3"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&h=300&fit=crop&auto=format" alt="Salon interior" class="gallery-photo" loading="lazy"/></div>
+            <div class="gallery-item reveal reveal-delay-4"><img src="https://images.unsplash.com/photo-1582095133179-bfd08e2fb6b8?w=400&h=300&fit=crop&auto=format" alt="Styling tools" class="gallery-photo" loading="lazy"/></div>
           </>
         )}
       </div>

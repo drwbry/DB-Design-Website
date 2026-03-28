@@ -43,24 +43,24 @@ const aboutData = await sanityClient.fetch<AboutPageData | null>(
 );
 
 const heroHeadline = aboutData?.heroHeadline;
-const heroSubtext = aboutData?.heroSubtext ?? "The Web Foundry is a volunteer initiative based in Cincinnati. We use AI-powered development to completely rebuild outdated local business websites — for free. No strings attached, no ongoing fees. Just a better web for the businesses that make our neighborhoods special.";
+const heroSubtext = aboutData?.heroSubtext ?? "The Web Foundry is a community service initiative based in Cincinnati. We use AI-powered development to completely rebuild outdated local business websites — for free. No strings attached. Just a better web for the businesses that make our neighborhoods special.";
 const whyTitle = aboutData?.whyTitle ?? "Why we do this";
 const whyBody = aboutData?.whyBody ?? [
   "Small businesses are the backbone of every community. They sponsor little league teams, know your name when you walk in, and make neighborhoods feel like home. But too often, their online presence doesn't reflect who they are — it's a website from 2009 that barely works on a phone.",
-  "Meanwhile, technology has moved fast. AI tools now let us build in hours what used to take weeks. We think that speed should benefit the people who need it most — not just the ones who can afford a $15,000 redesign.",
+  "Meanwhile, technology has moved fast. AI tools now let us build in hours what used to take weeks. We think that speed should benefit the people who need it most — not just the ones who can afford a $10,000 redesign.",
 ];
 const howTitle = aboutData?.howTitle ?? "How it works";
 const howBody = aboutData?.howBody;
 const teamTitle = aboutData?.teamTitle ?? "The Team";
 const teamMembers = aboutData?.teamMembers ?? [
-  { name: "Dreux Bontempo", title: "Co-Founder", photo: undefined, bio: "Cincinnati-based technologist passionate about putting modern tools to work for the community." },
+  { name: "Dreux Brys", title: "Co-Founder", photo: undefined, bio: "Cincinnati-based technologist passionate about putting modern tools to work for the community." },
   { name: "Partner Name", title: "Co-Founder", photo: undefined, bio: "Bio coming soon." },
 ];
 const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves better?";
 ---
 <BaseLayout
   title="About — The Web Foundry"
-  description="The Web Foundry is a volunteer initiative using AI vibe coding to rebuild outdated local business websites for free. Meet the team behind the mission."
+  description="The Web Foundry is a community initiative using AI vibe coding to rebuild outdated local business websites for free. Meet the team behind the mission."
 >
   <Fragment slot="head">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
@@ -115,7 +115,7 @@ const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves bet
         <div class="about-how__inner reveal">
           <h2 class="about-how__title">{howTitle}</h2>
           <p class="about-how__text">
-            {howBody ?? <>We call it <strong>AI vibe coding</strong> — using modern AI development tools to rapidly prototype, iterate, and ship polished websites. We volunteer our time, pair with business owners to capture their vision, and deliver a site that actually represents what they do. Every site is custom. Every site is free.</>}
+            {howBody ?? <>We call it <strong>AI vibe coding</strong> — using modern AI development tools to rapidly prototype, iterate, and ship polished websites. We donate our time, pair with business owners to capture their vision, and deliver a site that actually represents what they do. Every site is custom. Every site is free.</>}
           </p>
         </div>
       </div>
