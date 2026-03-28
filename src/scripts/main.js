@@ -99,6 +99,10 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = false;
         submitBtn.innerHTML = 'Send Message <span class="btn-arrow">→</span>';
       }
+      if (form) form.reset();
+      if (urlField) urlField.hidden = true;
+      if (urlInput) urlInput.value = '';
+      if (formError) formError.hidden = true;
     }, { once: true });
   }
 
