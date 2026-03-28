@@ -1,5 +1,5 @@
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     // CORS preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, {
@@ -164,8 +164,8 @@ export default {
 </body>
 </html>`;
 
-      // Fire-and-forget — don't fail the request if confirmation bounces
-      fetch('https://api.resend.com/emails', {
+      // Keep worker alive until confirmation sends, but don't block the response
+      ctx.waitUntil(fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${env.RESEND_API_KEY}`,
@@ -177,7 +177,7 @@ export default {
           subject: 'We received your message — The Web Foundry',
           html: confirmationHtml,
         }),
-      });
+      }));
     }
 
     return json({ success: true });
