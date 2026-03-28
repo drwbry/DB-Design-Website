@@ -90,14 +90,13 @@ const galleryImages = salonData?.gallery ?? [];
     .section-header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:4rem}
 
     .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;border:1.5px solid var(--border)}
-    .service-item{padding:2.5rem;border:none;background:var(--espresso-soft);border-right:1.5px solid var(--border);border-bottom:1.5px solid var(--border);transition:background .3s}
+    .service-item{padding:3rem;border:none;background:var(--espresso-soft);border-right:1.5px solid var(--border);border-bottom:1.5px solid var(--border);transition:background .3s}
     .service-item:hover{background:var(--espresso-card)}
     .service-item:nth-child(3n){border-right:none}
     .service-item:nth-last-child(-n+3){border-bottom:none}
-    .service-item__num{font-family:var(--ff-display);font-size:.9rem;color:var(--champagne);margin-bottom:1rem;opacity:.5}
-    .service-item__name{font-family:var(--ff-display);font-size:1.3rem;font-style:italic;color:var(--blush);margin-bottom:.6rem}
-    .service-item__desc{font-size:.85rem;color:var(--blush-muted);line-height:1.7;margin-bottom:1rem;font-weight:300}
-    .service-item__price{font-size:.8rem;font-weight:600;letter-spacing:.08em;color:var(--champagne)}
+    .service-item__name{font-family:var(--ff-display);font-size:1.55rem;font-style:italic;color:var(--blush);margin-bottom:.75rem}
+    .service-item__desc{font-size:.92rem;color:var(--blush-muted);line-height:1.75;margin-bottom:1.2rem;font-weight:300}
+    .service-item__price{font-size:.88rem;font-weight:600;letter-spacing:.08em;color:var(--champagne)}
 
     /* GALLERY */
     .gallery-section{padding:8rem 2rem;background:var(--espresso)}
@@ -203,37 +202,32 @@ const galleryImages = salonData?.gallery ?? [];
       </div>
       <div class="services-grid">
         <div class="service-item reveal">
-          <div class="service-item__num">01</div>
+
           <div class="service-item__name">Signature Cut &amp; Style</div>
           <p class="service-item__desc">A consultation-led cut with blow-dry finish. Includes deep conditioning treatment.</p>
           <div class="service-item__price">From $85</div>
         </div>
         <div class="service-item reveal reveal-delay-1">
-          <div class="service-item__num">02</div>
           <div class="service-item__name">Color &amp; Highlights</div>
           <p class="service-item__desc">Balayage, full color, or foil highlights tailored to your skin tone and lifestyle.</p>
           <div class="service-item__price">From $140</div>
         </div>
         <div class="service-item reveal reveal-delay-2">
-          <div class="service-item__num">03</div>
           <div class="service-item__name">Luxury Facial</div>
           <p class="service-item__desc">60-minute European facial with enzymatic peel, jade roller massage, and LED therapy.</p>
           <div class="service-item__price">From $110</div>
         </div>
         <div class="service-item reveal reveal-delay-1">
-          <div class="service-item__num">04</div>
           <div class="service-item__name">Hot Stone Massage</div>
           <p class="service-item__desc">Volcanic basalt stones melt muscle tension while aromatherapy eases the mind.</p>
           <div class="service-item__price">From $130</div>
         </div>
         <div class="service-item reveal reveal-delay-2">
-          <div class="service-item__num">05</div>
           <div class="service-item__name">Nail Artistry</div>
           <p class="service-item__desc">Gel manicure and pedicure with premium polish, cuticle care, and hand treatment.</p>
           <div class="service-item__price">From $60</div>
         </div>
         <div class="service-item reveal reveal-delay-3">
-          <div class="service-item__num">06</div>
           <div class="service-item__name">Bridal Package</div>
           <p class="service-item__desc">Full-day experience: hair, makeup, facial, and a complimentary champagne welcome.</p>
           <div class="service-item__price">From $480</div>
