@@ -151,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
     formError.hidden = true;
 
     const payload = Object.fromEntries(new FormData(form));
-    payload.secret = '35ab29bc42c1c3287683c70880a92b5ee76efd811c74ba9c';
     payload.subject = 'New Website Inquiry — The Web Foundry';
 
     try {

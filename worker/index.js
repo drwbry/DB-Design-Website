@@ -1,37 +1,70 @@
 export default {
   async fetch(request, env, ctx) {
-    // CORS preflight
+    // ── CORS: validate origin ──────────────────────────────────
+    const origin = request.headers.get('Origin') || '';
+    const allowed = (env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim());
+    const originAllowed = allowed.includes(origin);
+
     if (request.method === 'OPTIONS') {
       return new Response(null, {
-        headers: corsHeaders(),
+        headers: corsHeaders(originAllowed ? origin : ''),
       });
     }
 
-    if (request.method !== 'POST') {
-      return json({ success: false, message: 'Method not allowed' }, 405);
+    if (!originAllowed && origin !== '') {
+      return json({ success: false, message: 'Forbidden' }, 403, origin);
     }
 
-    // Parse body
+    if (request.method !== 'POST') {
+      return json({ success: false, message: 'Method not allowed' }, 405, origin);
+    }
+
+    // ── Parse body ─────────────────────────────────────────────
     let body;
     try {
       body = await request.json();
     } catch {
-      return json({ success: false, message: 'Invalid JSON' }, 400);
+      return json({ success: false, message: 'Invalid JSON' }, 400, origin);
     }
 
-    // Validate shared secret
-    if (body.secret !== env.WORKER_SECRET) {
-      return json({ success: false, message: 'Unauthorized' }, 401);
+    // ── Honeypot check ─────────────────────────────────────────
+    if (body.botcheck) {
+      return json({ success: true }, 200, origin);
     }
 
-    // Build internal notification email
+    // ── Turnstile verification ─────────────────────────────────
+    const turnstileToken = body['cf-turnstile-response'];
+    if (!turnstileToken) {
+      return json({ success: false, message: 'Verification required' }, 400, origin);
+    }
+
+    const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        secret: env.TURNSTILE_SECRET_KEY,
+        response: turnstileToken,
+        remoteip: request.headers.get('CF-Connecting-IP') || '',
+      }),
+    });
+    const verify = await verifyRes.json();
+    if (!verify.success) {
+      return json({ success: false, message: 'Verification failed' }, 403, origin);
+    }
+
+    // ── Legacy secret support (remove after all clients are updated) ──
+    if (body.secret && body.secret !== env.WORKER_SECRET) {
+      return json({ success: false, message: 'Unauthorized' }, 401, origin);
+    }
+
+    // ── Build internal notification email ──────────────────────
     const subject = body.subject || 'New Form Submission — The Web Foundry';
     const lines = Object.entries(body)
-      .filter(([k]) => !['secret', 'botcheck'].includes(k))
+      .filter(([k]) => !['secret', 'botcheck', 'cf-turnstile-response', 'subject'].includes(k))
       .map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;font-weight:600;vertical-align:top">${k}</td><td style="padding:4px 0">${v}</td></tr>`);
     const internalHtml = `<table style="font-family:sans-serif;font-size:14px;color:#333">${lines.join('')}</table>`;
 
-    // Send internal notification to Foundry inbox
+    // ── Send internal notification to Foundry inbox ────────────
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -50,10 +83,10 @@ export default {
     if (!res.ok) {
       const err = await res.text();
       console.error('Resend error:', err);
-      return json({ success: false, message: 'Email delivery failed' }, 500);
+      return json({ success: false, message: 'Email delivery failed' }, 500, origin);
     }
 
-    // Send confirmation email to submitter
+    // ── Send confirmation email to submitter ───────────────────
     if (body.email) {
       const firstName = (body.name || '').split(' ')[0] || 'there';
       const businessName = body.business_name || '';
@@ -164,7 +197,6 @@ export default {
 </body>
 </html>`;
 
-      // Keep worker alive until confirmation sends, but don't block the response
       ctx.waitUntil(fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
@@ -180,20 +212,20 @@ export default {
       }));
     }
 
-    return json({ success: true });
+    return json({ success: true }, 200, origin);
   },
 };
 
-function json(data, status = 200) {
+function json(data, status = 200, origin = '') {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+    headers: { 'Content-Type': 'application/json', ...corsHeaders(origin) },
   });
 }
 
-function corsHeaders() {
+function corsHeaders(origin) {
   return {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': origin || '',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };

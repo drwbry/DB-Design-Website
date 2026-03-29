@@ -1,7 +1,7 @@
-/* shared.js — DB Design shared utilities */
+/* shared.js — The Web Foundry shared utilities */
 
 // ── Scroll Reveal ──────────────────────────────────────────
-(function initScrollReveal() {
+function initScrollReveal() {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -15,7 +15,7 @@
   );
 
   document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-})();
+}
 
 // ── Counter Animation ──────────────────────────────────────
 function animateCounter(el, target, duration = 1800) {
@@ -57,7 +57,15 @@ function initCounters() {
   counters.forEach((c) => obs.observe(c));
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+// ── Initialize ─────────────────────────────────────────────
+// Astro bundles this as an ES module (deferred), so the DOM may
+// already be parsed by the time this runs. Handle both cases.
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    initScrollReveal();
+    initCounters();
+  });
+} else {
   initScrollReveal();
   initCounters();
-});
+}

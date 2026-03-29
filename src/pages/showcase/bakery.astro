@@ -663,6 +663,7 @@ const categories: { name: string; items: { name: string; description?: string; p
         </div>
         <div class="bakery-form-error" id="bakery-form-error" hidden></div>
         <div class="bakery-form-success" id="bakery-form-success" hidden>Thank you! We'll be in touch soon.</div>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAACxVhhG9sxrzihaS0x4AAAAAACxVhhG9sxrzihaS" data-theme="auto"></div>
         <button type="submit" class="btn-primary contact-submit" id="bakery-submit">Send Message</button>
       </form>
     </div>
@@ -744,7 +745,6 @@ const categories: { name: string; items: { name: string; description?: string; p
         btn.disabled = true; btn.textContent = 'Sending…';
         errorEl.hidden = true; successEl.hidden = true;
         const payload = Object.fromEntries(new FormData(form));
-        payload.secret = '35ab29bc42c1c3287683c70880a92b5ee76efd811c74ba9c';
         payload.subject = 'New Inquiry — Sweet Crumb Bakery';
         try {
           const res = await fetch('https://web-foundry-form-relay.cincinnati-web-foundry.workers.dev', {

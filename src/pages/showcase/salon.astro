@@ -288,6 +288,7 @@ const galleryImages = salonData?.gallery ?? [];
         </div>
         <div class="salon-form-error" id="salon-form-error" hidden></div>
         <div class="salon-form-success" id="salon-form-success" hidden>Thank you — we'll be in touch shortly.</div>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAACxVhhG9sxrzihaS0x4AAAAAACxVhhG9sxrzihaS" data-theme="auto"></div>
         <button type="submit" class="btn-primary contact-submit" id="salon-submit">Send Inquiry</button>
       </form>
       <p style="margin-top:2rem;font-size:.8rem;color:var(--blush-muted);text-align:center">456 Willow Lane · Open Tue–Sat, 9am–7pm</p>
@@ -312,7 +313,6 @@ const galleryImages = salonData?.gallery ?? [];
         btn.disabled = true; btn.textContent = 'Sending…';
         errorEl.hidden = true; successEl.hidden = true;
         const payload = Object.fromEntries(new FormData(form));
-        payload.secret = '35ab29bc42c1c3287683c70880a92b5ee76efd811c74ba9c';
         payload.subject = 'New Inquiry — Lumière Salon & Spa';
         try {
           const res = await fetch('https://web-foundry-form-relay.cincinnati-web-foundry.workers.dev', {

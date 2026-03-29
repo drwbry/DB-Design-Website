@@ -2,3 +2,6 @@ name = "web-foundry-form-relay"
 main = "index.js"
 compatibility_date = "2024-01-01"
 account_id = "4b67510725d20a66bec0794b2dad9122"
+
+[vars]
+ALLOWED_ORIGINS = "https://cincinnatiwebfoundry.com,http://localhost:4321"

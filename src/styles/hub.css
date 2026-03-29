@@ -825,51 +825,10 @@ body {
 }
 
 /* ============================================================
-   LOGO OPTIONS REVIEW PANEL (temporary — remove once logo is chosen)
+   LOGO STYLES
    ============================================================ */
-.logo-options {
-  background: #0d0d0d;
-  border-bottom: 1px solid rgba(212, 168, 83, 0.15);
-  padding: 2.5rem 0;
-}
 
-.logo-options__heading {
-  text-align: center;
-  font-family: var(--ff-body);
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(240, 235, 224, 0.35);
-  margin-bottom: 2rem;
-}
-
-.logo-options__grid {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4rem;
-  flex-wrap: wrap;
-}
-
-.logo-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-.logo-option__tag {
-  font-family: var(--ff-body);
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(212, 168, 83, 0.5);
-  border: 1px solid rgba(212, 168, 83, 0.2);
-  padding: 0.2rem 0.6rem;
-  border-radius: 2px;
-}
-
-/* Option A: Split "The Web" / "FOUNDRY" — mirrors original DB/Design style */
+/* Logo A: Split "The Web" / "FOUNDRY" — footer style */
 .logo-a {
   display: flex;
   align-items: baseline;
@@ -913,39 +872,6 @@ body {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--gold);
-}
-
-/* Option C: Abbreviated WF + stacked "Web / Foundry" */
-.logo-c {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-}
-.logo-c__abbr {
-  font-family: var(--ff-display);
-  font-weight: 900;
-  font-size: 2.2rem;
-  color: var(--gold);
-  letter-spacing: -0.05em;
-  line-height: 1;
-}
-.logo-c__divider {
-  width: 1px;
-  height: 1.8rem;
-  background: rgba(212, 168, 83, 0.25);
-}
-.logo-c__wordmark {
-  font-family: var(--ff-body);
-  font-weight: 300;
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
-  line-height: 1.5;
-}
-
-@media (max-width: 640px) {
-  .logo-options__grid { gap: 2.5rem; }
 }
 
 /* ============================================================

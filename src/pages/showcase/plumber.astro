@@ -288,6 +288,7 @@ const hours = (plumberData?.hours && plumberData.hours.length > 0)
           </div>
           <div class="plumber-form-error" id="plumber-form-error" hidden></div>
           <div class="plumber-form-success" id="plumber-form-success" hidden>Got it — we'll be in touch soon!</div>
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAACxVhhG9sxrzihaS0x4AAAAAACxVhhG9sxrzihaS" data-theme="auto"></div>
           <button type="submit" class="btn-call contact-submit" id="plumber-submit">Send Message ➜</button>
         </form>
       </div>
@@ -306,7 +307,6 @@ const hours = (plumberData?.hours && plumberData.hours.length > 0)
     btn.disabled = true; btn.textContent = 'Sending…';
     errorEl.hidden = true; successEl.hidden = true;
     const payload = Object.fromEntries(new FormData(form));
-    payload.secret = '35ab29bc42c1c3287683c70880a92b5ee76efd811c74ba9c';
     payload.subject = 'New Inquiry — Peak Flow Plumbing';
     try {
       const res = await fetch('https://web-foundry-form-relay.cincinnati-web-foundry.workers.dev', {

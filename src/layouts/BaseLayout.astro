@@ -27,6 +27,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://cincinna
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
 
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <slot name="head" />
   </head>
   <body>
