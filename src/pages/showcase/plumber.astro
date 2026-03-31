@@ -153,7 +153,11 @@ const hours = (plumberData?.hours && plumberData.hours.length > 0)
 
     /* ── Contact ── */
     .contact-section { padding: 2.5rem 2rem 4rem; background: var(--navy); }
-    .contact-inner { max-width: 640px; margin: 0 auto; }
+    .contact-inner { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
+    .contact-intro { display: flex; flex-direction: column; gap: 0.5rem; }
+    .contact-intro .section-title { margin-bottom: 0; font-size: clamp(2rem,4vw,3rem); color: white; }
+    .contact-intro .section-sub { margin-bottom: 0; color: rgba(255,255,255,0.5); max-width: none; }
+    .contact-form { margin-top: 0; }
     .contact-form .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
     .contact-form label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
     .contact-form input, .contact-form textarea {
@@ -267,8 +271,10 @@ const hours = (plumberData?.hours && plumberData.hours.length > 0)
   <section class="contact-section" id="contact-form">
     <div class="container">
       <div class="contact-inner reveal">
-        <h2 class="section-title" style="margin-bottom:.5rem;font-size:clamp(2rem,4vw,3rem);color:white">GET IN TOUCH</h2>
-        <p class="section-sub" style="margin-bottom:1.5rem;color:rgba(255,255,255,0.5)">Not an emergency? Send a message and we'll get back to you within one business day.</p>
+        <div class="contact-intro">
+          <h2 class="section-title">GET IN TOUCH</h2>
+          <p class="section-sub">Not an emergency? Send a message and we'll get back to you within one business day.</p>
+        </div>
         <form id="plumber-contact-form" class="contact-form" novalidate>
           <input type="checkbox" name="botcheck" style="display:none">
           <div class="form-group">
