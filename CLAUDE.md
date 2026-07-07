@@ -87,8 +87,8 @@ A Sanity webhook triggers a Coolify rebuild on publish (Create + Update, filter:
 ## Design System
 
 ### Hub Page (index.astro)
-- **Colors**: `#0A0A0A` bg, `#D4A853` gold, `#F0EBE0` cream
-- **Fonts**: `Playfair Display` (display/serif) + `DM Sans` (body)
+- **Colors**: `#181c28` ink bg, `#b45a3c` terracotta accent, `#eee9e1` cream
+- **Fonts**: `Sora` (display) + `Plus Jakarta Sans` (body)
 
 ### Showcase Pages
 | Page | Palette | Fonts |
@@ -159,6 +159,29 @@ Also update `docs/cowork-intake-brief.md` and `docs/intake-form.md` if the chang
 3. Link from `index.astro` — add a new `.project-card` in the showcase grid
 4. Add the matching color swatches and mock wireframe CSS using the `.project-card__mock--[name]` pattern
 5. Add a Turnstile widget (`<div class="cf-turnstile" data-sitekey="..." data-theme="auto">`) inside the contact form
+
+## DNS & Email Setup
+
+All domains use **Cloudflare for DNS management** and **Cloudflare Email Routing** for email forwarding (beyond form submissions).
+
+### DNS Migration Process
+1. Add domain to Cloudflare (creates nameserver pair)
+2. Update domain registrar nameservers to point to Cloudflare
+3. Cloudflare auto-imports existing DNS records (no data loss)
+4. Verify Resend DKIM/SPF/MX records are present and verified
+
+### Email Routing via Cloudflare
+**For form submissions:** Cloudflare Worker + Resend (handled by `worker/index.js`)
+**For general inbox forwarding:** Cloudflare Email Routing with routing rules
+- Example: `hello@domain.com` → personal Gmail inbox
+- Uses "Send to email" action (not Worker)
+- No catch-all rules — only forward specific addresses to avoid spam/typos
+
+**Why Cloudflare:**
+- Single source of truth for DNS + email routing
+- Auto-migrates records on nameserver switch
+- Email Routing is free tier included
+- Scales across all client sites
 
 ## Multi-Tenant Architecture (Website Factory)
 

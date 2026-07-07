@@ -7,22 +7,21 @@ import '../styles/hub.css';
   description="The Web Foundry designs and builds modern, custom websites for Cincinnati small businesses. Latest technology, zero templates, real results."
 >
   <Fragment slot="head">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   </Fragment>
 
   <!-- ── Navigation ── -->
   <nav class="nav" id="nav">
     <div class="container nav__inner">
-      <!-- Logo B: unified wordmark + locale — swap to logo-a markup for thewebfoundry.org -->
-      <a href="#" class="nav__logo logo-b">
-        <span class="logo-b__name">The Web Foundry</span>
-        <span class="logo-b__locale">Cincinnati</span>
+      <a href="#" class="nav__logo" id="nav-logo">
+        <span class="nav__logo-mark">W</span>
+        <span class="nav__logo-name">The Web Foundry</span>
       </a>
       <ul class="nav__links">
-        <li><a href="#mission" class="nav__link">Mission</a></li>
-        <li><a href="#showcase" class="nav__link">Work</a></li>
-        <li><button class="nav__cta js-open-modal">Get in Touch</button></li>
+        <li><a href="#work" class="nav__link">Our Work</a></li>
+        <li><a href="#process" class="nav__link">How It Works</a></li>
         <li><a href="/about" class="nav__link">About</a></li>
+        <li><button class="nav__cta js-open-modal">Get in Touch</button></li>
       </ul>
       <button class="nav__hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -31,179 +30,165 @@ import '../styles/hub.css';
   </nav>
 
   <main id="main-content">
+
   <!-- ── Hero ── -->
-  <section class="hero" id="hero">
-    <div class="hero__bg-grid" aria-hidden="true"></div>
-    <div class="hero__noise" aria-hidden="true"></div>
-    <div class="hero__glow" aria-hidden="true"></div>
-
-    <div class="container hero__inner">
-      <div class="hero__eyebrow reveal">
-        <span class="hero__eyebrow-dot"></span>
-        Built in Cincinnati
-      </div>
-
-      <h1 class="hero__headline">
-        <span class="hero__word" style="animation-delay:0.15s">Your</span>
-        <span class="hero__word" style="animation-delay:0.30s">next</span>
-        <span class="hero__word" style="animation-delay:0.45s">website?</span>
-        <br/>
-        <span class="hero__word hero__word--accent" style="animation-delay:0.65s">It's</span>
-        <span class="hero__word hero__word--accent" style="animation-delay:0.80s">on us.</span>
-      </h1>
-
-      <p class="hero__sub reveal reveal-delay-3">
-        We design, build, and launch modern websites for Cincinnati small businesses — completely free. You focus on running your business. We'll handle the rest.
+  <section class="hero container">
+    <div class="hero__inner">
+      <div class="hero__dash" aria-hidden="true"></div>
+      <span class="hero__eyebrow">Built in Cincinnati</span>
+      <h1 class="hero__headline">Your business deserves<br/>a great website.</h1>
+      <p class="hero__sub">
+        We design and build modern websites for Cincinnati small businesses. No templates,
+        no jargon — just a site that represents what you do, at a price a small business
+        can actually say yes to.
       </p>
-
-      <div class="hero__actions reveal reveal-delay-4">
-        <a href="#showcase" class="btn btn--primary">See the Work</a>
-        <button class="btn btn--ghost js-open-modal">Let's Talk</button>
+      <div class="hero__actions">
+        <a href="#work" class="btn btn--primary">View Our Work</a>
+        <button class="btn btn--ghost js-open-modal">Start a Conversation <span class="btn-arrow">→</span></button>
       </div>
-
-      <div class="hero__scroll-hint reveal reveal-delay-6" aria-hidden="true">
-        <div class="hero__scroll-line"></div>
-        <span>Scroll</span>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- ── Mission ── -->
-  <section class="mission" id="mission">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Our Mission</span>
-        <h2 class="section-title">The web shouldn't be<br/><em>a luxury</em></h2>
-      </div>
-
-      <div class="mission__content">
-        <div class="mission__beat reveal">
-          <p>Your business is the one people count on. You've built something real — a reputation, a following, a place in this community. But your website? It doesn't tell that story.</p>
+      <div class="hero__proof">
+        <div class="hero__proof-item">
+          <span class="hero__proof-num" data-count="3">0</span>
+          <span class="hero__proof-label">Live demo builds</span>
         </div>
-
-        <div class="mission__rule" aria-hidden="true"></div>
-
-        <div class="mission__beat reveal reveal-delay-1">
-          <p>Getting a real website built has always been <em>expensive and confusing.</em> Agencies quote thousands. DIY tools leave you with something generic — and something you have to maintain, test, and troubleshoot yourself.</p>
+        <div class="hero__proof-rule" aria-hidden="true"></div>
+        <div class="hero__proof-item">
+          <span class="hero__proof-num">Days</span>
+          <span class="hero__proof-label">From kickoff to launch</span>
         </div>
-
-        <div class="mission__rule" aria-hidden="true"></div>
-
-        <div class="mission__beat reveal reveal-delay-2">
-          <p><em>AI changed the game.</em> We build in days what used to take weeks. And we think that speed should benefit the businesses that need it most — not just the ones with the biggest budgets.</p>
-        </div>
-
-        <div class="mission__rule" aria-hidden="true"></div>
-
-        <div class="mission__beat reveal reveal-delay-3">
-          <p>So we design, build, and launch your website — <em>for free.</em> Custom design, modern tech, built to represent what you actually do. After launch, everything is handled — hosting, security, updates — for less than what you're paying today.</p>
+        <div class="hero__proof-rule" aria-hidden="true"></div>
+        <div class="hero__proof-item">
+          <span class="hero__proof-num">1</span>
+          <span class="hero__proof-label">Simple monthly invoice</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── Showcase ── -->
-  <section class="showcase" id="showcase">
+  <!-- ── Featured Work ── -->
+  <section class="work" id="work">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-tag">Featured Work</span>
-        <h2 class="section-title">See what's possible<br/><em>for your business</em></h2>
-        <p class="section-sub">Three businesses. Three completely different aesthetics. All built with AI — all built with intention.</p>
+        <h2 class="section-title">See what's possible.</h2>
+        <p class="section-sub">Different businesses, different aesthetics. Each one custom-designed to match.</p>
       </div>
 
-      <div class="projects-grid">
+      <div class="work-grid">
 
-        <a href="/showcase/bakery" class="project-card" id="card-bakery" data-theme="bakery">
-          <div class="project-card__visual">
-            <div class="project-card__mock project-card__mock--bakery">
-              <div class="mock-nav"></div>
-              <div class="mock-hero">
-                <div class="mock-headline"></div>
-                <div class="mock-sub"></div>
-                <div class="mock-btn"></div>
-              </div>
-              <div class="mock-cards">
-                <div class="mock-card"></div>
-                <div class="mock-card"></div>
-                <div class="mock-card"></div>
-              </div>
+        <!-- Bakery -->
+        <a href="/showcase/bakery" class="work-card reveal reveal-delay-1">
+          <div class="work-card__bar">
+            <div class="work-card__dots">
+              <span class="work-card__dot work-card__dot--red"></span>
+              <span class="work-card__dot work-card__dot--yellow"></span>
+              <span class="work-card__dot work-card__dot--green"></span>
             </div>
-            <div class="project-card__overlay">
-              <span class="project-card__view">View Site →</span>
-            </div>
+            <div class="work-card__url">sweetcrumbbakery.com</div>
           </div>
-          <div class="project-card__info">
-            <div class="project-card__tag">Bakery & Café</div>
-            <h3 class="project-card__name">Sweet Crumb Bakery</h3>
-            <p class="project-card__desc">Warm, artisan aesthetic with floating pastry animations and an online menu experience.</p>
-            <div class="project-card__palette">
-              <span class="swatch" style="background:#FDF6EC"></span>
-              <span class="swatch" style="background:#C9926B"></span>
-              <span class="swatch" style="background:#7A9E82"></span>
+          <div class="work-card__preview work-card__preview--bakery">
+            <div class="work-card__preview-nav">
+              <span class="work-card__preview-brand">Sweet Crumb</span>
+              <div class="work-card__preview-nav-links">
+                <span>MENU</span><span>STORY</span><span>HOURS</span>
+              </div>
             </div>
+            <div class="work-card__preview-body">
+              <span class="work-card__preview-headline">Baked with love,<br/><em>every morning.</em></span>
+              <span class="work-card__preview-sub">Fresh pastries · Artisan breads · Coffee</span>
+              <span class="work-card__preview-cta">View Menu</span>
+            </div>
+            <div class="work-card__preview-decor" aria-hidden="true"></div>
+            <div class="work-card__preview-decor work-card__preview-decor--2" aria-hidden="true"></div>
+          </div>
+          <div class="work-card__info">
+            <div class="work-card__tag">Bakery &amp; Café</div>
+            <h3 class="work-card__name">Sweet Crumb Bakery</h3>
+            <p class="work-card__desc">Warm artisan aesthetic with online menu and daily specials.</p>
+            <div class="work-card__chips">
+              <span class="chip">PDF Menu</span>
+              <span class="chip">Daily Specials</span>
+              <span class="chip">Sanity CMS</span>
+            </div>
+            <span class="work-card__link">View Site →</span>
           </div>
         </a>
 
-        <a href="/showcase/plumber" class="project-card" id="card-plumber" data-theme="plumber">
-          <div class="project-card__visual">
-            <div class="project-card__mock project-card__mock--plumber">
-              <div class="mock-nav"></div>
-              <div class="mock-hero">
-                <div class="mock-headline"></div>
-                <div class="mock-sub"></div>
-                <div class="mock-btn"></div>
-              </div>
-              <div class="mock-cards">
-                <div class="mock-card"></div>
-                <div class="mock-card"></div>
-                <div class="mock-card"></div>
+        <!-- Plumber -->
+        <a href="/showcase/plumber" class="work-card reveal reveal-delay-2">
+          <div class="work-card__bar">
+            <div class="work-card__dots">
+              <span class="work-card__dot work-card__dot--red"></span>
+              <span class="work-card__dot work-card__dot--yellow"></span>
+              <span class="work-card__dot work-card__dot--green"></span>
+            </div>
+            <div class="work-card__url">peakflowplumbing.com</div>
+          </div>
+          <div class="work-card__preview work-card__preview--plumber">
+            <div class="work-card__preview-nav">
+              <span class="work-card__preview-brand">PEAK FLOW</span>
+              <div class="work-card__preview-nav-links">
+                <span>SERVICES</span><span>ABOUT</span><span class="is-alert">EMERGENCY</span>
               </div>
             </div>
-            <div class="project-card__overlay">
-              <span class="project-card__view">View Site →</span>
+            <div class="work-card__preview-body work-card__preview-body--left">
+              <span class="work-card__preview-badge">Licensed &amp; Insured · Cincinnati, OH</span>
+              <span class="work-card__preview-headline">Your Local<br/>Plumbing Experts</span>
+              <span class="work-card__preview-sub">Residential &amp; commercial plumbing you can trust.</span>
+              <div class="work-card__preview-actions">
+                <span class="work-card__preview-cta">Call Now</span>
+                <span class="work-card__preview-cta--outline">Our Services</span>
+              </div>
             </div>
           </div>
-          <div class="project-card__info">
-            <div class="project-card__tag">Home Services</div>
-            <h3 class="project-card__name">Peak Flow Plumbing</h3>
-            <p class="project-card__desc">Bold, conversion-focused industrial design with animated trust signals and emergency CTA.</p>
-            <div class="project-card__palette">
-              <span class="swatch" style="background:#1A2744"></span>
-              <span class="swatch" style="background:#FF6B2B"></span>
-              <span class="swatch" style="background:#F5F5F5"></span>
+          <div class="work-card__info">
+            <div class="work-card__tag">Home Services</div>
+            <h3 class="work-card__name">Peak Flow Plumbing</h3>
+            <p class="work-card__desc">Bold, conversion-focused design with emergency CTAs and trust signals.</p>
+            <div class="work-card__chips">
+              <span class="chip">24/7 CTA</span>
+              <span class="chip">Business Hours</span>
+              <span class="chip">Contact Form</span>
             </div>
+            <span class="work-card__link">View Site →</span>
           </div>
         </a>
 
-        <a href="/showcase/salon" class="project-card" id="card-salon" data-theme="salon">
-          <div class="project-card__visual">
-            <div class="project-card__mock project-card__mock--salon">
-              <div class="mock-nav"></div>
-              <div class="mock-hero">
-                <div class="mock-headline"></div>
-                <div class="mock-sub"></div>
-                <div class="mock-btn"></div>
-              </div>
-              <div class="mock-cards">
-                <div class="mock-card"></div>
-                <div class="mock-card"></div>
-                <div class="mock-card"></div>
-              </div>
+        <!-- Salon -->
+        <a href="/showcase/salon" class="work-card reveal reveal-delay-3">
+          <div class="work-card__bar">
+            <div class="work-card__dots">
+              <span class="work-card__dot work-card__dot--red"></span>
+              <span class="work-card__dot work-card__dot--yellow"></span>
+              <span class="work-card__dot work-card__dot--green"></span>
             </div>
-            <div class="project-card__overlay">
-              <span class="project-card__view">View Site →</span>
-            </div>
+            <div class="work-card__url">lumieresalon.com</div>
           </div>
-          <div class="project-card__info">
-            <div class="project-card__tag">Beauty & Wellness</div>
-            <h3 class="project-card__name">Lumière Salon & Spa</h3>
-            <p class="project-card__desc">Luxe editorial aesthetic with champagne tones, masonry gallery, and elegant booking flow.</p>
-            <div class="project-card__palette">
-              <span class="swatch" style="background:#1C1410"></span>
-              <span class="swatch" style="background:#E8D5C4"></span>
-              <span class="swatch" style="background:#C9A96E"></span>
+          <div class="work-card__preview work-card__preview--salon">
+            <div class="work-card__preview-nav">
+              <span class="work-card__preview-brand">Lumière</span>
+              <div class="work-card__preview-nav-links">
+                <span>SERVICES</span><span>GALLERY</span><span>BOOK</span>
+              </div>
             </div>
+            <div class="work-card__preview-body">
+              <div class="work-card__preview-rule" aria-hidden="true"></div>
+              <span class="work-card__preview-headline">Beauty, Refined.</span>
+              <span class="work-card__preview-sub">Hair · Skin · Nails · Wellness</span>
+              <span class="work-card__preview-cta">Book Appointment</span>
+            </div>
+            <div class="work-card__preview-decor" aria-hidden="true"></div>
+          </div>
+          <div class="work-card__info">
+            <div class="work-card__tag">Beauty &amp; Wellness</div>
+            <h3 class="work-card__name">Lumière Salon &amp; Spa</h3>
+            <p class="work-card__desc">Luxe editorial aesthetic with elegant booking and gallery.</p>
+            <div class="work-card__chips">
+              <span class="chip">Gallery CMS</span>
+              <span class="chip">Service Pricing</span>
+              <span class="chip">Booking Inquiry</span>
+            </div>
+            <span class="work-card__link">View Site →</span>
           </div>
         </a>
 
@@ -212,38 +197,133 @@ import '../styles/hub.css';
   </section>
 
   <!-- ── How It Works ── -->
-  <section class="how-it-works" id="how-it-works">
+  <section class="process" id="process">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-tag">How It Works</span>
-        <h2 class="section-title">Three steps.<br/><em>That's it.</em></h2>
+        <h2 class="section-title">Simple from start to finish.</h2>
       </div>
 
-      <div class="timeline">
-        <div class="timeline__line" aria-hidden="true"></div>
+      <div class="process-steps">
+        <div class="process-step reveal reveal-delay-1">
+          <div class="process-step__when">Day 1 · About an Hour</div>
+          <h3 class="process-step__title">Tell us about your business</h3>
+          <p class="process-step__desc">A simple conversation — your customers, your style, what makes you different. No tech speak, no questionnaires.</p>
+        </div>
+        <div class="process-step__arrow" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="14 7 19 12 14 17"></polyline></svg>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <div class="process-step__when">Days 2–5</div>
+          <h3 class="process-step__title">We design and build</h3>
+          <p class="process-step__desc">Custom design, fast turnaround. We iterate until it feels like you. No templates, no shortcuts.</p>
+        </div>
+        <div class="process-step__arrow" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="14 7 19 12 14 17"></polyline></svg>
+        </div>
+        <div class="process-step reveal reveal-delay-3">
+          <div class="process-step__when">Within the Week</div>
+          <h3 class="process-step__title">Launch and forget</h3>
+          <p class="process-step__desc">Your site goes live. Hosting, security, domain, updates — all handled. One simple monthly invoice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="timeline__step reveal reveal-delay-1">
-          <div class="timeline__marker" aria-hidden="true"></div>
-          <div class="timeline__content">
-            <h3 class="timeline__title">We talk</h3>
-            <p class="timeline__desc">We learn about your business, your style, your goals. No jargon, no pressure — just a conversation.</p>
+  <!-- ── What's Included ── -->
+  <section class="included">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">What's Included</span>
+        <h2 class="section-title">Everything you need. Nothing you don't.</h2>
+      </div>
+
+      <div class="included-grid">
+        <div class="included-card reveal reveal-delay-1">
+          <div class="included-card__icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+          </div>
+          <div class="included-card__title">Custom Design</div>
+          <p class="included-card__desc">Built specifically for your business — not pulled from a template shelf.</p>
+        </div>
+        <div class="included-card reveal reveal-delay-2">
+          <div class="included-card__icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+          </div>
+          <div class="included-card__title">Hosting &amp; Domain</div>
+          <p class="included-card__desc">Fast, reliable hosting and your own domain — set up and managed for you.</p>
+        </div>
+        <div class="included-card reveal reveal-delay-3">
+          <div class="included-card__icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          </div>
+          <div class="included-card__title">SEO &amp; Analytics</div>
+          <p class="included-card__desc">Search-ready from day one so customers can actually find you on Google.</p>
+        </div>
+        <div class="included-card reveal reveal-delay-4">
+          <div class="included-card__icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          </div>
+          <div class="included-card__title">Content Updates</div>
+          <p class="included-card__desc">Update hours, menus, or photos yourself — or just ask us. Either way works.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The Bottom Line ── -->
+  <section class="bottom-line">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">The Bottom Line</span>
+        <h2 class="section-title">One invoice. Zero headaches.</h2>
+      </div>
+
+      <div class="bottom-line-split">
+        <div class="bottom-line__copy reveal reveal-delay-1">
+          <p>We handle the domain, the hosting, the security, the updates, and the support. You get one monthly invoice and a website that works — no tech knowledge required on your end, ever.</p>
+          <button class="btn btn--primary js-open-modal">Start a Conversation <span class="btn-arrow">→</span></button>
+        </div>
+        <div class="bottom-line__checklist reveal reveal-delay-2">
+          <div class="bottom-line__check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Custom website design</span>
+          </div>
+          <div class="bottom-line__check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Your own domain name</span>
+          </div>
+          <div class="bottom-line__check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Hosting &amp; security, handled</span>
+          </div>
+          <div class="bottom-line__check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Ongoing updates &amp; support</span>
+          </div>
+          <div class="bottom-line__check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>One simple monthly invoice</span>
           </div>
         </div>
+      </div>
 
-        <div class="timeline__step reveal reveal-delay-2">
-          <div class="timeline__marker" aria-hidden="true"></div>
-          <div class="timeline__content">
-            <h3 class="timeline__title">We build</h3>
-            <p class="timeline__desc">AI-powered design and development. We iterate fast until it feels right — and looks even better.</p>
-          </div>
+      <div class="fair-questions">
+        <div class="fair-q reveal reveal-delay-1">
+          <div class="fair-q__q">Why is this so affordable?</div>
+          <p class="fair-q__a">The Web Foundry is a community project, not an agency. AI lets us build in days what used to take weeks, and we price to cover our costs — not to make a living off Cincinnati's small businesses.</p>
         </div>
-
-        <div class="timeline__step reveal reveal-delay-3">
-          <div class="timeline__marker" aria-hidden="true"></div>
-          <div class="timeline__content">
-            <h3 class="timeline__title">You launch</h3>
-            <p class="timeline__desc">Your new site goes live. We handle everything after — hosting, security, updates. You never have to think about it.</p>
-          </div>
+        <div class="fair-q reveal reveal-delay-2">
+          <div class="fair-q__q">What do I actually pay?</div>
+          <p class="fair-q__a">A small one-time build fee, then one simple monthly invoice — about what you'd spend on lunch — that covers hosting, security, your domain, and updates. No contracts, no surprises.</p>
+        </div>
+        <div class="fair-q reveal reveal-delay-3">
+          <div class="fair-q__q">Who owns the website?</div>
+          <p class="fair-q__a">You do. Your domain, your content, your site. If you ever want to walk away, it all goes with you.</p>
+        </div>
+        <div class="fair-q reveal reveal-delay-4">
+          <div class="fair-q__q">What do you need from me?</div>
+          <p class="fair-q__a">About an hour. Tell us about your business, share your logo and photos if you have them, and react to the draft. We handle the rest.</p>
         </div>
       </div>
     </div>
@@ -251,16 +331,14 @@ import '../styles/hub.css';
 
   <!-- ── CTA ── -->
   <section class="cta-section" id="contact">
-    <div class="cta-section__bg" aria-hidden="true"></div>
     <div class="container cta-section__inner">
       <div class="reveal">
-        <span class="section-tag section-tag--light">Let's Talk</span>
-        <h2 class="cta-section__title">Ready for a website<br/>that works as hard as you do?</h2>
-        <p class="cta-section__sub">Reach out — we'd love to learn about your business and show you what's possible.</p>
-        <button class="btn btn--cta js-open-modal">
-          Let's get started
-          <span class="btn-arrow">→</span>
-        </button>
+        <h2 class="cta-section__title">Your business has a story<br/>worth telling.</h2>
+        <p class="cta-section__sub">Let's make it visible. No commitment, no pressure.</p>
+        <p class="cta-section__email">Prefer email? <a href="mailto:hello@cincinnatiwebfoundry.com">hello@cincinnatiwebfoundry.com</a></p>
+      </div>
+      <div class="cta-section__action reveal reveal-delay-1">
+        <button class="btn btn--primary js-open-modal">Start a Conversation <span class="btn-arrow">→</span></button>
       </div>
     </div>
   </section>
@@ -270,17 +348,15 @@ import '../styles/hub.css';
   <!-- ── Footer ── -->
   <footer class="footer">
     <div class="container footer__inner">
-      <!-- Logo A: split style — matches thewebfoundry.org brand direction -->
-      <div class="footer__logo logo-a">
-        <span class="logo-a__primary">The Web</span>
-        <span class="logo-a__secondary">Foundry</span>
+      <div class="footer__brand">
+        <span class="footer__mark">W</span>
+        <span class="footer__label">The Web Foundry · Cincinnati, OH</span>
       </div>
-      <p class="footer__tagline">AI Vibe Coding for the people.</p>
       <nav class="footer__links" aria-label="Footer">
+        <a href="#work">Work</a>
         <a href="/about">About</a>
-        <a href="/privacy">Privacy Policy</a>
+        <a href="/privacy">Privacy</a>
       </nav>
-      <p class="footer__copy">© 2026 The Web Foundry — Cincinnati. Built with ❤️ and AI.</p>
     </div>
   </footer>
 
@@ -291,77 +367,46 @@ import '../styles/hub.css';
   <!-- ── Contact Modal ── -->
   <div class="modal-overlay" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
     <div class="modal-card">
-      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+      <button class="modal-close" id="modal-close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="3" x2="13" y2="13"></line><line x1="13" y1="3" x2="3" y2="13"></line></svg>
+      </button>
 
       <div class="modal-body" id="modal-body">
-        <span class="section-tag">Let's Talk</span>
-        <h2 class="modal-title" id="modal-title">Tell us about<br/><em>your business</em></h2>
+        <h2 class="modal-title" id="modal-title">Let's talk.</h2>
+        <p class="modal-sub">Tell us about your business and we'll be in touch within 24 hours.</p>
 
         <form id="contact-form" novalidate>
           <input type="checkbox" name="botcheck" style="display:none">
+          <input type="hidden" name="site_id" value="web-foundry-hub">
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="f-name">Your Name *</label>
-              <input type="text" id="f-name" name="name" required autocomplete="name" placeholder="Maria Chen">
-            </div>
-            <div class="form-group">
-              <label for="f-email">Email Address *</label>
-              <input type="email" id="f-email" name="email" required autocomplete="email" placeholder="maria@example.com">
-            </div>
+          <div class="form-group">
+            <label for="f-name">Your Name</label>
+            <input type="text" id="f-name" name="name" required autocomplete="name" placeholder="Jane Smith">
           </div>
 
           <div class="form-group">
-            <label for="f-phone">Phone (optional)</label>
+            <label for="f-email">Email Address</label>
+            <input type="email" id="f-email" name="email" required autocomplete="email" placeholder="jane@example.com">
+          </div>
+
+          <div class="form-group">
+            <label for="f-phone">Phone <span class="optional">(optional)</span></label>
             <input type="tel" id="f-phone" name="phone" autocomplete="tel" placeholder="(513) 555-0100">
           </div>
 
-          <fieldset class="form-fieldset">
-            <legend>Who is this for?</legend>
-            <div class="form-radios">
-              <label class="radio-label">
-                <input type="radio" name="who_for" value="My business" checked>
-                <span>My business</span>
-              </label>
-              <label class="radio-label">
-                <input type="radio" name="who_for" value="Someone else's business">
-                <span>Someone else's business</span>
-              </label>
-            </div>
-          </fieldset>
-
           <div class="form-group">
-            <label for="f-business">Business Name *</label>
-            <input type="text" id="f-business" name="business_name" required placeholder="Sweet Crumb Bakery">
-          </div>
-
-          <fieldset class="form-fieldset">
-            <legend>Do you have an existing website?</legend>
-            <div class="form-radios">
-              <label class="radio-label">
-                <input type="radio" name="has_website" value="yes" id="has-website-yes">
-                <span>Yes</span>
-              </label>
-              <label class="radio-label">
-                <input type="radio" name="has_website" value="no" id="has-website-no" checked>
-                <span>No</span>
-              </label>
-            </div>
-          </fieldset>
-
-          <div class="form-group" id="url-field" hidden>
-            <label for="f-url">Website URL</label>
-            <input type="text" id="f-url" name="website_url" placeholder="yourbusiness.com">
+            <label for="f-business">Business Name</label>
+            <input type="text" id="f-business" name="business_name" required placeholder="Your business">
           </div>
 
           <div class="form-group">
-            <label for="f-message">Anything else you'd like us to know?</label>
-            <textarea id="f-message" name="message" rows="4" placeholder="Tell us about your business, goals, timeline..."></textarea>
+            <label for="f-message">Anything else? <span class="optional">(optional)</span></label>
+            <textarea id="f-message" name="message" rows="3" placeholder="Tell us a bit about what you're looking for..."></textarea>
           </div>
 
           <div class="form-error" id="form-error" hidden></div>
 
-          <div class="cf-turnstile" data-sitekey="0x4AAAAAACxVhhG9sxrzihaS" data-theme="auto"></div>
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAACxVhhG9sxrzihaS" data-theme="light"></div>
 
           <button type="submit" class="btn btn--primary form-submit" id="form-submit-btn">
             Send Message <span class="btn-arrow">→</span>
@@ -370,9 +415,11 @@ import '../styles/hub.css';
       </div>
 
       <div class="modal-success" id="modal-success" hidden>
-        <div class="modal-success__icon">✓</div>
-        <h3 class="modal-success__title">Message received!</h3>
-        <p class="modal-success__sub">We'll be in touch within 24 hours. A confirmation is on its way to your inbox.</p>
+        <div class="modal-success__icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h3 class="modal-success__title">Message received.</h3>
+        <p class="modal-success__sub">We'll be in touch within 24 hours.<br/>Looking forward to learning about your business.</p>
         <button class="btn btn--ghost" id="modal-success-close">Close</button>
       </div>
     </div>

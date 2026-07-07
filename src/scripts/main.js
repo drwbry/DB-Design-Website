@@ -1,13 +1,6 @@
-/* main.js — DB Design hub page interactivity */
+/* main.js — The Web Foundry hub page interactivity */
 
 document.addEventListener('DOMContentLoaded', () => {
-
-  // ── Nav scroll effect ──────────────────────────────────────
-  const nav = document.getElementById('nav');
-  const onScroll = () => {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
 
   // ── Hamburger menu ─────────────────────────────────────────
   const hamburger = document.getElementById('hamburger');
@@ -21,39 +14,19 @@ document.addEventListener('DOMContentLoaded', () => {
       navLinks.style.top = '72px';
       navLinks.style.left = '0';
       navLinks.style.right = '0';
-      navLinks.style.background = 'rgba(10,10,10,0.97)';
+      navLinks.style.background = 'rgba(24,28,40,0.97)';
       navLinks.style.padding = '1.5rem 2rem 2rem';
-      navLinks.style.borderBottom = '1px solid rgba(255,255,255,0.07)';
+      navLinks.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
       navLinks.style.backdropFilter = 'blur(20px)';
     });
   }
 
-  // ── Magnetic card effect ────────────────────────────────────
-  document.querySelectorAll('.project-card').forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      card.style.transform = `
-        translateY(-8px)
-        scale(1.01)
-        rotateX(${-y * 4}deg)
-        rotateY(${x * 4}deg)
-      `;
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-      card.style.transition = 'transform 0.5s cubic-bezier(0.22,1,0.36,1), border-color 0.35s ease, box-shadow 0.4s ease';
-    });
-    card.addEventListener('mouseenter', () => {
-      card.style.transition = 'transform 0.1s ease, border-color 0.35s ease, box-shadow 0.4s ease';
-    });
-  });
-
-  // ── Smooth scroll for nav links ────────────────────────────
+  // ── Smooth scroll for nav/anchor links ─────────────────────
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', (e) => {
-      const target = document.querySelector(anchor.getAttribute('href'));
+      const href = anchor.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
       if (target) {
         e.preventDefault();
         const offset = 72; // nav height
@@ -66,14 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Parallax hero glow ─────────────────────────────────────
-  const heroGlow = document.querySelector('.hero__glow');
-  if (heroGlow) {
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      heroGlow.style.transform = `translateX(-50%) translateY(${y * 0.3}px)`;
-    }, { passive: true });
-  }
+  document.getElementById('nav-logo')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   // ── Contact Modal ────────────────────────────────────────────
   const modal = document.getElementById('contact-modal');
@@ -100,8 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.innerHTML = 'Send Message <span class="btn-arrow">→</span>';
       }
       if (form) form.reset();
-      if (urlField) urlField.hidden = true;
-      if (urlInput) urlInput.value = '';
       if (formError) formError.hidden = true;
     }, { once: true });
   }
@@ -127,17 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
     e.target.value = formatted;
   });
 
-  // Conditional URL field
-  const urlField = document.getElementById('url-field');
-  const urlInput = document.getElementById('f-url');
-  document.querySelectorAll('input[name="has_website"]').forEach(radio => {
-    radio.addEventListener('change', () => {
-      const show = radio.value === 'yes' && radio.checked;
-      urlField.hidden = !show;
-      if (!show) urlInput.value = '';
-    });
-  });
-
   // Form submission → Cloudflare Worker
   const form = document.getElementById('contact-form');
   const submitBtn = document.getElementById('form-submit-btn');
@@ -160,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify(payload),
       });
       const result = await res.json();
-      if (result.success) {
+      if (res.ok && result.success) {
         modalBody.hidden = true;
         modalSuccess.hidden = false;
         form.reset();
@@ -172,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
       formError.hidden = false;
       submitBtn.disabled = false;
       submitBtn.innerHTML = 'Send Message <span class="btn-arrow">→</span>';
+      if (window.turnstile) window.turnstile.reset();
     }
   });
 
