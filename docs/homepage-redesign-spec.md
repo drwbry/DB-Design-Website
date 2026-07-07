@@ -1,208 +1,228 @@
-# Homepage Redesign Spec — The Web Foundry (Cincinnati)
+# Homepage Rebrand Spec v2 — The Web Foundry (Cincinnati)
 
-**Status:** Draft for build. Written against `src/pages/index.astro`, `src/styles/hub.css`, `src/scripts/main.js` as of 2026-07-06.
+**Status:** APPROVED DIRECTION — ready for implementation pass.
+**Design source of truth:** `docs/design-imports/Homepage.dc.html` (Claude Design export).
+Read it in full before building — all colors/spacing/copy referenced below exist there.
+**Liberties over the design are already decided in this spec** (owner confirmed the
+design was half-baked; scroll pinning was broken). Where this spec and the design file
+conflict, **this spec wins**. Do not re-litigate choices; do not add features not listed.
 
-> **⚠ Design-import blocker:** The in-progress Claude Design file
-> (`https://claude.ai/design/p/1abf3cf6-b8bf-4802-85f0-be69fc6d80b4?file=Homepage.dc.html`)
-> could not be imported in this session — `DesignSync` needs `/design-login` (interactive
-> only) and the URL 403s to unauthenticated fetch. To unblock, either:
-> 1. Run `/design-login` in an interactive Claude Code session, then re-run the import, or
-> 2. In Claude Design, use **"Send to Claude Code Web"**, or
-> 3. Export `Homepage.dc.html` and drop it at `docs/design-imports/Homepage.dc.html`.
->
-> Until then, this spec is grounded in the **current live page + the brand system in
-> CLAUDE.md**. Sections below marked **[reconcile]** are the ones most likely to have
-> been addressed in the Claude Design draft — when the file arrives, diff those first
-> and let the design's visual decisions win where they conflict with layout suggestions
-> here (copy and sequencing recommendations here should still apply).
+The `.dc.html` files under `docs/design-imports/showcase/` are rough card-target
+placeholders — **ignore them**; the live showcase pages remain canonical for their own
+design systems.
 
----
+## Scope of the rebrand
 
-## 1. Goal & conversion thesis
+This is a **full visual rebrand of the hub page only** (`index.astro` + `hub.css` +
+`main.js` + `BaseLayout` fonts). Showcase pages are untouched. `about.astro` /
+`privacy.astro` keep the old style this pass (they'll visually mismatch — accepted;
+About redesign is a follow-up using `docs/design-imports/About.dc.html`).
 
-The page sells a **free website build** to a skeptical local business owner. The current
-page is visually strong but has one structural gap: **it never answers "what's the
-catch?"** — and for a free offer, unresolved skepticism is the #1 reason a prospect
-doesn't reach out. There is also **zero social proof** anywhere on the page.
-
-Revised narrative arc (section order):
-
-1. **Hero** — the promise, immediately grounded ("free build" + what happens after)
-2. **Mission** — why we do this (keep, tighten)
-3. **Showcase** — proof of capability (keep, add functionality signals)
-4. **How It Works** — proof of low effort (keep, add timeframes)
-5. **NEW — "The Straight Answers"** — objection handling / pricing transparency
-6. **CTA** — keep, lower the perceived commitment
-7. Footer — keep as-is
-
-Everything reuses existing tokens: `--black/--black-soft/--black-card`, `--gold/--gold-light/--gold-dim`,
-`--cream/--cream-dim/--cream-muted`, `--border/--border-gold`, `--ff-display` (Playfair Display),
-`--ff-body` (DM Sans), easings `--ease-out-expo/--ease-out-quart`, utilities `.reveal` (+ modifiers),
-`data-count`, `.container`, `.section-tag`, `.section-title`, `.btn` variants.
+**Template-ability rule (applies to everything):** keep all styling in `hub.css` under
+the token block below; no inline hex values in `index.astro`. A future client fork
+should be able to re-skin by editing tokens only.
 
 ---
 
-## 2. Navigation (minor)
+## 1. New design system (replaces hub.css `:root` wholesale)
 
-- **Keep:** logo-b wordmark + locale, scrolled blur behavior, hamburger.
-- **Change:** link order is currently `Mission / Work / [Get in Touch button] / About`.
-  Reorder to `Work / Mission / About / [Get in Touch]` — CTA last (rightmost), content
-  links in descending prospect interest (work first; prospects click proof before philosophy).
-- No new styles needed; `.nav__cta` already exists.
+Fonts (swap the Google Fonts link in `index.astro`'s head Fragment):
+`Sora:wght@400;600;700` (display) + `Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400` (body).
 
-## 3. Hero **[reconcile]**
+```css
+:root {
+  --ink: #181c28;            /* page bg */
+  --surface: #1e2333;        /* raised section bg (Featured Work) */
+  --surface-raised: #242c3a; /* CTA band bg */
+  --footer-bg: #12151f;
+  --accent: #b45a3c;         /* terracotta — buttons, tags, links */
+  --accent-hover: #c96a4c;
+  --accent-dim: rgba(180,90,60,0.12);   /* icon chips */
+  --cream: #eee9e1;          /* headings on dark */
+  --muted: #8b95a8;          /* body text on dark */
+  --muted-deep: #6b7488;     /* footer text */
+  --panel: #f5f0ea;          /* light process cards */
+  --panel-ink: #2a3240;      /* headings on light */
+  --panel-muted: #5f6b7a;    /* body on light (modal body: #6b7888) */
+  --modal-bg: #faf7f3;
+  --hairline: rgba(255,255,255,0.04);
+  --border-soft: rgba(255,255,255,0.06);
+  --border-card: rgba(255,255,255,0.08);
+  --card-glass: rgba(255,255,255,0.04);
+  --ff-display: 'Sora', system-ui, sans-serif;
+  --ff-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+```
 
-- **Keep (already nails it):** the word-by-word `hero__word` entrance, the
-  `hero__eyebrow` "Built in Cincinnati" pin, bg-grid/noise/glow layering, the headline
-  itself — *"Your next website? It's on us."* is the best line on the page. Do not
-  replace it.
-- **Copy — subhead (replace current):**
-  > "We design, build, and launch a custom website for your Cincinnati small business —
-  > the build is free, and everything after is handled for about what you spend on
-  > coffee each month."
-  Rationale: the current sub says "completely free" with no qualifier; savvy owners
-  smell a trick. Naming the real model (free build + small monthly care) in the first
-  screen *increases* trust and pre-qualifies leads. (Model per `docs/cowork-intake-brief.md`:
-  free build, ~$20/mo hosting.)
-- **NEW — proof microbar** directly under `.hero__actions`: a single row, three items
-  separated by thin gold rules:
-  - `3` live builds to explore (anchor-links to `#showcase`)
-  - `Days` from kickoff to launch — not months
-  - `100%` yours — your domain, your content
-  - Markup: `.hero__proof` flex row; each item = `.hero__proof-num` (Playfair,
-    `--gold`, ~1.4rem) over `.hero__proof-label` (DM Sans, 0.72rem, uppercase,
-    `--cream-muted`, letter-spacing 0.12em). Separators: 1px × 32px `--border-gold`.
-    Use `data-count="3"` on the first number (shared.js animates it free of charge).
-    Enter with `.reveal.reveal-delay-5`. On ≤768px: stack vertically or wrap 2+1;
-    keep `hero__scroll-hint` below it.
-- **CTAs:** keep both buttons; change ghost button label `Let's Talk` → `Start the
-  Conversation` (matches the modal's non-salesy tone).
+Type rules: display headings = Sora 700, letter-spacing -0.02em (h1 clamp(2.4rem,5vw,3.75rem);
+section titles clamp(1.8rem,3.5vw,2.4rem)). Body = Plus Jakarta Sans. Section tags =
+12px/600/uppercase/0.14em tracking/`--accent`. Buttons: 6px radius; cards: 10px; modal: 12px.
+Primary button = `--accent` bg, white text, hover `--accent-hover` + scale(1.02).
+Keep easing tokens `--ease-out-expo/--ease-out-quart` for reveals.
 
-## 4. Mission (tighten, keep the form)
+Delete from `hub.css`: all gold/Playfair-era tokens and any styles for removed sections
+(mission beats/rules, timeline, old mock wireframes, hero grid/noise/glow, palette swatches).
+Delete from `main.js`: magnetic card tilt, parallax glow, conditional URL field, radio
+handlers. Keep: nav scroll, hamburger, smooth scroll, modal open/close, phone format,
+form submit (amended in §9). `shared.js`/`shared.css` unchanged.
 
-- **Keep:** the beat/rule rhythm (`.mission__beat` / `.mission__rule`), the section
-  title *"The web shouldn't be a luxury."*
-- **Change:** merge beats 3 and 4 — they currently split one idea ("AI made us fast" /
-  "so it's free") across two beats and repeat the pricing reveal the hero now makes.
-  New beat 3 (final):
-  > "AI changed the math. We build in days what used to take weeks — and we think that
-  > speed should benefit the businesses that need it most. So the build is free. After
-  > launch we handle everything — hosting, security, updates — for less than most owners
-  > pay to be disappointed today."
-  Net: 4 beats → 3. Faster read, no lost meaning.
-- Motion: unchanged (`.reveal` + delays).
+## 2. Page structure (final order)
 
-## 5. Showcase **[reconcile]**
+Nav → Hero → Featured Work (`#work`) → How It Works (`#process`) → What's Included →
+The Bottom Line (incl. Fair Questions) → CTA band → Footer → Contact modal.
+(Mission section from the old page is **removed** — its story lives on /about and in
+Fair Questions. Old How-It-Works timeline is **replaced** by §4.)
 
-- **Keep (already nails it):** CSS wireframe mocks (`.project-card__mock--*`), palette
-  swatches, magnetic 3D tilt from `main.js`, overlay "View Site →". The mocks read as
-  intentional design artifacts — do **not** swap for screenshots.
-- **Copy — section sub (replace):**
-  > "Three businesses, three completely different builds — real menus, real booking,
-  > real forms. Click through; everything works."
-- **NEW — feature chips** per card, between `.project-card__desc` and the palette row:
-  2–3 small pills naming *functionality*, not aesthetics (this is what separates us
-  from template shops, and it sets up the showcase enhancements in
-  `docs/showcase-enhancements-proposal.md`):
-  - Bakery: `Daily specials` · `CMS menu` · `Pre-orders`
-  - Plumber: `24/7 emergency CTA` · `Service requests` · `Invoice pay`
-  - Salon: `Online booking` · `Gallery CMS`
-  - Markup: `.project-card__chips` flex-wrap row of `.chip` — 0.65rem DM Sans,
-    uppercase, letter-spacing 0.08em, `--cream-dim` text, 1px `--border` border,
-    border-radius 100px, padding 0.25rem 0.7rem. On card hover, chip border →
-    `--border-gold` (piggyback the existing card hover transition).
-  - **Build order note:** ship chips that match reality — if the Part 2 showcase
-    features aren't built yet, use current-truth chips (`PDF menu`, `Business hours`,
-    `Contact form`, etc.) and upgrade wording when those land.
+## 3. Nav + Hero — design file lines 27–53, plus additions
 
-## 6. How It Works
+- Logo: 30px square, 2px `--accent` border, radius 4, "W" in Sora 700 `--accent` +
+  wordmark "The Web Foundry" (PJS 600 15px `--cream`). Keep it a component-ish block —
+  forks swap one letter + name.
+- Links: `Our Work` `How It Works` `About` + `Get in Touch` accent button (order as designed).
+- Hero (left-aligned, max-width 720px): keep the 40×3px accent dash, but put beside it
+  an eyebrow — PJS 12px/600/uppercase/0.12em `--muted`: **"Built in Cincinnati"**.
+- H1 (as designed): **"Your business deserves\na great website."**
+- Sub (REPLACES design copy — pricing honesty, never say "free"):
+  > "We design and build modern websites for Cincinnati small businesses. No templates,
+  > no jargon — just a site that represents what you do, at a price a small business
+  > can actually say yes to."
+- CTAs: primary button "View Our Work" (smooth-scroll `#work`) + text link
+  "Start a Conversation →" (opens modal), accent color, arrow nudges +4px on hover.
+- **Proof microbar** (addition; not in design): row under CTAs, 48px top margin, three
+  items separated by 1px×28px `--border-card` rules. Item = number (Sora 600 20px
+  `--cream`) + label (PJS 12px `--muted`): `3` "Live demo builds" (use `data-count="3"`),
+  `Days` "From kickoff to launch", `1` "Simple monthly invoice". Wraps on mobile.
+- Entrance: whole hero = single `slideUp` 0.5s ease-out on load (design's keyframe);
+  no per-word animation (that dies with the old hero).
 
-- **Keep:** timeline structure, marker/line motif, 3 steps.
-- **Change:** add a timeframe kicker above each `.timeline__title` —
-  `.timeline__when` (0.68rem, uppercase, `--gold`, letter-spacing 0.14em):
-  - We talk — **"Day 1 · ~1 hour of your time"**
-  - We build — **"Days 2–5"**
-  - You launch — **"Within the week"**
-  Speed is the AI story made concrete; "1 hour of your time" kills the "I don't have
-  time for this" objection.
-- Step 3 desc, append: *"…You never have to think about it — and if you ever want to
-  walk away, the site and domain are yours."* (Sets up Straight Answers.)
+## 4. Featured Work — per design lines 56–186, plus chips
 
-## 7. NEW SECTION — "The Straight Answers" (objection handling)
+Section bg `--surface`, header block as designed ("Featured Work" tag /
+"See what's possible." / sub "Different businesses, different aesthetics. Each one
+custom-designed to match.").
 
-**Placement:** between How It Works and the CTA. Background `--black-soft` to break
-rhythm. This is the highest-impact addition on the page.
+3-col grid of **browser-chrome cards** (this replaces the old wireframe mocks):
+white card, radius 10; dark title bar with 3 traffic dots + URL pill
+(`sweetcrumbbakery.com` / `peakflowplumbing.com` / `lumieresalon.com`); 250px mini
+site-preview panel — recreate each preview exactly per design lines 77–93 (bakery),
+116–134 (plumber), 157–173 (salon); info footer with category tag (`--accent`), name
+(Sora 18px `#2a3240`), one-line desc, and "View Site →" linking to
+`/showcase/bakery|plumber|salon`.
 
-- Header: `.section-tag` = "No Fine Print", `.section-title` = **"Okay — what's the
-  catch?"** (italic `em` on "catch" per house style).
-- Body: 4 Q&A items, two-column grid on desktop (`repeat(2, 1fr)`, gap 2rem/3rem),
-  single column mobile. Each item: question in Playfair (~1.25rem, `--cream`, an
-  italic `em` allowed), answer in DM Sans (0.95rem, `--cream-dim`, line-height 1.7).
-  Left-border accent 2px `--border-gold` with padding-left 1.5rem (echoes
-  `.trust-badge` treatment from the plumber page, adapted to hub tokens). Stagger in
-  with `.reveal reveal-delay-1..4`.
-- **Copy (final, build as written):**
-  1. **Q: Why would you build my website for free?**
-     A: Because AI collapsed the cost of building, and we'd rather prove it than
-     advertise it. Every free build becomes part of our showcase — your win is our
-     portfolio.
-  2. **Q: So what do I actually pay?**
-     A: Nothing for the build. After launch, hosting, security, and updates run about
-     $20/month — typically less than owners already pay for a worse site. No contracts.
-  3. **Q: Who owns the website?**
-     A: You do. Your domain, your content, your site. If you ever leave, it all goes
-     with you.
-  4. **Q: What do you need from me?**
-     A: About an hour. Tell us about your business, share your logo and photos if you
-     have them, and give feedback on the draft. We handle the rest.
+Whole card is the link (wrap in `<a>`); hover = translateY(-6px) + deepened shadow
+(as designed — no 3D tilt).
 
-## 8. CTA section
+**Addition — feature chips** between desc and View Site link: `.chip` pills, PJS 10px/600
+uppercase 0.08em, `#6b7888` text, 1px `#e3ddd4` border, radius 100px, padding 3px 10px.
+Current-truth wording: bakery `PDF menu · Daily specials · Sanity CMS`; plumber
+`24/7 CTA · Business hours · Contact form`; salon `Gallery CMS · Service pricing · Booking inquiry`.
+(Upgrade wording only when showcase-enhancement features ship.)
 
-- **Keep:** layout, `--gold`-era styling, `.btn--cta` arrow interaction.
-- **Copy — sub (replace):**
-  > "One conversation. No pitch deck, no obligation — just a look at what your
-  > business could have online."
-- **Add** below the button, small (`0.8rem`, `--cream-muted`): direct-email fallback —
-  "Prefer email? `hello@cincinnatiwebfoundry.com`" as a `mailto:` link in `--gold`.
-  Some owners will never open a modal form; give them the one-click path.
+Cards enter with `.reveal reveal-delay-1/2/3`.
 
-## 9. Contact modal (keep) + form compliance fixes
+## 5. How It Works — design panel 0 content, **un-pinned**
 
-Modal UX (focus handling, success state, phone auto-format, conditional URL field) is
-good — keep. **But the form violates the repo's own reliability rules (CLAUDE.md
-"Required form reliability rules"), and this page is the template others fork:**
+**Liberty (decided):** the design's 360vh pinned scroll-story (lines 189–338) is
+**dropped entirely** — implement its three panels as three normal stacked sections.
+Do not port `story-wrapper`, the rAF `_tick` loop, progress bar, stepper, or scroll cue.
 
-1. Add hidden inputs: `site_id` (e.g. `web-foundry-hub`) and `to_email`.
-2. In `main.js`, gate success UI on `res.ok === true` (currently only checks
-   `result.success` in the parsed body).
-3. On failure, refresh the Turnstile token (`turnstile.reset()`) — currently a failed
-   submit leaves a consumed token, so the retry fails too.
+Section `#process`, bg `--ink`, top border `--hairline`. Header: tag "How It Works" +
+title "Simple from start to finish." Then the 3 light panels in a row (design lines
+209–228): `--panel` bg, radius 10, 3px `--accent` top border, heading PJS 15px/600
+`--panel-ink`, body 13px `--panel-muted`; animated arrow separators (`arrowNudge`
+keyframe, `--accent` stroke). Copy exactly as designed, with one addition — a timeframe
+kicker above each heading (PJS 10px/700/uppercase/0.12em `--accent`):
 
-(The same three fixes apply to the bakery/plumber/salon forms — tracked in the
-showcase proposal doc.)
+1. **Day 1 · about an hour** — "Tell us about your business" / "A simple conversation — your customers, your style, what makes you different. No tech speak, no questionnaires."
+2. **Days 2–5** — "We design and build" / "Custom design, fast turnaround. We iterate until it feels like you. No templates, no shortcuts."
+3. **Within the week** — "Launch and forget" / "Your site goes live. Hosting, security, domain, updates — all handled. One simple monthly invoice."
 
-## 10. Motion & interaction summary (all reuse, no new systems)
+Mobile: stack panels vertically, rotate arrows 90° (or hide them).
 
-| Element | Mechanism | Source |
-|---|---|---|
-| Hero words | existing `hero__word` keyframes | hub.css |
-| Proof microbar count | `data-count` | shared.js (already auto-inits) |
-| Section entrances | `.reveal` + delay modifiers | shared.css |
-| Card tilt | existing magnetic handler | main.js |
-| Chips hover | extend existing `.project-card:hover` rule | hub.css |
-| Straight Answers stagger | `.reveal reveal-delay-1..4` | shared.css |
+## 6. What's Included — design panel 1 as its own section
 
-Do **not** add new JS libraries or scroll frameworks. Respect
-`prefers-reduced-motion` for anything new (shared.css reveal already handles its own).
+Bg `--ink`. Header: tag "What's Included" + title "Everything you need. Nothing you don't."
+4-col grid (2-col ≤1024px, 1-col ≤640px) of glass cards (`--card-glass` bg,
+`--border-card` border, radius 10): 36px `--accent-dim` icon chip with the exact inline
+SVGs from design lines 241/248/255/262, then title + body copy exactly as designed
+(Custom Design / Hosting & Domain / SEO & Analytics / Content Updates).
+Cards `.reveal reveal-delay-1..4`.
 
-## 11. Build checklist (for the implementation pass)
+## 7. The Bottom Line + Fair Questions
 
-- [ ] Nav link reorder
-- [ ] Hero: new sub copy, ghost CTA label, `.hero__proof` microbar (+ mobile stack)
-- [ ] Mission: merge beats 3+4 (4 → 3 beats)
-- [ ] Showcase: new section sub, `.project-card__chips` + `.chip` styles, chips per card (current-truth wording)
-- [ ] How It Works: `.timeline__when` kickers, step-3 copy append
-- [ ] New "Straight Answers" section (`--black-soft` bg, 4 Q&As, copy as written above)
-- [ ] CTA: new sub copy + mailto fallback line
-- [ ] Form compliance: `site_id`/`to_email` hidden fields, `res.ok` gate, Turnstile reset on failure
-- [ ] Verify mobile ≤768px for every touched section; hub Lighthouse should stay ≥ current
+Bg `--surface`. Header: tag "The Bottom Line" + title "One invoice. Zero headaches."
+Split layout (design lines 277–304): left — paragraph exactly as designed ("We handle
+the domain, the hosting, the security, the updates, and the support. You get one
+monthly invoice and a website that works — no tech knowledge required on your end,
+ever.") + primary button "Start a Conversation →" (opens modal); right — 280px
+checklist card (glass style) with the five ✓ rows as designed.
+
+**Addition — Fair Questions block** below the split, same section (48px gap): 2×2 grid
+(1-col mobile), each item Q (Sora 16px 600 `--cream`) + A (PJS 14px `--muted`, lh 1.7),
+2px `--accent` left border, padding-left 20px. Copy final — **never the word "free"**:
+
+1. **Why is this so affordable?** — "The Web Foundry is a community project, not an
+   agency. AI lets us build in days what used to take weeks, and we price to cover our
+   costs — not to make a living off Cincinnati's small businesses."
+2. **What do I actually pay?** — "A small one-time build fee, then one simple monthly
+   invoice — about what you'd spend on lunch — that covers hosting, security, your
+   domain, and updates. No contracts, no surprises."
+3. **Who owns the website?** — "You do. Your domain, your content, your site. If you
+   ever want to walk away, it all goes with you."
+4. **What do you need from me?** — "About an hour. Tell us about your business, share
+   your logo and photos if you have them, and react to the draft. We handle the rest."
+
+Items `.reveal reveal-delay-1..4`.
+
+## 8. CTA band + Footer — per design lines 342–368
+
+CTA band: bg `--surface-raised`, split layout: left — Sora 36px "Your business has a
+story worth telling." + sub "Let's make it visible. No commitment, no pressure."
+(`rgba(238,233,225,0.45)`); right — primary button "Start a Conversation →" (modal).
+Add under the sub, PJS 13px `--muted`: "Prefer email? " +
+`hello@cincinnatiwebfoundry.com` mailto link in `--accent`. Stacks on mobile.
+
+Footer: bg `--footer-bg`, mini W-mark + "The Web Foundry · Cincinnati, OH", links
+Work (`#work`) / About (`/about`) / Privacy (`/privacy`), all `--muted-deep`.
+(This replaces the old logo-a footer + tagline.)
+
+## 9. Contact modal — design lines 371–419 + production requirements
+
+Light modal (`--modal-bg`, radius 12, 44px padding, `slideUp` entrance, overlay click +
+Esc close — keep existing `main.js` modal logic and focus handling).
+
+Fields (REPLACES old field set — no radios, no conditional URL field):
+Name*, Email*, Phone (optional, keep auto-format), Business Name*,
+"Anything else? (optional)" textarea. Light inputs per design (white bg, `#d5cfc7`
+border, focus border `--accent`).
+
+**Production requirements the design omits (mandatory):**
+- Hidden `botcheck` checkbox; hidden `site_id` = `web-foundry-hub`; hidden `to_email`
+  (value: current notification inbox — same one the Worker's `TO_EMAIL` uses).
+- Turnstile widget (`data-sitekey="0x4AAAAAACxVhhG9sxrzihaS" data-theme="light"`).
+- Submit JSON to the existing Worker URL; success UI **only when `res.ok === true`**
+  (and body `success`); on failure show inline error, keep form visible, and call
+  `turnstile.reset()`.
+- Success state per design (check circle, "Message received.", 24-hour promise).
+
+## 10. Responsive rules (design has none — these are the spec)
+
+Breakpoints 1024px / 768px. Section padding 60px → 24px at 768. Nav: links collapse
+behind existing hamburger at 768 (restyle dropdown to `rgba(24,28,40,0.97)`).
+Work grid 3→1 col (1024: 2-col is acceptable if cards hold ≥320px). Hero h1 via clamp;
+proof bar wraps. No horizontal scroll at 360px width. Respect `prefers-reduced-motion`
+(shared.css already covers reveals; gate `arrowNudge` similarly).
+
+## 11. Build checklist (do in this order)
+
+- [ ] `BaseLayout`/`index.astro` head: swap font link to Sora + Plus Jakarta Sans
+- [ ] `hub.css`: replace `:root` tokens (§1); restyle nav/buttons/footer; delete dead styles
+- [ ] `index.astro`: rebuild sections per §§3–8 (remove mission, old timeline, old cards, old CTA/footer markup)
+- [ ] Modal per §9; `main.js` form handler: `site_id`/`to_email` pass-through, `res.ok` gate, `turnstile.reset()` on failure; delete dead JS (§1)
+- [ ] Responsive pass per §10
+- [ ] Update CLAUDE.md "Design System → Hub Page" row: colors `#181c28` bg / `#b45a3c` terracotta / `#eee9e1` cream; fonts Sora + Plus Jakarta Sans
+- [ ] `npm run build` clean; check `/`, `/about`, `/privacy` links resolve
+- [ ] Post-deploy: live form smoke test per CLAUDE.md
+
+**Out of scope this pass:** about/privacy restyle, showcase pages, any new imagery,
+sitewide copy beyond sections above.

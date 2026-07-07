@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { -webkit-font-smoothing: antialiased; }
+  </style>
+</helmet>
+
+<div style="background:#faf6f1; min-height:100vh;">
+
+  <!-- NAV -->
+  <nav style="display:flex; align-items:center; justify-content:space-between; padding:0 56px; height:72px; background:rgba(250,246,241,0.95); backdrop-filter:blur(12px); position:sticky; top:0; z-index:50; border-bottom:1px solid rgba(92,61,46,0.08);">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <div style="width:32px; height:32px; background:#8b5e3c; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:'Playfair Display',serif; font-size:16px; color:#faf6f1; font-weight:600;">S</span>
+      </div>
+      <span style="font-family:'Playfair Display',serif; font-size:18px; color:#5c3d2e; font-weight:500;">Sweet Crumb</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:32px;">
+      <span style="font-family:'Lato',sans-serif; font-size:13px; font-weight:400; color:#8b7565; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; transition:color 0.15s;" style-hover="color:#5c3d2e">Menu</span>
+      <span style="font-family:'Lato',sans-serif; font-size:13px; font-weight:400; color:#8b7565; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; transition:color 0.15s;" style-hover="color:#5c3d2e">Our Story</span>
+      <span style="font-family:'Lato',sans-serif; font-size:13px; font-weight:400; color:#8b7565; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; transition:color 0.15s;" style-hover="color:#5c3d2e">Hours</span>
+      <span style="font-family:'Lato',sans-serif; font-size:12px; font-weight:700; color:#faf6f1; background:#8b5e3c; padding:9px 20px; border-radius:4px; letter-spacing:0.04em; cursor:pointer; transition:background 0.15s;" style-hover="background:#a06e4a">Order Online</span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section style="padding:100px 56px 80px; max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;">
+    <div>
+      <div style="font-family:'Lato',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:#b8956a; margin-bottom:16px;">Handcrafted in Cincinnati</div>
+      <h1 style="font-family:'Playfair Display',serif; font-size:56px; line-height:1.1; color:#3a2518; margin-bottom:20px;">Baked with love,<br><em style="color:#8b5e3c;">every morning.</em></h1>
+      <p style="font-family:'Lato',sans-serif; font-size:16px; line-height:1.75; color:#8b7565; max-width:400px; margin-bottom:32px;">Fresh pastries, artisan breads, and house-roasted coffee. Made from scratch daily in our Northside kitchen.</p>
+      <div style="display:flex; gap:12px;">
+        <span style="font-family:'Lato',sans-serif; font-size:13px; font-weight:700; color:#faf6f1; background:#8b5e3c; padding:13px 28px; border-radius:4px; cursor:pointer; letter-spacing:0.02em; transition:background 0.15s;" style-hover="background:#a06e4a">View Our Menu</span>
+        <span style="font-family:'Lato',sans-serif; font-size:13px; font-weight:700; color:#8b5e3c; padding:13px 28px; border:1.5px solid #8b5e3c; border-radius:4px; cursor:pointer; letter-spacing:0.02em; transition:background 0.15s, color 0.15s;" style-hover="background:#8b5e3c; color:#faf6f1">Our Story</span>
+      </div>
+    </div>
+    <div style="background:linear-gradient(145deg, #ecdccc 0%, #d4a574 100%); border-radius:12px; height:420px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+      <div style="position:absolute; top:24px; right:24px; width:80px; height:80px; border:1px solid rgba(250,246,241,0.25); border-radius:50%;"></div>
+      <div style="position:absolute; bottom:-20px; left:-20px; width:120px; height:120px; border-radius:50%; background:rgba(139,94,60,0.12);"></div>
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-size:60px; color:rgba(250,246,241,0.9); font-style:italic;">🥐</div>
+        <div style="font-family:'Lato',sans-serif; font-size:11px; color:rgba(250,246,241,0.6); letter-spacing:0.12em; text-transform:uppercase; margin-top:12px;">Fresh Daily</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAILY SPECIALS -->
+  <section style="background:#f0e8dc; padding:72px 56px; border-top:1px solid rgba(92,61,46,0.06);">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="text-align:center; margin-bottom:48px;">
+        <div style="font-family:'Lato',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:#b8956a; margin-bottom:10px;">From Our Kitchen</div>
+        <div style="font-family:'Playfair Display',serif; font-size:36px; color:#3a2518;">Today's Favorites</div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+        <div style="background:#faf6f1; border-radius:10px; overflow:hidden; transition:transform 0.2s;" style-hover="transform:translateY(-4px)">
+          <div style="height:200px; background:linear-gradient(135deg, #e8d5c0 0%, #d4b896 100%); display:flex; align-items:center; justify-content:center;">
+            <span style="font-size:48px;">🍞</span>
+          </div>
+          <div style="padding:24px;">
+            <div style="font-family:'Playfair Display',serif; font-size:20px; color:#3a2518; margin-bottom:6px;">Sourdough Boule</div>
+            <p style="font-family:'Lato',sans-serif; font-size:13px; color:#8b7565; line-height:1.6; margin-bottom:12px;">48-hour fermented, stone-baked with a crackling crust and soft, tangy interior.</p>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-family:'Lato',sans-serif; font-size:14px; font-weight:700; color:#8b5e3c;">$8.50</span>
+              <span style="font-family:'Lato',sans-serif; font-size:11px; color:#b8956a; text-transform:uppercase; letter-spacing:0.08em;">Available Today</span>
+            </div>
+          </div>
+        </div>
+        <div style="background:#faf6f1; border-radius:10px; overflow:hidden; transition:transform 0.2s;" style-hover="transform:translateY(-4px)">
+          <div style="height:200px; background:linear-gradient(135deg, #f0dcc8 0%, #e0c4a6 100%); display:flex; align-items:center; justify-content:center;">
+            <span style="font-size:48px;">🥐</span>
+          </div>
+          <div style="padding:24px;">
+            <div style="font-family:'Playfair Display',serif; font-size:20px; color:#3a2518; margin-bottom:6px;">Almond Croissant</div>
+            <p style="font-family:'Lato',sans-serif; font-size:13px; color:#8b7565; line-height:1.6; margin-bottom:12px;">Butter-laminated pastry filled with house-made almond cream and toasted almonds.</p>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-family:'Lato',sans-serif; font-size:14px; font-weight:700; color:#8b5e3c;">$5.75</span>
+              <span style="font-family:'Lato',sans-serif; font-size:11px; color:#b8956a; text-transform:uppercase; letter-spacing:0.08em;">Sells Out Early</span>
+            </div>
+          </div>
+        </div>
+        <div style="background:#faf6f1; border-radius:10px; overflow:hidden; transition:transform 0.2s;" style-hover="transform:translateY(-4px)">
+          <div style="height:200px; background:linear-gradient(135deg, #ecdccc 0%, #d8bfa0 100%); display:flex; align-items:center; justify-content:center;">
+            <span style="font-size:48px;">🍰</span>
+          </div>
+          <div style="padding:24px;">
+            <div style="font-family:'Playfair Display',serif; font-size:20px; color:#3a2518; margin-bottom:6px;">Cardamom Coffee Cake</div>
+            <p style="font-family:'Lato',sans-serif; font-size:13px; color:#8b7565; line-height:1.6; margin-bottom:12px;">Warm spiced cake with brown butter streusel. Perfect with our house drip coffee.</p>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-family:'Lato',sans-serif; font-size:14px; font-weight:700; color:#8b5e3c;">$6.25</span>
+              <span style="font-family:'Lato',sans-serif; font-size:11px; color:#b8956a; text-transform:uppercase; letter-spacing:0.08em;">Weekend Special</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOURS & LOCATION -->
+  <section style="padding:72px 56px; max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;">
+    <div>
+      <div style="font-family:'Lato',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:#b8956a; margin-bottom:10px;">Visit Us</div>
+      <div style="font-family:'Playfair Display',serif; font-size:36px; color:#3a2518; margin-bottom:24px;">Come Say Hello</div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div style="display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid rgba(92,61,46,0.08);">
+          <span style="font-family:'Lato',sans-serif; font-size:14px; color:#5c3d2e; font-weight:700;">Monday – Friday</span>
+          <span style="font-family:'Lato',sans-serif; font-size:14px; color:#8b7565;">6:30 AM – 3:00 PM</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid rgba(92,61,46,0.08);">
+          <span style="font-family:'Lato',sans-serif; font-size:14px; color:#5c3d2e; font-weight:700;">Saturday</span>
+          <span style="font-family:'Lato',sans-serif; font-size:14px; color:#8b7565;">7:00 AM – 4:00 PM</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid rgba(92,61,46,0.08);">
+          <span style="font-family:'Lato',sans-serif; font-size:14px; color:#5c3d2e; font-weight:700;">Sunday</span>
+          <span style="font-family:'Lato',sans-serif; font-size:14px; color:#8b7565;">8:00 AM – 2:00 PM</span>
+        </div>
+      </div>
+      <div style="margin-top:24px;">
+        <div style="font-family:'Lato',sans-serif; font-size:14px; color:#5c3d2e; font-weight:700; margin-bottom:4px;">4127 Hamilton Ave</div>
+        <div style="font-family:'Lato',sans-serif; font-size:14px; color:#8b7565;">Northside, Cincinnati, OH 45223</div>
+      </div>
+    </div>
+    <div style="background:#e8d5c0; border-radius:12px; height:320px; display:flex; align-items:center; justify-content:center;">
+      <div style="text-align:center;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8b5e3c" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        <div style="font-family:'Lato',sans-serif; font-size:12px; color:#8b5e3c; margin-top:8px; letter-spacing:0.06em;">Map Placeholder</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#3a2518; padding:40px 56px;">
+    <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <div style="font-family:'Playfair Display',serif; font-size:18px; color:#faf6f1; margin-bottom:4px;">Sweet Crumb Bakery</div>
+        <div style="font-family:'Lato',sans-serif; font-size:12px; color:rgba(250,246,241,0.5);">Handcrafted in Northside, Cincinnati</div>
+      </div>
+      <div style="display:flex; gap:24px;">
+        <span style="font-family:'Lato',sans-serif; font-size:12px; color:rgba(250,246,241,0.5); cursor:pointer; transition:color 0.15s;" style-hover="color:#faf6f1">Instagram</span>
+        <span style="font-family:'Lato',sans-serif; font-size:12px; color:rgba(250,246,241,0.5); cursor:pointer; transition:color 0.15s;" style-hover="color:#faf6f1">Facebook</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO FOUNDRY BADGE -->
+  <a href="Homepage.dc.html" style="position:fixed; bottom:20px; right:20px; z-index:90; background:#181c28; color:#8b95a8; font-family:'Plus Jakarta Sans',sans-serif; font-size:11px; padding:8px 14px; border-radius:6px; text-decoration:none; display:flex; align-items:center; gap:6px; transition:background 0.15s;" style-hover="background:#242c3a">
+    <span style="color:#b45a3c;">←</span> Built by The Web Foundry
+  </a>
+
+</div>
+
+</x-dc>
+</body>
+</html>

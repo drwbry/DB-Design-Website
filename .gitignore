@@ -5,3 +5,7 @@ node_modules/
 dist/
 .env
 .env.local
+
+# Claude Design handoff extract (curated copies live in docs/design-imports/)
+Cincinnati Web Foundry-handoff/
+Cincinnati Web Foundry-handoff.zip*

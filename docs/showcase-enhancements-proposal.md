@@ -1,244 +1,168 @@
-# Showcase Enhancements Proposal — Industry-Specific Functionality
+# Showcase Enhancements — Plan v2 (Stripe & Calendly APPROVED)
 
-**Status:** Proposal for review — no implementation yet. Written 2026-07-06 against
-`src/pages/showcase/{plumber,bakery,salon}.astro`.
+**Status:** Stripe + Calendly integrations approved by Dreux (2026-07-06).
+GloriaFood embed pending Dreux account setup (free — see research below).
+**Stripe account:** `foundrysolutionsllc@gmail.com` (use **test mode** for demo links).
 
-**Purpose:** the showcase pages must prove a static Astro site supports *real industry
-functionality*, not just aesthetics. Every item below is achievable with exactly three
-mechanisms (per constraints): (a) a static form POSTing JSON to the existing shared
-Cloudflare Worker, (b) a client-side third-party embed, or (c) a Sanity-driven content
-field (webhook → Coolify rebuild already wired). All demo integrations must actually
-work using accounts **The Web Foundry owns** — no dead mockups, no "client account
-required" placeholders.
+**Constraints (unchanged):** static Astro only; every feature = (a) JSON form to the
+existing shared Cloudflare Worker, (b) client-side third-party embed, or (c) Sanity
+field (webhook → Coolify rebuild). Demo integrations run on TWF-owned accounts and
+must actually work. Match each page's existing design system.
 
----
-
-## Priority overview
-
-| # | Page | Feature | Mechanism | Effort | External dependency |
-|---|------|---------|-----------|--------|---------------------|
-| P0 | all four forms | Form-reliability compliance fixes | Worker (existing) | S | none |
-| P1 | plumber | Service-request ticket form | Worker | M | none |
-| P1 | plumber | "Pay Your Invoice" via Stripe Payment Link | embed/link | S–M | TWF Stripe account (test mode), free |
-| P1 | salon | Real booking embed (Calendly) | embed | S | TWF-owned free Calendly account |
-| P1 | bakery | Specials → Sanity-driven | Sanity | M | none |
-| P2 | bakery | Pre-order form (pickup orders) | Worker | M | none |
-| P2 | bakery | GloriaMenus ordering embed | embed | S | TWF GloriaMenus demo account (~$30/mo or trial) — **your call** |
-| P3 | salon | Gift cards via Stripe Payment Link | embed/link | S | reuses plumber's Stripe setup |
-| P3 | salon | Services → Sanity `services` schema | Sanity | S | none |
-| P3 | bakery | Clean up empty structured-menu scaffold | code hygiene | XS | none |
-
-Recommended first batch if you confirm scope: **P0 + the three P1s** (each showcase
-page gains one flagship "a static site can do *that*?" feature).
+**Template-ability rule (applies to every feature):** each showcase page gets a
+`CONFIG` block — a small set of `const`s at the top of the frontmatter (or a clearly
+marked constants section in the inline script) holding every fork-swappable value:
+`SITE_ID`, `TO_EMAIL`, `WORKER_URL`, `STRIPE_PAYMENT_LINK`, `CALENDLY_URL`,
+`PHONE`, business name. **No integration URL or routing value may appear inline in
+markup/JS below the CONFIG block.** Forking a client site = edit CONFIG + branding.
 
 ---
 
-## P0 — Cross-cutting: form-reliability compliance (all four forms)
+## Ordering-solution research (answers "is GloriaMenus free?")
 
-The hub modal + all three showcase forms predate the deployment guardrails now in
-CLAUDE.md, and since these pages are **forkable client templates, every fork inherits
-the gaps**:
+The intake brief's "GloriaMenus ~$30/mo" was wrong on both name and price. The product
+is **GloriaFood** — and its **core online ordering (and table reservations) is free
+forever**: unlimited orders, no commissions, no setup fee; the restaurant confirms
+orders on a free phone/tablet app and customers pay at pickup. The ~$29/mo figure is
+their **optional online-card-payments add-on** (other add-ons: sales website $9/mo,
+branded app $59/mo — we need neither; we ARE the website).
 
-1. No hidden `site_id` / `to_email` routing fields (required rule).
-2. Success UI gates on `data.success` from the body, not `response.ok === true`.
-3. On failure, the consumed Turnstile token is never refreshed (`turnstile.reset()`),
-   so the user's retry silently fails verification.
+**Recommendation ladder for zero-tech-budget clients (now reflected in
+`docs/cowork-intake-brief.md`):**
 
-Fix all four in one pass (suggested `site_id`s: `web-foundry-hub`, `demo-bakery`,
-`demo-plumber`, `demo-salon`). Small, mechanical, highest leverage per line changed.
+1. **GloriaFood free tier** — default for restaurants/bakeries/cafés wanting ordering.
+   $0/mo, pay-at-pickup. Embed = one script/button snippet on `/menu` or `/order`.
+2. **GloriaFood + card payments ($29/mo)** — only when the client insists on prepaid
+   orders. Their Stripe connects; money flows direct to client.
+3. **Square Online (free plan)** — alternative when the client *already runs Square
+   POS* (transaction fees only, menu syncs from their POS).
 
----
+So GloriaFood **is** the cost-efficient answer — better than we thought, since $0
+covers the realistic bakery case.
 
-## Peak Flow Plumbing (`plumber.astro`) — service business exemplar
-
-Already good: emergency CTA, trust badges, animated stats bar, Sanity hours, contact
-form. What's missing is the *workflow* story: a customer with a problem, and a customer
-with a bill.
-
-### P1a — Service-request ticket form (replaces "describe the issue" free-text)
-
-Upgrade the existing contact form into a structured **Request Service** form — same
-Worker, same pattern, richer payload:
-
-- **Fields:** name*, phone*, email, service type (select mirroring the six service
-  cards + "Something else"), urgency (radio: `Emergency — right now` / `Today` /
-  `This week` / `Flexible`), street address or ZIP*, preferred time window (morning /
-  afternoon / evening), description textarea.
-- **Ticket number, client-side:** generate `PF-{base36 timestamp}` on submit, include
-  it in the JSON payload (`ticket_id`) and show it in the success state: *"Request
-  received — your ticket is **PF-K3X9Q**. We'll confirm your window shortly."* Zero
-  backend; it just threads the email conversation and *feels* like a real dispatch
-  system — which is exactly the demo point.
-- **Emergency routing UX:** selecting `Emergency — right now` swaps the submit button
-  for a pulsing "Don't wait — call (555) 123-4567" tel: button (reuses
-  `.btn-emergency` styles) while keeping the form usable. Realistic and shows conversion
-  thinking.
-- **Deep links from service cards:** each `.service-card` gets a "Request this
-  service →" link that scrolls to the form and preselects the service type (few lines
-  of inline JS). Cards stop being decorative.
-- **Design:** existing navy contact section, existing input styles; urgency radios as
-  segmented pills using `--orange` for the selected state.
-- **Explicit non-goal:** photo attachments — the Worker is a JSON→email relay; file
-  upload would need R2 or multipart handling. Note "text description now, photos by
-  reply email" in the helper text.
-
-### P1b — "Pay Your Invoice" section (Stripe Payment Link)
-
-New section between Hours and the emergency banner: **"PAY YOUR INVOICE"** (Bebas
-headline per house style, navy bg, orange accent).
-
-- **Mechanism:** one **Stripe Payment Link** created in the TWF Stripe account —
-  *customer chooses amount* enabled, plus a Payment Link **custom field** for
-  "Invoice #". That combination is exactly "pay what your invoice says" with zero
-  server code. For the demo, create it in **test mode** and label the section
-  "Demo — use card 4242 4242 4242 4242"; a fork for a real client swaps in their live
-  link URL and deletes the demo note. No client account needed for the showcase to
-  function.
-- **Layout:** left column — short copy ("Have an invoice from us? Pay it online in
-  under a minute. Secure checkout by Stripe.") + trust line (lock icon, "PCI-compliant
-  · cards, Apple Pay, Google Pay"); right column — a card with invoice-number
-  illustration and a `.btn-call`-styled "Pay Invoice →" anchor opening the Payment
-  Link in a new tab.
-- **Why not embedded Stripe Checkout/Elements:** requires a server to mint sessions.
-  Payment Links are the static-first answer and match the CLAUDE.md scaling doctrine.
-
-### P2 — smaller plumber ideas (flag only)
-
-- Static reviews strip (3 quotes + Google star badge) under the stats bar — trust
-  signals are this industry's currency. Content could later be a Sanity `testimonials`
-  schema (already a standard type in the intake brief).
-- "Service area" ZIP checker: client-side JS against a hardcoded ZIP list, instant
-  "✓ We cover 45202" feedback. Cheap, delightful, fully static.
+Sources: [gloriafood.com/pricing](https://www.gloriafood.com/pricing),
+[gloriafood.com](https://www.gloriafood.com/),
+[g2.com GloriaFood pricing](https://www.g2.com/products/gloriafood/pricing).
 
 ---
 
-## Sweet Crumb Bakery (`bakery.astro`) — food-service exemplar
+## Batch 1 (build next, in order)
 
-Already good: Sanity PDF menu, a **hardcoded** Today's Specials strip, warm design.
-Two gaps: specials aren't client-editable (undermines the CMS demo story), and there's
-no path from "menu" to "order".
+| # | Page | Feature | Mechanism | Blocked on Dreux? |
+|---|------|---------|-----------|-------------------|
+| P0 | all 4 forms | Form-reliability compliance | Worker | no |
+| P1a | plumber | Service-request ticket form | Worker | no |
+| P1b | plumber | "Pay Your Invoice" — Stripe Payment Link | link-out | yes — create link (5 min, below) |
+| P1c | bakery | Specials → Sanity-driven | Sanity | no |
+| P1d | salon | Calendly booking embed | embed | yes — create event (10 min, below) |
 
-### P1c — Specials become Sanity-driven
+Later: P2a bakery pre-order form (Worker, no deps) · P2b bakery GloriaFood embed
+(after Dreux makes free account) · P3 salon gift-card Payment Link · P3 salon
+services→Sanity · P3 bakery dead menu-tab scaffold cleanup (`bakery.astro:10`).
 
-The specials strip already exists visually — make it real:
-
-- **Schema:** add `specials` array to the existing `bakeryMenu` document (or a
-  `dailySpecials` doc): `emoji` (string), `name`, `description`, `price` (string),
-  optional `availableNote` ("Tue/Thu/Sat only"). Cap at 3 items (same pattern as the
-  salon gallery's max-5).
-- **Page:** render from Sanity with the current three cards as the hardcoded fallback
-  (identical pattern to plumber hours / salon gallery). Publish → webhook → Coolify
-  rebuild, already wired.
-- **Demo value:** this is the single best live-demo moment for food prospects —
-  *"watch me change today's special from my phone, and the site updates itself."*
-
-### P2a — Pre-order / order-ahead form (Worker)
-
-Real small bakeries take pre-orders; a form genuinely covers the workflow:
-
-- New **"Order Ahead"** section (anchor the nav's currently-dead `Order Now` pill to
-  it — right now it points at `#hours`, which is a bug in demo terms).
-- **Fields:** name*, phone*, email*, pickup date (min tomorrow, client-side) + time
-  select within business hours, order textarea ("6 almond croissants, 1 walnut rye"),
-  optional occasion select (birthday/event/just because 🧁). `subject: "Pre-Order —
-  Sweet Crumb Bakery"`, `order_id` generated client-side like the plumber ticket.
-- Success copy sets expectations honestly: *"Order received! We'll confirm by text
-  within the hour. Nothing is charged until pickup."* — which is also exactly how most
-  real small bakeries want it (no payment integration to reconcile).
-
-### P2b — GloriaMenus embed (decision needed from you)
-
-The intake brief's sanctioned path for "menu changes often + wants a dedicated
-tool/QR" is a **GloriaMenus embed (~$30/mo)**. To demo it honestly the showcase needs
-a **TWF-owned GloriaMenus account** with a "Sweet Crumb" demo menu embedded in the
-menu section (tabs scaffold already exists to house it or be replaced by it).
-- **Recommendation:** hold this until the $30/mo (or trial availability) is worth it —
-  the Sanity specials + pre-order form already prove the food-service story. Add the
-  embed when a real restaurant prospect is in the pipeline. If you'd rather have it
-  now, say so and it goes in the first batch.
-
-### Decision: enhance `bakery.astro` vs. new `restaurant.astro`
-
-**Recommendation: enhance bakery; do not build restaurant.astro now.** Reasoning:
-
-1. Every food-service pattern we can demo (CMS menu, specials, ordering embed,
-   pre-orders, hours) fits naturally on the bakery — a fourth page would demonstrate
-   the *same mechanism classes*, just restyled.
-2. A fourth showcase costs hub-grid redesign (3-card grid → 4), a fourth palette/mock,
-   and permanent maintenance surface, while diluting the "three businesses, three
-   aesthetics" line.
-3. The one genuinely distinct restaurant pattern — **reservations** (OpenTable/Resy) —
-   is mechanically identical to the salon's booking embed (P1d below), so the
-   capability still gets demonstrated.
-4. Revisit only if Cincinnati full-service-restaurant prospects become a real segment;
-   then a `restaurant.astro` with a Resy/OpenTable embed + GloriaMenus becomes a
-   sales-call asset worth its upkeep.
-
-### P3 — hygiene
-
-`bakery.astro` line 10 declares an empty `categories` array, so the sticky tab bar
-renders as an empty bordered strip and the structured-menu loop renders nothing.
-Either wire it to a Sanity `menuItems` schema or remove the scaffold until needed.
+**Decision recorded — no `restaurant.astro`:** bakery is the food-service exemplar.
+Every food pattern (CMS menu, specials, ordering embed, pre-orders) fits it; a fourth
+page duplicates mechanism classes, costs hub-grid + maintenance, and reservations are
+mechanically identical to the salon's Calendly embed. Revisit only if full-service
+restaurant prospects become a real segment.
 
 ---
 
-## Lumière Salon & Spa (`salon.astro`) — appointment business exemplar
+## Dreux setup tasks (do before/independent of the build; Sonnet builds with placeholders)
 
-Already good: services with prices, Sanity gallery, luxe design. The gap is glaring in
-demo terms: the nav says **"Book Now"** but lands on… a contact form. Appointment
-booking is *the* thing every salon/barber/studio prospect will ask about.
+1. **Stripe (foundrysolutionsllc@gmail.com, TEST mode):** create Payment Link —
+   "Peak Flow Plumbing — Invoice Payment"; *customer chooses amount*; add custom text
+   field "Invoice #". Paste URL into plumber CONFIG (`STRIPE_PAYMENT_LINK`).
+2. **Calendly (free account):** event "Lumière Salon — Consultation", 30 min, cap
+   ~3/day. Paste scheduling URL into salon CONFIG (`CALENDLY_URL`).
+3. *(Later, P2b)* GloriaFood free account + "Sweet Crumb Bakery" demo menu; grab the
+   ordering-widget snippet.
 
-### P1d — Real booking embed (Calendly)
-
-- **Mechanism:** TWF-owned **free Calendly account**, event type "Lumière Salon —
-  Consultation" (30 min). Embed via Calendly's inline widget (script + div) inside the
-  `#book` section; free tier, functions end-to-end, and a fork swaps one URL per the
-  intake brief's embed doctrine (Calendly is first in its listed platforms).
-- **Design integration:** Calendly's inline widget accepts `background_color`,
-  `text_color`, `primary_color` URL params — set espresso `1C1410` / blush `E8D5C4` /
-  champagne `C9A96E` so it sits inside the aesthetic rather than looking bolted on.
-  Frame it in a 1px `--border-gold` card.
-- **Restructure `#book`:** two columns — left: the embed ("Book instantly"); right:
-  the existing inquiry form retitled **"Prefer to ask first?"** (it keeps the Worker
-  demo alive and models the real-world pair: instant booking + human inquiry).
-- Demo note under the embed: "Demo calendar — bookings land on The Web Foundry's
-  calendar, feel free to try it." (Real bookings arriving is the *point*; pick a
-  Calendly event with generous availability and auto-decline… actually simpler: set
-  the event's daily cap to a few slots.)
-
-### P3 — smaller salon ideas (flag only)
-
-- **Gift cards:** a second Stripe Payment Link (fixed amounts $50/$100/$150) —
-  reuses the plumber Stripe setup verbatim; salon gift cards are a real revenue line.
-  Cheap to add once P1b exists.
-- **Services from Sanity:** move the six hardcoded service cards to the standard
-  `services` schema (name/description/price) from the intake brief — lets the demo
-  show price edits, and dogfoods the schema clients actually get.
+Sonnet must build every integration against CONFIG constants with placeholder values
+(`"REPLACE_ME_STRIPE_LINK"` etc.) and a loud `<!-- TODO(dreux) -->` comment, so the
+build never blocks on these.
 
 ---
 
-## What this set proves, per prospect type
+## Build specs (kept terse — reuse each page's existing tokens/classes)
 
-- **Trades/home services:** dispatch-style ticketing + online invoice payment, no backend.
-- **Food service:** phone-editable specials, order-ahead, (optionally) full ordering embed.
-- **Appointments/beauty:** real-time booking inside a fully static page.
-- **Everyone:** every page becomes a copy-paste-ready template where the "integration"
-  is one URL or one Sanity schema swap at fork time.
+### P0 — form compliance (hub + bakery + plumber + salon)
 
-## Onboarding-skill follow-through (per CLAUDE.md)
+Per CLAUDE.md rules, in each form/script: add hidden `site_id`
+(`web-foundry-hub` / `demo-bakery` / `demo-plumber` / `demo-salon`) and `to_email`
+inputs; gate success on `res.ok === true` (keep body-`success` check as AND); on
+failure call `turnstile.reset()` and keep form visible. Hub modal is also covered by
+the homepage spec §9 — don't double-build; do hub last, skip if the rebrand pass
+already landed it.
 
-When implemented, the following must be reflected in
-`~/.claude/skills/web-foundry-onboarding/SKILL.md` and the intake docs:
-- Stripe Payment Link pattern (invoice pay / gift cards) as a standard offering + the
-  "swap link URL at fork" step.
-- Calendly embed color-param theming pattern.
-- New Sanity types: `specials`; `services` moving from "common" to "demonstrated".
-- New form types for the Worker docs: `service-request` (ticket_id), `pre-order`
-  (order_id) — and the `site_id`/`to_email` compliance fix as template baseline.
+### P1a — plumber service-request form
+
+Extend `#plumber-contact-form` (keep navy styling/input classes):
+
+- Fields: name*, phone*, email, `service_type` select (the six service-card names +
+  "Something else"), `urgency` radio pills (`Emergency — right now` / `Today` /
+  `This week` / `Flexible`; selected state = `--orange` bg, white text), `address` (street
+  or ZIP)*, `time_window` select (Morning / Afternoon / Evening / Any), description textarea.
+- `subject: "Service Request — Peak Flow Plumbing"`; add `ticket_id` = `'PF-' +
+  Date.now().toString(36).toUpperCase()` to payload; success message shows it:
+  "Request received — ticket **{id}**. We'll confirm your window shortly."
+- Urgency = Emergency: reveal a pulsing tel: button ("Don't wait — call (555) 123-4567",
+  reuse `.btn-emergency`) above submit; form stays usable.
+- Each `.service-card` gets a "Request this service →" link (orange, small) that
+  scrolls to the form and preselects `service_type` (tiny inline JS).
+- Helper text: photos by reply email (Worker is JSON-only — no file uploads).
+
+### P1b — plumber "Pay Your Invoice" section
+
+New section between Hours and Emergency; navy bg, Bebas `section-title` "PAY YOUR
+INVOICE", orange `section-tag` "Settle Up Online". Two columns (stack ≤768px): left —
+copy "Have an invoice from us? Pay it online in under a minute. Secure checkout by
+Stripe." + trust row (🔒 "Cards, Apple Pay, Google Pay — PCI-compliant"); right — card
+(`rgba(255,255,255,0.04)` bg, orange left border like `.trust-badge`) with
+`.btn-call`-styled anchor "Pay Invoice →" → `CONFIG.STRIPE_PAYMENT_LINK`, new tab.
+Small print: "Demo checkout (test mode) — try card 4242 4242 4242 4242."
+
+### P1c — bakery Sanity specials
+
+- Studio (`studio/`): add `specials` array field to the `bakeryMenu` schema — items:
+  `emoji` (string), `name` (string, required), `description` (string), `price` (string),
+  `availableNote` (string, optional); validation max 3.
+- `bakery.astro`: extend the existing GROQ fetch; render `.special-card`s from data,
+  keeping the current three hardcoded cards as the fallback when Sanity returns none
+  (same pattern as plumber hours). `availableNote` renders in `.special-card__desc`
+  line 2. No new CSS needed.
+- Deploy schema (`npx sanity deploy` / `deploy_schema`) + seed one published document
+  so the live demo shows Sanity data.
+
+### P1d — salon Calendly embed
+
+Restructure `#book` into two columns (stack ≤768px), keeping section header/copy:
+
+- **Left — "Book instantly":** Calendly inline widget div + script
+  (script src `assets.calendly.com/assets/external/widget.js`), URL =
+  `CONFIG.CALENDLY_URL + '?hide_gdpr_banner=1&background_color=1c1410&text_color=e8d5c4&primary_color=c9a96e'`,
+  height ~660px, wrapped in a 1px `--border-gold` frame. Caption (`--blush-muted`,
+  0.8rem): "Demo calendar — go ahead, book a slot."
+- **Right — existing inquiry form** retitled "Prefer to ask first?" (keep all P0 fixes).
+- Calendly script loads lazily (IntersectionObserver or `loading` on scroll) so the
+  espresso hero stays fast.
+
+### Copy guardrail (all pages)
+
+Showcase business copy is fictional-business voice — fine as is. Any copy referring to
+**The Web Foundry itself** (DBCredit, hub, footers) must never say "free"; the service
+has a small fee — community-project pricing, not a giveaway.
 
 ---
 
-**Awaiting your scope confirmation before any implementation.** Suggested batch 1:
-P0 + P1a–P1d. Decisions needed from you: (1) approve batch, (2) GloriaMenus demo
-account now or later, (3) confirm TWF Stripe (test mode) + free Calendly accounts are
-okay to set up.
+## Onboarding-skill updates (same PR as the build, per CLAUDE.md)
+
+Update `~/.claude/skills/web-foundry-onboarding/SKILL.md` + `docs/intake-form.md`:
+
+- GloriaMenus → **GloriaFood**, free core tier; recommendation ladder above.
+- Stripe Payment Link pattern (invoice pay / gift cards): client creates link in their
+  Stripe (or we assist), we paste one URL into CONFIG.
+- Calendly embed pattern incl. color-param theming.
+- CONFIG-block fork convention as the standard for all client templates.
+- Worker form types: `service-request` (ticket_id), `pre-order` (order_id);
+  `site_id`/`to_email` now baseline in every template form.

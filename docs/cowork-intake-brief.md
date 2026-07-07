@@ -30,7 +30,7 @@ Map the client's intake answers to one of these:
 |---------------|-----------|
 | Menu rarely changes + has a PDF | **PDF in Sanity** — simple upload, client replaces when needed |
 | Menu changes often + wants one login | **Custom Sanity menu schema** — we build it, client edits in CMS |
-| Menu changes often + wants QR codes or a dedicated tool | **GloriaMenus** (~$30/mo third-party) — we embed it on the site |
+| Menu changes often + wants QR codes or a dedicated tool | **GloriaFood** (free core ordering/reservations; optional $29/mo online-card-payments add-on) — we embed it on the site |
 | No menu | Skip entirely |
 
 ### Sanity Content Types

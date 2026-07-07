@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { -webkit-font-smoothing: antialiased; }
+  </style>
+</helmet>
+
+<div style="background:#faf8f5; min-height:100vh;">
+
+  <!-- NAV -->
+  <nav style="display:flex; align-items:center; justify-content:space-between; padding:0 56px; height:72px; background:rgba(250,248,245,0.95); backdrop-filter:blur(12px); position:sticky; top:0; z-index:50; border-bottom:1px solid rgba(61,53,48,0.06);">
+    <div style="display:flex; align-items:center; gap:4px;">
+      <span style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:300; color:#3d3530; font-style:italic; letter-spacing:0.02em;">Lumière</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:32px;">
+      <span style="font-family:'Outfit',sans-serif; font-size:12px; font-weight:400; color:#9b8f85; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:color 0.15s;" style-hover="color:#3d3530">Services</span>
+      <span style="font-family:'Outfit',sans-serif; font-size:12px; font-weight:400; color:#9b8f85; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:color 0.15s;" style-hover="color:#3d3530">Gallery</span>
+      <span style="font-family:'Outfit',sans-serif; font-size:12px; font-weight:400; color:#9b8f85; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:color 0.15s;" style-hover="color:#3d3530">Team</span>
+      <span style="font-family:'Outfit',sans-serif; font-size:11px; font-weight:500; color:#3d3530; padding:9px 22px; border:1px solid #3d3530; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; transition:background 0.2s, color 0.2s;" style-hover="background:#3d3530; color:#faf8f5">Book Now</span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section style="padding:100px 56px 80px; max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;">
+    <div>
+      <div style="width:40px; height:1px; background:#b8956a; margin-bottom:24px;"></div>
+      <h1 style="font-family:'Cormorant Garamond',serif; font-size:60px; font-weight:300; line-height:1.1; color:#3d3530; margin-bottom:20px; font-style:italic;">Beauty,<br>Refined.</h1>
+      <p style="font-family:'Outfit',sans-serif; font-size:15px; line-height:1.8; color:#9b8f85; max-width:380px; margin-bottom:32px; font-weight:300;">A sanctuary for self-care in the heart of Cincinnati. Hair, skin, nails, and wellness — all under one roof.</p>
+      <div style="display:flex; gap:14px;">
+        <span style="font-family:'Outfit',sans-serif; font-size:12px; font-weight:500; color:#faf8f5; background:#3d3530; padding:13px 28px; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; transition:background 0.2s;" style-hover="background:#5a4d44">Book Appointment</span>
+        <span style="font-family:'Outfit',sans-serif; font-size:12px; font-weight:500; color:#3d3530; padding:13px 28px; border:1px solid rgba(61,53,48,0.2); letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; transition:border-color 0.2s;" style-hover="border-color:#3d3530">View Services</span>
+      </div>
+    </div>
+    <div style="position:relative;">
+      <div style="background:linear-gradient(160deg, #ede6dd 0%, #d8cfc4 100%); border-radius:200px 200px 12px 12px; height:480px; display:flex; align-items:center; justify-content:center;">
+        <div style="text-align:center;">
+          <div style="width:48px; height:48px; border:1px solid rgba(184,149,106,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b8956a" stroke-width="1.5" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          </div>
+          <div style="font-family:'Outfit',sans-serif; font-size:11px; color:#b8956a; letter-spacing:0.12em; text-transform:uppercase;">Photo Placeholder</div>
+        </div>
+      </div>
+      <div style="position:absolute; top:40px; right:-20px; width:80px; height:80px; border:1px solid rgba(184,149,106,0.15); border-radius:50%;"></div>
+      <div style="position:absolute; bottom:60px; left:-16px; width:50px; height:50px; border:1px solid rgba(184,149,106,0.1); border-radius:50%;"></div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section style="background:#f3eeea; padding:72px 56px; border-top:1px solid rgba(61,53,48,0.04);">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="text-align:center; margin-bottom:48px;">
+        <div style="width:32px; height:1px; background:#b8956a; margin:0 auto 16px;"></div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300; color:#3d3530; font-style:italic;">Our Services</div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px;">
+        <div style="background:#faf8f5; padding:32px 24px; text-align:center; transition:transform 0.2s;" style-hover="transform:translateY(-4px)">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:#3d3530; font-style:italic; margin-bottom:8px;">Hair</div>
+          <div style="width:20px; height:1px; background:#b8956a; margin:0 auto 12px;"></div>
+          <p style="font-family:'Outfit',sans-serif; font-size:12px; color:#9b8f85; line-height:1.7; font-weight:300; margin-bottom:14px;">Cuts, color, balayage, styling, treatments, and extensions.</p>
+          <span style="font-family:'Outfit',sans-serif; font-size:11px; color:#b8956a; letter-spacing:0.06em; cursor:pointer;">From $65</span>
+        </div>
+        <div style="background:#faf8f5; padding:32px 24px; text-align:center; transition:transform 0.2s;" style-hover="transform:translateY(-4px)">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:#3d3530; font-style:italic; margin-bottom:8px;">Skin</div>
+          <div style="width:20px; height:1px; background:#b8956a; margin:0 auto 12px;"></div>
+          <p style="font-family:'Outfit',sans-serif; font-size:12px; color:#9b8f85; line-height:1.7; font-weight:300; margin-bottom:14px;">Facials, peels, microdermabrasion, and custom skincare consultations.</p>
+          <span style="font-family:'Outfit',sans-serif; font-size:11px; color:#b8956a; letter-spacing:0.06em; cursor:pointer;">From $85</span>
+        </div>
+        <div style="background:#faf8f5; padding:32px 24px; text-align:center; transition:transform 0.2s;" style-hover="transform:translateY(-4px)">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:#3d3530; font-style:italic; margin-bottom:8px;">Nails</div>
+          <div style="width:20px; height:1px; background:#b8956a; margin:0 auto 12px;"></div>
+          <p style="font-family:'Outfit',sans-serif; font-size:12px; color:#9b8f85; line-height:1.7; font-weight:300; margin-bottom:14px;">Manicures, pedicures, gel, acrylics, and nail art by our specialists.</p>
+          <span style="font-family:'Outfit',sans-serif; font-size:11px; color:#b8956a; letter-spacing:0.06em; cursor:pointer;">From $45</span>
+        </div>
+        <div style="background:#faf8f5; padding:32px 24px; text-align:center; transition:transform 0.2s;" style-hover="transform:translateY(-4px)">
+          <div style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:#3d3530; font-style:italic; margin-bottom:8px;">Wellness</div>
+          <div style="width:20px; height:1px; background:#b8956a; margin:0 auto 12px;"></div>
+          <p style="font-family:'Outfit',sans-serif; font-size:12px; color:#9b8f85; line-height:1.7; font-weight:300; margin-bottom:14px;">Massage therapy, aromatherapy, and relaxation treatments.</p>
+          <span style="font-family:'Outfit',sans-serif; font-size:11px; color:#b8956a; letter-spacing:0.06em; cursor:pointer;">From $95</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section style="padding:72px 56px; max-width:800px; margin:0 auto; text-align:center;">
+    <div style="font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:300; font-style:italic; color:#3d3530; line-height:1.5; margin-bottom:20px;">"Lumière is my escape. The team makes you feel like the only person in the room. I've never left without feeling completely renewed."</div>
+    <div style="width:24px; height:1px; background:#b8956a; margin:0 auto 14px;"></div>
+    <div style="font-family:'Outfit',sans-serif; font-size:13px; font-weight:500; color:#3d3530;">Sarah M.</div>
+    <div style="font-family:'Outfit',sans-serif; font-size:12px; color:#9b8f85; font-weight:300;">Hyde Park, Cincinnati</div>
+  </section>
+
+  <!-- BOOKING CTA -->
+  <section style="background:#f3eeea; padding:72px 56px;">
+    <div style="max-width:800px; margin:0 auto; background:#3d3530; border-radius:12px; padding:56px 48px; text-align:center;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:44px; font-weight:300; color:#faf8f5; font-style:italic; margin-bottom:14px;">Your appointment awaits.</div>
+      <p style="font-family:'Outfit',sans-serif; font-size:14px; color:rgba(250,248,245,0.5); margin-bottom:28px; font-weight:300;">Book online or call us at (513) 555-0283</p>
+      <span style="font-family:'Outfit',sans-serif; font-size:12px; font-weight:500; color:#3d3530; background:#faf8f5; padding:14px 32px; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; display:inline-block; transition:background 0.2s;" style-hover="background:#ede6dd">Book Now</span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#3d3530; padding:40px 56px;">
+    <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:20px; color:#faf8f5; font-style:italic; font-weight:300;">Lumière</div>
+        <div style="font-family:'Outfit',sans-serif; font-size:11px; color:rgba(250,248,245,0.4); margin-top:4px; font-weight:300;">Salon & Spa · Cincinnati, OH</div>
+      </div>
+      <div style="display:flex; gap:24px;">
+        <span style="font-family:'Outfit',sans-serif; font-size:11px; color:rgba(250,248,245,0.4); letter-spacing:0.06em; cursor:pointer; transition:color 0.15s;" style-hover="color:#faf8f5">Instagram</span>
+        <span style="font-family:'Outfit',sans-serif; font-size:11px; color:rgba(250,248,245,0.4); letter-spacing:0.06em; cursor:pointer; transition:color 0.15s;" style-hover="color:#faf8f5">Facebook</span>
+        <span style="font-family:'Outfit',sans-serif; font-size:11px; color:rgba(250,248,245,0.4); letter-spacing:0.06em; cursor:pointer; transition:color 0.15s;" style-hover="color:#faf8f5">Yelp</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO FOUNDRY -->
+  <a href="Homepage.dc.html" style="position:fixed; bottom:20px; right:20px; z-index:90; background:#181c28; color:#8b95a8; font-family:'Outfit',sans-serif; font-size:11px; padding:8px 14px; border-radius:6px; text-decoration:none; display:flex; align-items:center; gap:6px; transition:background 0.15s;" style-hover="background:#242c3a">
+    <span style="color:#b45a3c;">←</span> Built by The Web Foundry
+  </a>
+
+</div>
+
+</x-dc>
+</body>
+</html>

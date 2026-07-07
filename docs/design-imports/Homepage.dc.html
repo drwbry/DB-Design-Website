@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes arrowNudge { 0%, 100% { transform: translateX(0); opacity: 0.35; } 50% { transform: translateX(5px); opacity: 0.7; } }
+    @keyframes bounceDown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+    input::placeholder, textarea::placeholder { color: #a09a92; }
+  </style>
+</helmet>
+
+<div style="background:#181c28; min-height:100vh;">
+
+  <!-- ==================== NAV ==================== -->
+  <nav style="position:sticky; top:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 60px; height:72px; background:rgba(24,28,40,0.92); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(255,255,255,0.06);">
+    <div style="display:flex; align-items:center; gap:10px; cursor:pointer;" onClick="{{ scrollToTop }}">
+      <div style="width:30px; height:30px; border:2px solid #b45a3c; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:'Sora',sans-serif; font-size:14px; color:#b45a3c; font-weight:700;">W</span>
+      </div>
+      <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:600; color:#eee9e1; letter-spacing:0.01em;">The Web Foundry</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:32px;">
+      <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:500; color:#8b95a8; cursor:pointer; transition:color 0.15s;" style-hover="color:#eee9e1" onClick="{{ scrollToWork }}">Our Work</span>
+      <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:500; color:#8b95a8; cursor:pointer; transition:color 0.15s;" style-hover="color:#eee9e1" onClick="{{ scrollToProcess }}">How It Works</span>
+      <a href="About.dc.html" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:500; color:#8b95a8; cursor:pointer; text-decoration:none; transition:color 0.15s;" style-hover="color:#eee9e1">About</a>
+      <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:600; color:#ffffff; background:#b45a3c; padding:9px 22px; border-radius:6px; cursor:pointer; transition:background 0.15s;" style-hover="background:#c96a4c" onClick="{{ openContact }}">Get in Touch</span>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section style="padding:110px 60px 100px; max-width:1320px; margin:0 auto;">
+    <div style="max-width:720px;">
+      <div style="width:40px; height:3px; background:#b45a3c; border-radius:2px; margin-bottom:28px;"></div>
+      <h1 style="font-family:'Sora',sans-serif; font-size:60px; line-height:1.12; color:#eee9e1; margin-bottom:24px; font-weight:700; letter-spacing:-0.02em;">Your business deserves<br>a great website.</h1>
+      <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:18px; line-height:1.7; color:#8b95a8; max-width:500px; margin-bottom:40px;">We design and build modern websites for Cincinnati small businesses. No templates, no confusion. Just a site that represents what you do.</p>
+      <div style="display:flex; gap:14px; align-items:center;">
+        <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600; color:#ffffff; background:#b45a3c; padding:14px 28px; border-radius:6px; cursor:pointer; transition:background 0.15s, transform 0.15s;" style-hover="background:#c96a4c; transform:scale(1.02)" onClick="{{ scrollToWork }}">View Our Work</span>
+        <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:500; color:#b45a3c; cursor:pointer; padding:14px 4px; transition:color 0.15s;" style-hover="color:#c96a4c" onClick="{{ openContact }}">Start a Conversation →</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FEATURED WORK ==================== -->
+  <section id="work" style="background:#1e2333; padding:88px 60px 96px;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="margin-bottom:48px;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.14em; color:#b45a3c; margin-bottom:12px;">Featured Work</div>
+        <div style="font-family:'Sora',sans-serif; font-size:38px; color:#eee9e1; line-height:1.15; font-weight:700; letter-spacing:-0.02em;">See what's possible.</div>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; color:#8b95a8; margin-top:10px; max-width:460px; line-height:1.6;">Different businesses, different aesthetics. Each one custom-designed to match.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+
+        <!-- BAKERY CARD -->
+        <div style="background:#ffffff; border-radius:10px; overflow:hidden; cursor:pointer; box-shadow:0 2px 16px rgba(0,0,0,0.15); transition:transform 0.25s ease, box-shadow 0.25s ease; -webkit-backface-visibility:hidden; backface-visibility:hidden; will-change:transform;" style-hover="transform:translateY(-6px); box-shadow:0 16px 44px rgba(0,0,0,0.3);">
+          <div style="background:#1e1e1e; padding:10px 14px; display:flex; align-items:center; gap:6px;">
+            <div style="display:flex; gap:6px;">
+              <div style="width:9px; height:9px; border-radius:50%; background:#ff5f57;"></div>
+              <div style="width:9px; height:9px; border-radius:50%; background:#febc2e;"></div>
+              <div style="width:9px; height:9px; border-radius:50%; background:#28c840;"></div>
+            </div>
+            <div style="flex:1; background:#111; border-radius:3px; padding:5px 10px; margin-left:4px;">
+              <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; color:#666;">sweetcrumbbakery.com</span>
+            </div>
+          </div>
+          <div style="height:250px; background:linear-gradient(160deg, #f7ede3 0%, #ecdccc 100%); padding:20px; display:flex; flex-direction:column; position:relative; overflow:hidden;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <span style="font-family:'Sora',sans-serif; font-size:13px; color:#5c3d2e;">Sweet Crumb</span>
+              <div style="display:flex; gap:10px;">
+                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#9b8575; letter-spacing:0.05em;">MENU</span>
+                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#9b8575; letter-spacing:0.05em;">STORY</span>
+                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#9b8575; letter-spacing:0.05em;">HOURS</span>
+              </div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;">
+              <span style="font-family:'Sora',sans-serif; font-size:22px; color:#5c3d2e; text-align:center; line-height:1.25;">Baked with love,<br><em>every morning.</em></span>
+              <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#9b8575; letter-spacing:0.04em;">Fresh pastries · Artisan breads · Coffee</span>
+              <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#fff; background:#8b5e3c; padding:5px 12px; border-radius:3px; margin-top:4px;">View Menu</span>
+            </div>
+            <div style="position:absolute; bottom:-30px; right:-30px; width:100px; height:100px; border-radius:50%; background:rgba(139,94,60,0.08);"></div>
+            <div style="position:absolute; bottom:15px; right:30px; width:40px; height:40px; border-radius:50%; background:rgba(212,165,116,0.1);"></div>
+          </div>
+          <div style="padding:20px;">
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:#b45a3c; margin-bottom:6px;">Bakery & Café</div>
+            <div style="font-family:'Sora',sans-serif; font-size:18px; color:#2a3240; margin-bottom:5px;">Sweet Crumb Bakery</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; color:#6b7888; line-height:1.5;">Warm artisan aesthetic with online menu and daily specials.</div>
+            <div style="margin-top:14px;">
+              <a href="showcase/Sweet Crumb Bakery.dc.html" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:11px; font-weight:600; color:#b45a3c; cursor:pointer; transition:color 0.15s; text-decoration:none;" style-hover="color:#c96a4c">View Site →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PLUMBER CARD -->
+        <div style="background:#ffffff; border-radius:10px; overflow:hidden; cursor:pointer; box-shadow:0 2px 16px rgba(0,0,0,0.15); transition:transform 0.25s ease, box-shadow 0.25s ease; -webkit-backface-visibility:hidden; backface-visibility:hidden; will-change:transform;" style-hover="transform:translateY(-6px); box-shadow:0 16px 44px rgba(0,0,0,0.3);">
+          <div style="background:#1e1e1e; padding:10px 14px; display:flex; align-items:center; gap:6px;">
+            <div style="display:flex; gap:6px;">
+              <div style="width:9px; height:9px; border-radius:50%; background:#ff5f57;"></div>
+              <div style="width:9px; height:9px; border-radius:50%; background:#febc2e;"></div>
+              <div style="width:9px; height:9px; border-radius:50%; background:#28c840;"></div>
+            </div>
+            <div style="flex:1; background:#111; border-radius:3px; padding:5px 10px; margin-left:4px;">
+              <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; color:#666;">peakflowplumbing.com</span>
+            </div>
+          </div>
+          <div style="height:250px; background:#0f2640; padding:20px; display:flex; flex-direction:column; position:relative; overflow:hidden;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:700; color:#ffffff; letter-spacing:0.04em;">PEAK FLOW</span>
+              <div style="display:flex; gap:10px; align-items:center;">
+                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#7ba3cc; letter-spacing:0.05em;">SERVICES</span>
+                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#7ba3cc; letter-spacing:0.05em;">ABOUT</span>
+                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#e67e22; font-weight:600; letter-spacing:0.05em;">EMERGENCY</span>
+              </div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:8px;">
+              <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; font-weight:600; color:#e67e22; text-transform:uppercase; letter-spacing:0.1em;">Licensed & Insured · Cincinnati, OH</span>
+              <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:22px; font-weight:700; color:#ffffff; line-height:1.15;">Your Local<br>Plumbing Experts</span>
+              <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#7ba3cc; line-height:1.5;">Residential & commercial plumbing you can trust.</span>
+              <div style="display:flex; gap:6px; margin-top:4px;">
+                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; font-weight:600; color:#fff; background:#e67e22; padding:5px 12px; border-radius:3px;">Call Now</span>
+                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; font-weight:500; color:#7ba3cc; padding:5px 12px; border:1px solid #2a5580; border-radius:3px;">Our Services</span>
+              </div>
+            </div>
+          </div>
+          <div style="padding:20px;">
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:#b45a3c; margin-bottom:6px;">Home Services</div>
+            <div style="font-family:'Sora',sans-serif; font-size:18px; color:#2a3240; margin-bottom:5px;">Peak Flow Plumbing</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; color:#6b7888; line-height:1.5;">Bold, conversion-focused design with emergency CTAs and trust signals.</div>
+            <div style="margin-top:14px;">
+              <a href="showcase/Peak Flow Plumbing.dc.html" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:11px; font-weight:600; color:#b45a3c; cursor:pointer; transition:color 0.15s; text-decoration:none;" style-hover="color:#c96a4c">View Site →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SALON CARD -->
+        <div style="background:#ffffff; border-radius:10px; overflow:hidden; cursor:pointer; box-shadow:0 2px 16px rgba(0,0,0,0.15); transition:transform 0.25s ease, box-shadow 0.25s ease; -webkit-backface-visibility:hidden; backface-visibility:hidden; will-change:transform;" style-hover="transform:translateY(-6px); box-shadow:0 16px 44px rgba(0,0,0,0.3);">
+          <div style="background:#1e1e1e; padding:10px 14px; display:flex; align-items:center; gap:6px;">
+            <div style="display:flex; gap:6px;">
+              <div style="width:9px; height:9px; border-radius:50%; background:#ff5f57;"></div>
+              <div style="width:9px; height:9px; border-radius:50%; background:#febc2e;"></div>
+              <div style="width:9px; height:9px; border-radius:50%; background:#28c840;"></div>
+            </div>
+            <div style="flex:1; background:#111; border-radius:3px; padding:5px 10px; margin-left:4px;">
+              <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; color:#666;">lumieresalon.com</span>
+            </div>
+          </div>
+          <div style="height:250px; background:linear-gradient(160deg, #f8f3ee 0%, #ede6dd 100%); padding:20px; display:flex; flex-direction:column; position:relative; overflow:hidden;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <span style="font-family:'Sora',sans-serif; font-size:13px; color:#3d3530; font-style:italic;">Lumière</span>
+              <div style="display:flex; gap:10px;">
+                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#9b8f85; letter-spacing:0.05em;">SERVICES</span>
+                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#9b8f85; letter-spacing:0.05em;">GALLERY</span>
+                <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#9b8f85; letter-spacing:0.05em;">BOOK</span>
+              </div>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;">
+              <div style="width:32px; height:1px; background:#b8956a; margin-bottom:2px;"></div>
+              <span style="font-family:'Sora',sans-serif; font-size:24px; color:#3d3530; text-align:center; line-height:1.25; font-style:italic;">Beauty, Refined.</span>
+              <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#9b8f85; letter-spacing:0.08em; text-transform:uppercase;">Hair · Skin · Nails · Wellness</span>
+              <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:8px; color:#3d3530; padding:5px 12px; border:1px solid #b8956a; margin-top:6px; letter-spacing:0.04em;">Book Appointment</span>
+            </div>
+            <div style="position:absolute; top:12px; right:12px; width:50px; height:50px; border:1px solid rgba(184,149,106,0.12); border-radius:50%;"></div>
+          </div>
+          <div style="padding:20px;">
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:#b45a3c; margin-bottom:6px;">Beauty & Wellness</div>
+            <div style="font-family:'Sora',sans-serif; font-size:18px; color:#2a3240; margin-bottom:5px;">Lumière Salon & Spa</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; color:#6b7888; line-height:1.5;">Luxe editorial aesthetic with elegant booking and gallery.</div>
+            <div style="margin-top:14px;">
+              <a href="showcase/Lumiere Salon.dc.html" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:11px; font-weight:600; color:#b45a3c; cursor:pointer; transition:color 0.15s; text-decoration:none;" style-hover="color:#c96a4c">View Site →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SCROLL STORY ==================== -->
+  <sc-if value="{{ processVisible }}" hint-placeholder-val="{{ true }}">
+  <section id="process" style="background:#181c28; border-top:1px solid rgba(255,255,255,0.04);">
+    <!-- tall wrapper creates 260vh of scroll space for 3 pinned panels -->
+    <div id="story-wrapper" style="position:relative; height:360vh;">
+      <div style="position:sticky; top:0; height:100vh; display:flex; align-items:center; overflow:hidden; background:#181c28;">
+        <!-- continuous scroll progress bar -->
+        <div style="position:absolute; top:0; left:0; right:0; height:2px; background:rgba(255,255,255,0.05); z-index:2;">
+          <div id="story-bar" style="height:100%; background:#b45a3c; border-radius:0 1px 1px 0; transform-origin:left; transform:scaleX(0); transition:transform 0.06s linear;"></div>
+        </div>
+        <div style="width:100%; max-width:1200px; margin:0 auto; padding:0 60px;">
+
+          <!-- all 3 panels sit in this relative container, absolutely stacked -->
+          <div style="position:relative; height:340px;">
+
+            <!-- ── Panel 0: How It Works ── -->
+            <div id="foundry-panel-0" style="position:absolute; top:0; left:0; right:0; opacity:1; transform:translateY(0px);">
+              <div style="margin-bottom:32px;">
+                <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.14em; color:#b45a3c; margin-bottom:10px;">How It Works</div>
+                <div style="font-family:'Sora',sans-serif; font-size:38px; color:#eee9e1; line-height:1.15; font-weight:700; letter-spacing:-0.02em;">Simple from start to finish.</div>
+              </div>
+              <div style="display:flex; align-items:stretch; gap:0;">
+                <div style="flex:1; background:#f5f0ea; padding:28px 24px; border-radius:10px; border-top:3px solid #b45a3c;">
+                  <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:600; color:#2a3240; margin-bottom:8px;">Tell us about your business</div>
+                  <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; color:#5f6b7a; line-height:1.65;">A simple conversation — your customers, your style, what makes you different. No tech speak, no questionnaires.</p>
+                </div>
+                <div style="display:flex; align-items:center; padding:0 14px; flex:none; animation:arrowNudge 2.5s ease-in-out infinite;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="14 7 19 12 14 17"></polyline></svg>
+                </div>
+                <div style="flex:1; background:#f5f0ea; padding:28px 24px; border-radius:10px; border-top:3px solid #b45a3c;">
+                  <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:600; color:#2a3240; margin-bottom:8px;">We design and build</div>
+                  <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; color:#5f6b7a; line-height:1.65;">Custom design, fast turnaround. We iterate until it feels like you. No templates, no shortcuts.</p>
+                </div>
+                <div style="display:flex; align-items:center; padding:0 14px; flex:none; animation:arrowNudge 2.5s ease-in-out infinite;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="14 7 19 12 14 17"></polyline></svg>
+                </div>
+                <div style="flex:1; background:#f5f0ea; padding:28px 24px; border-radius:10px; border-top:3px solid #b45a3c;">
+                  <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:600; color:#2a3240; margin-bottom:8px;">Launch and forget</div>
+                  <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; color:#5f6b7a; line-height:1.65;">Your site goes live. Hosting, security, domain, updates — all handled. One simple monthly invoice.</p>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- ── Panel 1: What's Included ── -->
+            <div id="foundry-panel-1" style="position:absolute; top:0; left:0; right:0; opacity:0; transform:translateY(36px);">
+              <div style="margin-bottom:32px;">
+                <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.14em; color:#b45a3c; margin-bottom:10px;">What's Included</div>
+                <div style="font-family:'Sora',sans-serif; font-size:38px; color:#eee9e1; line-height:1.15; font-weight:700; letter-spacing:-0.02em;">Everything you need. Nothing you don't.</div>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px;">
+                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px 20px;">
+                  <div style="width:36px; height:36px; background:rgba(180,90,60,0.12); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                  </div>
+                  <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600; color:#eee9e1; margin-bottom:6px;">Custom Design</div>
+                  <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; color:#8b95a8; line-height:1.6;">Built specifically for your business — not pulled from a template shelf.</p>
+                </div>
+                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px 20px;">
+                  <div style="width:36px; height:36px; background:rgba(180,90,60,0.12); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                  </div>
+                  <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600; color:#eee9e1; margin-bottom:6px;">Hosting &amp; Domain</div>
+                  <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; color:#8b95a8; line-height:1.6;">Fast, reliable hosting and your own domain — set up and managed for you.</p>
+                </div>
+                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px 20px;">
+                  <div style="width:36px; height:36px; background:rgba(180,90,60,0.12); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                  </div>
+                  <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600; color:#eee9e1; margin-bottom:6px;">SEO &amp; Analytics</div>
+                  <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; color:#8b95a8; line-height:1.6;">Search-ready from day one so customers can actually find you on Google.</p>
+                </div>
+                <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:24px 20px;">
+                  <div style="width:36px; height:36px; background:rgba(180,90,60,0.12); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                  </div>
+                  <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600; color:#eee9e1; margin-bottom:6px;">Content Updates</div>
+                  <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; color:#8b95a8; line-height:1.6;">Update hours, menus, or photos yourself — or just ask us. Either way works.</p>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- ── Panel 2: The Bottom Line ── -->
+            <div id="foundry-panel-2" style="position:absolute; top:0; left:0; right:0; opacity:0; transform:translateY(36px);">
+              <div style="margin-bottom:32px;">
+                <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.14em; color:#b45a3c; margin-bottom:10px;">The Bottom Line</div>
+                <div style="font-family:'Sora',sans-serif; font-size:38px; color:#eee9e1; line-height:1.15; font-weight:700; letter-spacing:-0.02em;">One invoice. Zero headaches.</div>
+              </div>
+              <div style="display:flex; gap:48px; align-items:flex-start;">
+                <div style="flex:1;">
+                  <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; color:#8b95a8; line-height:1.85; margin-bottom:28px;">We handle the domain, the hosting, the security, the updates, and the support. You get one monthly invoice and a website that works — no tech knowledge required on your end, ever.</p>
+                  <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600; color:#ffffff; background:#b45a3c; padding:13px 28px; border-radius:6px; cursor:pointer; transition:background 0.15s;" style-hover="background:#c96a4c" onClick="{{ openContact }}">Start a Conversation →</span>
+                </div>
+                <div style="flex:0 0 280px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:12px; padding:26px 22px; display:flex; flex-direction:column; gap:13px;">
+                  <div style="display:flex; align-items:center; gap:12px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; color:#eee9e1;">Custom website design</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:12px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; color:#eee9e1;">Your own domain name</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:12px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; color:#eee9e1;">Hosting &amp; security, handled</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:12px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; color:#eee9e1;">Ongoing updates &amp; support</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:12px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; color:#eee9e1;">One simple monthly invoice</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Right-side stepper -->
+        <div style="position:absolute; right:48px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; align-items:flex-start; z-index:5;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div id="step-dot-0" style="width:8px; height:8px; border-radius:50%; background:#b45a3c; transition:all 0.35s;"></div>
+            <span id="step-label-0" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; color:#b45a3c; font-weight:600; letter-spacing:0.1em; transition:color 0.35s;">HOW IT WORKS</span>
+          </div>
+          <div style="width:1px; height:24px; background:rgba(255,255,255,0.08); margin-left:3.5px;"></div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div id="step-dot-1" style="width:6px; height:6px; border-radius:50%; background:rgba(238,233,225,0.2); margin:0 1px; transition:all 0.35s;"></div>
+            <span id="step-label-1" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; color:rgba(238,233,225,0.25); font-weight:500; letter-spacing:0.1em; transition:color 0.35s;">WHAT'S INCLUDED</span>
+          </div>
+          <div style="width:1px; height:24px; background:rgba(255,255,255,0.08); margin-left:3.5px;"></div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div id="step-dot-2" style="width:6px; height:6px; border-radius:50%; background:rgba(238,233,225,0.2); margin:0 1px; transition:all 0.35s;"></div>
+            <span id="step-label-2" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; color:rgba(238,233,225,0.25); font-weight:500; letter-spacing:0.1em; transition:color 0.35s;">THE BOTTOM LINE</span>
+          </div>
+        </div>
+
+        <!-- Bottom scroll cue -->
+        <div id="story-scroll-cue" style="position:absolute; bottom:40px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:6px; opacity:1; transition:opacity 0.4s;">
+          <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; color:rgba(238,233,225,0.4); letter-spacing:0.12em; text-transform:uppercase;">Keep scrolling</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(238,233,225,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation:bounceDown 1.8s ease-in-out infinite;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ==================== CTA ==================== -->
+  <sc-if value="{{ ctaVisible }}" hint-placeholder-val="{{ true }}">
+  <section style="background:#242c3a; padding:80px 60px; border-top:1px solid rgba(255,255,255,0.04);">
+    <div style="max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:48px;">
+      <div>
+        <div style="font-family:'Sora',sans-serif; font-size:36px; color:#eee9e1; line-height:1.2; font-weight:700; letter-spacing:-0.02em;">Your business has a story<br>worth telling.</div>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; color:rgba(238,233,225,0.45); margin-top:12px;">Let's make it visible. No commitment, no pressure.</p>
+      </div>
+      <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600; color:#ffffff; background:#b45a3c; padding:15px 32px; border-radius:6px; cursor:pointer; white-space:nowrap; flex:none; transition:background 0.15s, transform 0.15s;" style-hover="background:#c96a4c; transform:scale(1.02)" onClick="{{ openContact }}">Start a Conversation →</span>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer style="background:#12151f; padding:36px 60px; border-top:1px solid rgba(255,255,255,0.04);">
+    <div style="max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div style="width:22px; height:22px; border:2px solid #b45a3c; border-radius:3px; display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:'Sora',sans-serif; font-size:10px; color:#b45a3c; font-weight:700;">W</span>
+        </div>
+        <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; color:#6b7488;">The Web Foundry · Cincinnati, OH</span>
+      </div>
+      <div style="display:flex; gap:24px;">
+        <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; color:#6b7488; cursor:pointer; transition:color 0.15s;" style-hover="color:#8b95a8" onClick="{{ scrollToWork }}">Work</span>
+        <a href="About.dc.html" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; color:#6b7488; cursor:pointer; text-decoration:none; transition:color 0.15s;" style-hover="color:#8b95a8">About</a>
+        <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; color:#6b7488; cursor:pointer; transition:color 0.15s;" style-hover="color:#8b95a8">Privacy</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== CONTACT MODAL ==================== -->
+  <sc-if value="{{ showContact }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(0,0,0,0.6); animation:fadeIn 0.2s ease;" onClick="{{ closeContact }}">
+    <div style="width:100%; max-width:520px; background:#faf7f3; border-radius:12px; padding:44px; position:relative; animation:slideUp 0.3s ease;" onClick="{{ stopProp }}">
+
+      <!-- Close button -->
+      <div style="position:absolute; top:16px; right:16px; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#8c95a3; border-radius:6px; transition:background 0.15s;" style-hover="background:rgba(42,50,64,0.08)" onClick="{{ closeContact }}">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="3" x2="13" y2="13"></line><line x1="13" y1="3" x2="3" y2="13"></line></svg>
+      </div>
+
+      <!-- Form state -->
+      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+        <div style="font-family:'Sora',sans-serif; font-size:28px; color:#2a3240; margin-bottom:6px; font-weight:700; letter-spacing:-0.02em;">Let's talk.</div>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; color:#6b7888; margin-bottom:28px; line-height:1.6;">Tell us about your business and we'll be in touch within 24 hours.</p>
+        <form onSubmit="{{ handleSubmit }}" style="display:flex; flex-direction:column; gap:16px;">
+          <div>
+            <label style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:600; color:#2a3240; display:block; margin-bottom:6px;">Your Name</label>
+            <input type="text" placeholder="Jane Smith" required style="width:100%; padding:11px 14px; border:1px solid #d5cfc7; border-radius:6px; background:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; color:#2a3240; outline:none; transition:border-color 0.15s;" style-focus="border-color:#b45a3c"></input>
+          </div>
+          <div>
+            <label style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:600; color:#2a3240; display:block; margin-bottom:6px;">Email Address</label>
+            <input type="email" placeholder="jane@example.com" required style="width:100%; padding:11px 14px; border:1px solid #d5cfc7; border-radius:6px; background:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; color:#2a3240; outline:none; transition:border-color 0.15s;" style-focus="border-color:#b45a3c"></input>
+          </div>
+          <div>
+            <label style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:600; color:#2a3240; display:block; margin-bottom:6px;">Business Name</label>
+            <input type="text" placeholder="Your business" required style="width:100%; padding:11px 14px; border:1px solid #d5cfc7; border-radius:6px; background:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; color:#2a3240; outline:none; transition:border-color 0.15s;" style-focus="border-color:#b45a3c"></input>
+          </div>
+          <div>
+            <label style="font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:600; color:#2a3240; display:block; margin-bottom:6px;">Anything else? <span style="font-weight:400; color:#8c95a3;">(optional)</span></label>
+            <textarea rows="3" placeholder="Tell us a bit about what you're looking for..." style="width:100%; padding:11px 14px; border:1px solid #d5cfc7; border-radius:6px; background:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; color:#2a3240; outline:none; resize:vertical; transition:border-color 0.15s;" style-focus="border-color:#b45a3c"></textarea>
+          </div>
+          <button type="submit" style="width:100%; padding:14px; background:#b45a3c; color:#fff; border:none; border-radius:6px; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer; transition:background 0.15s, transform 0.15s; margin-top:4px;" style-hover="background:#c96a4c; transform:scale(1.01)">Send Message →</button>
+        </form>
+      </sc-if>
+
+      <!-- Success state -->
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center; padding:24px 0;">
+          <div style="width:56px; height:56px; background:rgba(180,90,60,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b45a3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <div style="font-family:'Sora',sans-serif; font-size:24px; color:#2a3240; margin-bottom:8px; font-weight:700; letter-spacing:-0.02em;">Message received.</div>
+          <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; color:#6b7888; line-height:1.6; margin-bottom:24px;">We'll be in touch within 24 hours.<br>Looking forward to learning about your business.</p>
+          <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600; color:#b45a3c; cursor:pointer; transition:color 0.15s;" style-hover="color:#c96a4c" onClick="{{ closeContact }}">Close</span>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;showProcess&quot;: {
+    &quot;editor&quot;: &quot;boolean&quot;,
+    &quot;default&quot;: true,
+    &quot;tsType&quot;: &quot;boolean&quot;
+  },
+  &quot;showCTA&quot;: {
+    &quot;editor&quot;: &quot;boolean&quot;,
+    &quot;default&quot;: true,
+    &quot;tsType&quot;: &quot;boolean&quot;
+  }
+}">
+
+class Component extends DCLogic {
+  state = {
+    showContact: false,
+    submitted: false
+  };
+
+  _raf = null;
+
+  _tick = () => {
+    const w = document.getElementById('story-wrapper');
+    if (w) {
+      const si = Math.max(0, -w.getBoundingClientRect().top);
+      const vh = window.innerHeight;
+      const ms = w.offsetHeight - vh;
+      const progress = si / vh;
+      const sp = ms > 0 ? Math.min(1, si / ms) : 0;
+
+      var bar = document.getElementById('story-bar');
+      if (bar) bar.style.transform = 'scaleX(' + sp + ')';
+
+      for (var i = 0; i <= 2; i++) {
+        var el = document.getElementById('foundry-panel-' + i);
+        if (!el) continue;
+        var diff = progress - i;
+        var opacity, y;
+        if (i === 0 && diff <= 0) { opacity = 1; y = 0; }
+        else if (i === 2 && diff >= 0) { opacity = 1; y = 0; }
+        else if (diff < -0.3) { opacity = 0; y = 36; }
+        else if (diff < 0) { var t1 = (diff + 0.3) / 0.3; opacity = t1; y = (1 - t1) * 36; }
+        else if (diff <= 0.7) { opacity = 1; y = 0; }
+        else if (diff <= 1) { var t2 = (diff - 0.7) / 0.3; opacity = 1 - t2; y = -t2 * 24; }
+        else { opacity = 0; y = -24; }
+        el.style.opacity = Math.max(0, Math.min(1, opacity));
+        el.style.transform = 'translateY(' + y + 'px)';
+        el.style.pointerEvents = opacity > 0.5 ? 'auto' : 'none';
+      }
+
+      var panel = Math.min(2, Math.max(0, Math.round(progress)));
+      for (var j = 0; j <= 2; j++) {
+        var dot = document.getElementById('step-dot-' + j);
+        var lbl = document.getElementById('step-label-' + j);
+        if (dot) {
+          dot.style.width = j === panel ? '8px' : '6px';
+          dot.style.height = j === panel ? '8px' : '6px';
+          dot.style.margin = j === panel ? '0' : '0 1px';
+          dot.style.background = j === panel ? '#b45a3c' : 'rgba(238,233,225,0.2)';
+        }
+        if (lbl) {
+          lbl.style.color = j === panel ? '#b45a3c' : 'rgba(238,233,225,0.25)';
+          lbl.style.fontWeight = j === panel ? '600' : '500';
+        }
+      }
+
+      var cue = document.getElementById('story-scroll-cue');
+      if (cue) cue.style.opacity = panel >= 2 ? '0' : '1';
+    }
+    this._raf = requestAnimationFrame(this._tick);
+  };
+
+  componentDidMount() {
+    this._raf = requestAnimationFrame(this._tick);
+  }
+
+  componentWillUnmount() {
+    if (this._raf) cancelAnimationFrame(this._raf);
+  }
+
+  renderVals() {
+    const scrollTo = (id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        const y = el.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    };
+
+    return {
+      showContact: this.state.showContact,
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      processVisible: this.props.showProcess ?? true,
+      ctaVisible: this.props.showCTA ?? true,
+      openContact: () => this.setState({ showContact: true, submitted: false }),
+      closeContact: () => this.setState({ showContact: false }),
+      stopProp: (e) => e.stopPropagation(),
+      handleSubmit: (e) => {
+        e.preventDefault();
+        this.setState({ submitted: true });
+      },
+      scrollToWork: () => scrollTo('work'),
+      scrollToProcess: () => scrollTo('process'),
+      scrollToTop: () => window.scrollTo({ top: 0, behavior: 'smooth' })
+    };
+  }
+}
+
+</script>
+</body>
+</html>
