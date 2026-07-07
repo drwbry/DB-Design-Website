@@ -6,7 +6,7 @@ This document gives Cowork the context it needs to turn a completed client intak
 
 ## What We Build
 
-Static websites for local Cincinnati small businesses. Fast, mobile-first, designed to convert visitors into customers (calls, bookings, walk-ins). Free build, ~$20/month ongoing hosting.
+Static websites for local Cincinnati small businesses. Fast, mobile-first, designed to convert visitors into customers (calls, bookings, walk-ins). Small one-time build fee plus a simple monthly hosting/support invoice.
 
 ---
 
@@ -49,6 +49,8 @@ If the client said "I'd rather have you handle all updates," minimize Sanity sch
 
 ### Booking / Reservations
 If the client needs booking, note which third-party platform in the Build Plan. We embed it (iframe or script), not build it. Default to **Calendly (free tier)** unless the client already uses a platform: Acuity, Square Appointments, OpenTable, Resy.
+
+**Calendly free-tier limitation:** free covers only one bookable event type. If intake reveals the client needs multiple distinct services with separate booking pages (different durations, different staff), flag it in the Build Plan's Open Questions — the client either upgrades Calendly (~$10–16/mo, their cost) or we revisit Cal.com, which supports unlimited event types on its free tier. See `docs/features.md` for the full comparison.
 
 ### Payments (invoices, gift cards)
 If the client wants to collect money (pay-your-invoice for trades, gift cards for salons), the Build Plan notes a **Stripe Payment Link** — created in the client's own Stripe account, linked from the site. No checkout server, ever.

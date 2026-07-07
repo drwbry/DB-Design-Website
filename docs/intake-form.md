@@ -51,6 +51,8 @@ These are the questions we ask every new client before building their website. D
    - Yes — I already use: ___ (Calendly, Acuity, OpenTable, Resy, Square, other)
    - Yes — I need help choosing a booking tool
 
+   > **Note for whoever runs this form with the client:** Our default is Calendly's free plan. Free covers _one_ bookable service type (e.g. "book a consultation") at no cost, forever. If the client offers several distinct services that need separate booking pages (e.g. a salon with haircuts, color, and spa packages each needing their own duration), free-tier Calendly can't do that — they'd need a paid Calendly seat (~$10–16/mo, billed to the client, not us). Flag this during intake so it's not a surprise later. See `docs/features.md` for the full comparison and fallback options.
+
 8. **Do you need a blog or news section?**
    - No
    - Yes — describe what you'd post: ___
