@@ -7,18 +7,18 @@ import '../styles/hub.css';
   description="Privacy policy for The Web Foundry website. We respect your privacy and collect minimal data."
 >
   <Fragment slot="head">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   </Fragment>
 
   <nav class="nav" id="nav">
     <div class="container nav__inner">
-      <a href="/" class="nav__logo logo-b">
-        <span class="logo-b__name">The Web Foundry</span>
-        <span class="logo-b__locale">Cincinnati</span>
+      <a href="/" class="nav__logo">
+        <span class="nav__logo-mark">W</span>
+        <span class="nav__logo-name">The Web Foundry</span>
       </a>
       <ul class="nav__links">
-        <li><a href="/#mission" class="nav__link">Mission</a></li>
-        <li><a href="/#showcase" class="nav__link">Work</a></li>
+        <li><a href="/#work" class="nav__link">Our Work</a></li>
+        <li><a href="/about" class="nav__link">About</a></li>
         <li><a href="/#contact" class="nav__cta">Get in Touch</a></li>
       </ul>
       <button class="nav__hamburger" id="hamburger" aria-label="Menu">
@@ -74,35 +74,35 @@ import '../styles/hub.css';
 
   <footer class="footer">
     <div class="container footer__inner">
-      <div class="footer__logo logo-a">
-        <span class="logo-a__primary">The Web</span>
-        <span class="logo-a__secondary">Foundry</span>
+      <div class="footer__brand">
+        <span class="footer__mark">W</span>
+        <span class="footer__label">The Web Foundry · Cincinnati, OH</span>
       </div>
-      <p class="footer__tagline">AI Vibe Coding for the people.</p>
       <nav class="footer__links" aria-label="Footer">
+        <a href="/#work">Work</a>
         <a href="/about">About</a>
-        <a href="/privacy">Privacy Policy</a>
+        <a href="/privacy">Privacy</a>
       </nav>
-      <p class="footer__copy">© 2026 The Web Foundry — Cincinnati. Built with ❤️ and AI.</p>
     </div>
   </footer>
 
   <style is:global>
     .privacy {
-      padding: 8rem 0 5rem;
-      background: var(--black);
+      padding: 5.5rem 0 4.5rem;
+      background: var(--ink);
     }
     .privacy__title {
       font-family: var(--ff-display);
       font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 900;
+      font-weight: 700;
+      letter-spacing: -0.02em;
       color: var(--cream);
       margin-bottom: 0.5rem;
     }
     .privacy__updated {
       font-family: var(--ff-body);
       font-size: 0.8rem;
-      color: var(--cream-dim);
+      color: var(--muted);
       margin-bottom: 3rem;
     }
     .privacy__body {
@@ -121,7 +121,7 @@ import '../styles/hub.css';
     .privacy__body p {
       font-family: var(--ff-body);
       font-size: 0.95rem;
-      color: var(--cream-dim);
+      color: var(--muted);
       line-height: 1.8;
       margin-bottom: 0.8rem;
     }
@@ -133,12 +133,12 @@ import '../styles/hub.css';
     .privacy__body li {
       font-family: var(--ff-body);
       font-size: 0.95rem;
-      color: var(--cream-dim);
+      color: var(--muted);
       line-height: 1.8;
       margin-bottom: 0.3rem;
     }
     .privacy__body a {
-      color: var(--gold);
+      color: var(--accent);
       text-decoration: underline;
       text-underline-offset: 2px;
     }

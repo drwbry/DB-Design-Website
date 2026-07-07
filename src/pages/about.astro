@@ -18,7 +18,6 @@ interface AboutPageData {
   whyBody?: string[];
   howTitle?: string;
   howBody?: string;
-  teamTitle?: string;
   teamMembers?: TeamMember[];
   ctaHeadline?: string;
 }
@@ -31,7 +30,6 @@ const aboutData = await sanityClient.fetch<AboutPageData | null>(
     whyBody,
     howTitle,
     howBody,
-    teamTitle,
     teamMembers[] {
       name,
       title,
@@ -43,40 +41,38 @@ const aboutData = await sanityClient.fetch<AboutPageData | null>(
 );
 
 const heroHeadline = aboutData?.heroHeadline;
-const heroSubtext = aboutData?.heroSubtext ?? "The Web Foundry is a community service initiative based in Cincinnati. We use AI-powered development to completely rebuild outdated local business websites — for free. No strings attached. Just a better web for the businesses that make our neighborhoods special.";
+const heroSubtext = aboutData?.heroSubtext ?? "The Web Foundry is a community initiative based in Cincinnati. We use AI-powered development to rebuild outdated local business websites — priced to stay within reach, not to turn a profit. Just a better web for the businesses that make our neighborhoods special.";
 const whyTitle = aboutData?.whyTitle ?? "Why we do this";
 const whyBody = aboutData?.whyBody ?? [
   "Small businesses are the backbone of every community. They sponsor little league teams, know your name when you walk in, and make neighborhoods feel like home. But too often, their online presence doesn't reflect who they are — it's a website from 2009 that barely works on a phone.",
   "Meanwhile, technology has moved fast. AI tools now let us build in hours what used to take weeks. We think that speed should benefit the people who need it most — not just the ones who can afford a $10,000 redesign.",
 ];
 const howTitle = aboutData?.howTitle ?? "How it works";
-const howBody = aboutData?.howBody;
-const teamTitle = aboutData?.teamTitle ?? "The Team";
-const teamMembers = aboutData?.teamMembers ?? [
-  { name: "Dreux Brys", title: "Co-Founder", photo: undefined, bio: "Cincinnati-based technologist passionate about putting modern tools to work for the community." },
-  { name: "Partner Name", title: "Co-Founder", photo: undefined, bio: "Bio coming soon." },
-];
+const howBody = aboutData?.howBody ?? "We call it AI vibe coding — using modern AI development tools to rapidly prototype, iterate, and ship polished websites. We pair with business owners to capture their vision and deliver a site that actually represents what they do. Every site is custom, and priced to stay within reach — not to turn a profit.";
+const founder = (aboutData?.teamMembers ?? [
+  { name: "Dreux Brys", title: "Founder, Norwood", photo: undefined, bio: "Cincinnati-based technologist passionate about putting modern tools to work for the community." },
+])[0];
 const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves better?";
 ---
 <BaseLayout
   title="About — The Web Foundry"
-  description="The Web Foundry is a community initiative using AI vibe coding to rebuild outdated local business websites for free. Meet the team behind the mission."
+  description="The Web Foundry is a Cincinnati community initiative using AI vibe coding to rebuild outdated local business websites. Meet the founder behind the mission."
 >
   <Fragment slot="head">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   </Fragment>
 
   <nav class="nav" id="nav">
     <div class="container nav__inner">
-      <a href="/" class="nav__logo logo-b">
-        <span class="logo-b__name">The Web Foundry</span>
-        <span class="logo-b__locale">Cincinnati</span>
+      <a href="/" class="nav__logo">
+        <span class="nav__logo-mark">W</span>
+        <span class="nav__logo-name">The Web Foundry</span>
       </a>
       <ul class="nav__links">
-        <li><a href="/#mission" class="nav__link">Mission</a></li>
-        <li><a href="/#showcase" class="nav__link">Work</a></li>
-        <li><a href="/#contact" class="nav__cta">Get in Touch</a></li>
+        <li><a href="/#work" class="nav__link">Our Work</a></li>
+        <li><a href="/#process" class="nav__link">How It Works</a></li>
         <li><a href="/about" class="nav__link">About</a></li>
+        <li><a href="/#contact" class="nav__cta">Get in Touch</a></li>
       </ul>
       <button class="nav__hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -85,9 +81,11 @@ const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves bet
   </nav>
 
   <main id="main-content">
+
     <section class="about-hero">
       <div class="container">
         <div class="about-hero__inner reveal">
+          <div class="about-hero__dash" aria-hidden="true"></div>
           <span class="section-tag">About Us</span>
           <h1 class="about-hero__title">
             {heroHeadline ?? <>We build websites<br/>for the people<br/><em>who build communities.</em></>}
@@ -97,15 +95,33 @@ const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves bet
       </div>
     </section>
 
+    <section class="about-founder">
+      <div class="container">
+        <div class="about-founder__inner reveal">
+          <div class="about-founder__photo-wrap">
+            {founder.photo
+              ? <img class="about-founder__photo" src={urlFor(founder.photo as object).width(480).height(560).fit('crop').url()} alt={founder.name} />
+              : <div class="about-founder__photo-placeholder" aria-label={`${founder.name} photo placeholder`}></div>
+            }
+          </div>
+          <div class="about-founder__copy">
+            <span class="section-tag">From This Community</span>
+            <h2 class="about-founder__name">{founder.name}</h2>
+            <p class="about-founder__role">{founder.title} · Cincinnati, OH</p>
+            <p class="about-founder__quote">{founder.bio}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="about-why">
       <div class="container">
-        <div class="about-why__inner">
-          <div class="reveal">
-            <h2 class="about-why__title">{whyTitle}</h2>
-            {whyBody.map((para) => (
-              <p class="about-why__text">{para}</p>
-            ))}
-          </div>
+        <div class="about-why__inner reveal">
+          <span class="section-tag">Our Mission</span>
+          <h2 class="about-section-title">{whyTitle}</h2>
+          {whyBody.map((para) => (
+            <p class="about-body-text">{para}</p>
+          ))}
         </div>
       </div>
     </section>
@@ -113,31 +129,9 @@ const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves bet
     <section class="about-how">
       <div class="container">
         <div class="about-how__inner reveal">
-          <h2 class="about-how__title">{howTitle}</h2>
-          <p class="about-how__text">
-            {howBody ?? <>We call it <strong>AI vibe coding</strong> — using modern AI development tools to rapidly prototype, iterate, and ship polished websites. We donate our time, pair with business owners to capture their vision, and deliver a site that actually represents what they do. Every site is custom. Every site is free.</>}
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="about-team">
-      <div class="container">
-        <div class="about-team__inner">
-          <h2 class="about-team__title reveal">{teamTitle}</h2>
-          <div class="about-team__grid">
-            {teamMembers.map((member, i) => (
-              <div class={`team-card reveal reveal-delay-${i + 1}`}>
-                {member.photo
-                  ? <img class="team-card__photo" src={urlFor(member.photo as object).width(240).height(240).fit('crop').url()} alt={member.name} />
-                  : <div class="team-card__photo-placeholder" aria-label={`${member.name} photo placeholder`}></div>
-                }
-                <h3 class="team-card__name">{member.name}</h3>
-                <p class="team-card__role">{member.title}</p>
-                <p class="team-card__bio">{member.bio}</p>
-              </div>
-            ))}
-          </div>
+          <span class="section-tag">Our Process</span>
+          <h2 class="about-section-title">{howTitle}</h2>
+          <p class="about-body-text">{howBody}</p>
         </div>
       </div>
     </section>
@@ -146,155 +140,176 @@ const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves bet
       <div class="container">
         <div class="about-cta__inner reveal">
           <h2 class="about-cta__title">{ctaHeadline}</h2>
-          <a href="/#contact" class="btn btn--primary">Get in Touch</a>
+          <a href="/#contact" class="btn btn--primary">Get in Touch <span class="btn-arrow">→</span></a>
         </div>
       </div>
     </section>
+
   </main>
 
   <footer class="footer">
     <div class="container footer__inner">
-      <div class="footer__logo logo-a">
-        <span class="logo-a__primary">The Web</span>
-        <span class="logo-a__secondary">Foundry</span>
+      <div class="footer__brand">
+        <span class="footer__mark">W</span>
+        <span class="footer__label">The Web Foundry · Cincinnati, OH</span>
       </div>
-      <p class="footer__tagline">AI Vibe Coding for the people.</p>
       <nav class="footer__links" aria-label="Footer">
+        <a href="/#work">Work</a>
         <a href="/about">About</a>
-        <a href="/privacy">Privacy Policy</a>
+        <a href="/privacy">Privacy</a>
       </nav>
-      <p class="footer__copy">© 2026 The Web Foundry — Cincinnati. Built with ❤️ and AI.</p>
     </div>
   </footer>
 
   <style is:global>
     .about-hero {
-      padding: 8rem 0 4rem;
-      background: var(--black);
+      padding: 5rem 0 3.5rem;
+      background: var(--ink);
+    }
+    .about-hero__dash {
+      width: 40px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 1.25rem;
     }
     .about-hero__title {
       font-family: var(--ff-display);
-      font-size: clamp(2rem, 4.5vw, 3.5rem);
-      font-weight: 900;
-      line-height: 1.1;
+      font-size: clamp(2rem, 4.5vw, 3.25rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
       color: var(--cream);
-      margin: 1rem 0 1.5rem;
+      margin: 0.75rem 0 1.25rem;
     }
     .about-hero__title em {
-      color: var(--gold);
+      color: var(--accent);
       font-style: italic;
     }
     .about-hero__sub {
-      font-family: var(--ff-body);
       font-size: 1.05rem;
-      color: var(--cream-dim);
-      line-height: 1.8;
-      max-width: 640px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 620px;
     }
 
-    .about-why {
-      padding: 5rem 0;
-      background: var(--black-soft);
-      border-top: 1px solid var(--border);
+    /* Founder spotlight */
+    .about-founder {
+      padding: 3.5rem 0 4.5rem;
+      background: var(--surface);
+      border-top: 1px solid var(--hairline);
     }
-    .about-why__title,
-    .about-how__title,
-    .about-team__title {
+    .about-founder__inner {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+    .about-founder__photo-wrap {
+      flex: 0 0 260px;
+    }
+    .about-founder__photo,
+    .about-founder__photo-placeholder {
+      width: 260px;
+      height: 300px;
+      border-radius: 16px;
+      object-fit: cover;
+      display: block;
+      border: 1px solid var(--border-card);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+    .about-founder__photo-placeholder {
+      background: linear-gradient(135deg, var(--surface-raised), var(--accent-dim));
+    }
+    .about-founder__copy {
+      flex: 1;
+    }
+    .about-founder__name {
+      font-family: var(--ff-display);
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--cream);
+      margin-bottom: 0.35rem;
+    }
+    .about-founder__role {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+    .about-founder__quote {
+      font-family: var(--ff-display);
+      font-size: 1.25rem;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--cream);
+      max-width: 480px;
+      position: relative;
+      padding-left: 1.25rem;
+      border-left: 2px solid var(--accent);
+    }
+
+    /* Why / How sections */
+    .about-why,
+    .about-how {
+      padding: 4.5rem 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .about-why {
+      background: var(--ink);
+    }
+    .about-how {
+      background: var(--surface);
+    }
+    .about-why__inner,
+    .about-how__inner {
+      max-width: 720px;
+    }
+    .about-section-title {
       font-family: var(--ff-display);
       font-size: clamp(1.6rem, 3vw, 2.2rem);
       font-weight: 700;
+      letter-spacing: -0.02em;
       color: var(--cream);
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.25rem;
     }
-    .about-why__text,
-    .about-how__text {
-      font-family: var(--ff-body);
-      font-size: 1rem;
-      color: var(--cream-dim);
+    .about-body-text {
+      font-size: 0.98rem;
+      color: var(--muted);
       line-height: 1.8;
-      max-width: 640px;
       margin-bottom: 1rem;
     }
-
-    .about-how {
-      padding: 5rem 0;
-      background: var(--black);
-      border-top: 1px solid var(--border);
+    .about-body-text:last-child {
+      margin-bottom: 0;
     }
-    .about-how__text strong {
-      color: var(--gold);
-    }
-
-    .about-team {
-      padding: 5rem 0;
-      background: var(--black-soft);
-      border-top: 1px solid var(--border);
-    }
-    .about-team__grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    .team-card {
-      background: var(--black-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2rem;
-      text-align: center;
-    }
-    .team-card__photo-placeholder {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--black-soft), rgba(212, 168, 83, 0.15));
-      border: 2px solid var(--border);
-      margin: 0 auto 1.2rem;
-    }
-    .team-card__photo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      margin: 0 auto 1.2rem;
-      display: block;
-      object-fit: cover;
-    }
-    .team-card__name {
-      font-family: var(--ff-display);
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--cream);
-      margin-bottom: 0.2rem;
-    }
-    .team-card__role {
-      font-family: var(--ff-body);
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.8rem;
-    }
-    .team-card__bio {
-      font-family: var(--ff-body);
-      font-size: 0.9rem;
-      color: var(--cream-dim);
-      line-height: 1.6;
+    .about-how__inner .about-body-text strong {
+      color: var(--accent);
     }
 
     .about-cta {
-      padding: 5rem 0;
-      background: var(--black);
-      border-top: 1px solid var(--border);
+      padding: 4.5rem 0;
+      background: var(--surface-raised);
+      border-top: 1px solid var(--hairline);
       text-align: center;
     }
     .about-cta__title {
       font-family: var(--ff-display);
       font-size: clamp(1.5rem, 3vw, 2rem);
       font-weight: 700;
+      letter-spacing: -0.02em;
       color: var(--cream);
       margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .about-hero { padding: 3.5rem 0 2.5rem; }
+      .about-founder { padding: 2.5rem 0 3rem; }
+      .about-founder__inner { flex-direction: column; text-align: center; gap: 1.75rem; }
+      .about-founder__quote { margin: 0 auto; text-align: left; }
+      .about-why, .about-how { padding: 3rem 0; }
+      .about-cta { padding: 3rem 0; }
     }
   </style>
 
