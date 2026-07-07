@@ -48,7 +48,10 @@ For each content type the client checked as "I want to update myself," include i
 If the client said "I'd rather have you handle all updates," minimize Sanity schemas — maybe just hours and contact info.
 
 ### Booking / Reservations
-If the client needs booking, note which third-party platform in the Build Plan. We embed it (iframe or script), not build it. Common platforms: Calendly, Acuity, Square Appointments, OpenTable, Resy.
+If the client needs booking, note which third-party platform in the Build Plan. We embed it (iframe or script), not build it. Default to **Calendly (free tier)** unless the client already uses a platform: Acuity, Square Appointments, OpenTable, Resy.
+
+### Payments (invoices, gift cards)
+If the client wants to collect money (pay-your-invoice for trades, gift cards for salons), the Build Plan notes a **Stripe Payment Link** — created in the client's own Stripe account, linked from the site. No checkout server, ever.
 
 ### Blog
 We don't currently build blogs. If the client requested one, flag it in the Build Plan as an open question for Dreux to review.
@@ -74,7 +77,7 @@ After reviewing a client's intake form, Cowork generates this structured documen
 ## Pages
 [List all routes with a brief description of purpose]
 - / (home) — hero, about blurb, [hours/gallery/services], contact form
-- /menu — [PDF embed / GloriaMenus embed / structured menu]
+- /menu — [PDF embed / GloriaFood embed / structured menu]
 - /services — [service list with prices]
 - /about — [team, story]
 - [etc.]

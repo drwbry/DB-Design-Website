@@ -82,6 +82,26 @@ These are the questions we ask every new client before building their website. D
     - No
     - Not sure — tell me more
 
+13b. **Would you like customers to order online?**
+    - No — menu is view-only
+    - Yes — order online, pay at pickup _(we set this up at no monthly cost)_
+    - Yes — order and pay online _(small monthly cost from the ordering provider)_
+    - I already use an ordering system: ___
+
+---
+
+## Section 3b: Payments _(Skip if not applicable)_
+
+13c. **Would it help to collect payments through your website?** _(Check all that apply — payments go straight to your own account)_
+    - [ ] "Pay your invoice" online (great for service businesses)
+    - [ ] Sell gift cards
+    - [ ] No thanks
+
+13d. **Do you have a Stripe account?**
+    - Yes
+    - No — I'd like help setting one up
+    - Not sure what that is
+
 ---
 
 ## Section 4: Content You'll Want to Update

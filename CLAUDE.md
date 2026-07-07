@@ -105,9 +105,11 @@ All forms POST to a **shared Cloudflare Worker** (`worker/index.js`) deployed at
 
 ### Required form reliability rules (for every new client)
 
-- Include hidden routing fields on every form:
-  - `site_id` (client slug)
-  - `to_email` (explicit client destination inbox)
+- Include a hidden `site_id` field (client slug) on every form. The Worker resolves the
+  destination inbox server-side from KV via `site_id` (fallback: its `TO_EMAIL` env var).
+  Do **not** add a `to_email` field — the Worker deliberately ignores client-supplied
+  recipients (spoofing risk), so the field does nothing except leak into the
+  notification email as a stray row.
 - Submit as JSON (`Content-Type: application/json`) to the Worker, not multipart `FormData`.
 - Frontend must only show success UI when `response.ok === true`.
 - On failure, keep the form visible, show inline error, and refresh Turnstile token.
