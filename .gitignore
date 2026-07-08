@@ -1,11 +1,18 @@
 .claude/
 .superpowers/
 .worktrees/
+.astro/
 node_modules/
+studio/node_modules/
 dist/
+studio/dist/
+worker/.wrangler/
 .env
 .env.local
 
 # Claude Design handoff extract (curated copies live in docs/design-imports/)
 Cincinnati Web Foundry-handoff/
 Cincinnati Web Foundry-handoff.zip*
+
+# Local brand source masters (re-keying only, not deployed)
+.brand-src/
