@@ -1,0 +1,981 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Web Foundry Stack Map</title>
+  <style>
+    :root {
+      --ink: #17201d;
+      --panel: #ffffff;
+      --paper: #f7f4ed;
+      --line: #d7d1c5;
+      --muted: #65716c;
+      --green: #4f7f67;
+      --blue: #426b91;
+      --gold: #b98531;
+      --rose: #a85d58;
+      --violet: #6e648e;
+      --text: #26312d;
+      --soft-green: #e5eee8;
+      --soft-blue: #e4edf5;
+      --soft-gold: #f3ead8;
+      --soft-rose: #f1e1df;
+      --soft-violet: #e9e5f1;
+      --shadow: 0 18px 48px rgba(23, 32, 29, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #faf8f2 0%, var(--paper) 44%, #f0ede6 100%);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 52px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      background: var(--ink);
+      color: #f7f4ed;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-weight: 800;
+      border-radius: 8px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1.85rem;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .brand p,
+    .hero p,
+    .section-head p,
+    .small {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .badge {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.68);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 390px;
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
+
+    .hero-main,
+    .legend,
+    .band,
+    .flow-panel,
+    .input-panel,
+    .note-panel {
+      background: rgba(255,255,255,0.86);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main {
+      padding: clamp(24px, 4vw, 42px);
+      display: grid;
+      align-content: center;
+      min-height: 330px;
+    }
+
+    .eyebrow {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    .hero h2 {
+      margin: 0 0 16px;
+      max-width: 760px;
+      font-size: 4.3rem;
+      line-height: 0.98;
+      letter-spacing: 0;
+      color: var(--ink);
+    }
+
+    .hero p {
+      max-width: 680px;
+      font-size: 1.12rem;
+    }
+
+    .legend {
+      padding: 20px;
+      display: grid;
+      gap: 12px;
+      align-content: center;
+    }
+
+    .legend-item {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .legend-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: var(--ink);
+      border: 1px solid rgba(23,32,29,0.1);
+    }
+
+    .legend-item strong { display: block; color: var(--ink); }
+    .legend-item span { color: var(--muted); font-size: 0.88rem; }
+
+    .section {
+      margin-top: 26px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 0 0 14px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 2rem;
+      letter-spacing: 0;
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .tech {
+      position: relative;
+      min-height: 138px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .tech::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 5px;
+      background: var(--accent, var(--green));
+    }
+
+    .tech h3 {
+      margin: 12px 0 6px;
+      color: var(--ink);
+      font-size: 1rem;
+    }
+
+    .tech p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .diagram-wrap {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      overflow: auto;
+    }
+
+    .system-svg {
+      min-width: 980px;
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .lane {
+      fill: #faf8f2;
+      stroke: #e1dbcf;
+      stroke-width: 1;
+      rx: 10;
+    }
+
+    .lane-label {
+      fill: #748078;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .node rect {
+      fill: #fff;
+      stroke: #cfc8ba;
+      stroke-width: 1.4;
+      rx: 8;
+    }
+
+    .node text {
+      fill: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: 0;
+    }
+
+    .node .label {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .node .sub {
+      font-size: 12px;
+      fill: #65716c;
+    }
+
+    .node.plan rect { stroke: #b9cfbf; fill: #fbfdfb; }
+    .node.deploy rect { stroke: #b8cada; fill: #fbfdff; }
+    .node.content rect { stroke: #ddcfad; fill: #fffdf8; }
+    .node.form rect { stroke: #d8bdb9; fill: #fffafa; }
+
+    .arrow {
+      stroke: #737d77;
+      stroke-width: 2;
+      fill: none;
+      marker-end: url(#arrow);
+    }
+
+    .arrow-soft {
+      stroke: #a7ada6;
+      stroke-width: 1.8;
+      stroke-dasharray: 6 6;
+      marker-end: url(#arrow-soft);
+    }
+
+    .arrow-label {
+      fill: #65716c;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .tab {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .tab[aria-selected="true"] {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff;
+    }
+
+    .flow-panel,
+    .input-panel,
+    .note-panel {
+      padding: 18px;
+      box-shadow: none;
+    }
+
+    .flow {
+      display: none;
+      grid-template-columns: repeat(6, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .flow.is-active { display: grid; }
+
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+      min-height: 148px;
+      position: relative;
+    }
+
+    .step::after {
+      content: "";
+      position: absolute;
+      right: -9px;
+      top: 50%;
+      width: 16px;
+      height: 2px;
+      background: #a7ada6;
+    }
+
+    .step:last-child::after { display: none; }
+
+    .num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: var(--ink);
+      background: var(--soft-gold);
+      margin-bottom: 10px;
+    }
+
+    .step h3 {
+      margin: 0 0 6px;
+      color: var(--ink);
+      font-size: 0.98rem;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .inputs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .input-card {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 172px;
+    }
+
+    .input-card h3 {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: 1rem;
+    }
+
+    .input-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .input-card li + li { margin-top: 4px; }
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .decision {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 166px;
+    }
+
+    .decision strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .decision span {
+      display: inline-block;
+      margin: 0 5px 6px 0;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: var(--soft-blue);
+      color: #2f526f;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .checklist {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .checklist li {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--soft-green);
+      color: var(--green);
+      font-weight: 900;
+      font-size: 0.78rem;
+    }
+
+    .note-panel {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .mini-map {
+      display: grid;
+      gap: 8px;
+    }
+
+    .mini-row {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+    }
+
+    .mini-key {
+      font-weight: 800;
+      color: var(--ink);
+      font-size: 0.86rem;
+    }
+
+    .mini-value {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .note-panel,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .stack-grid,
+      .inputs-grid,
+      .decision-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .flow {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .step::after { display: none; }
+      .hero h2 { font-size: 3.1rem; }
+      .section-head h2 { font-size: 1.7rem; }
+    }
+
+    @media (max-width: 640px) {
+      .shell { width: min(100% - 20px, 1180px); padding-top: 18px; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .badge { white-space: normal; }
+      .stack-grid,
+      .inputs-grid,
+      .decision-grid,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+      .hero-main { min-height: auto; }
+      .mini-row { grid-template-columns: 1fr; }
+      .brand h1 { font-size: 1.35rem; }
+      .hero h2 { font-size: 2.25rem; }
+      .hero p { font-size: 1rem; }
+      .section-head h2 { font-size: 1.45rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark">W</div>
+        <div>
+          <h1>The Web Foundry Stack Map</h1>
+          <p>How the website factory works from intake to launch to updates</p>
+        </div>
+      </div>
+      <div class="badge">Template repo + onboarding skill + shared infrastructure</div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-main">
+        <div class="eyebrow">Big Picture</div>
+        <h2>One repeatable system for custom local business websites.</h2>
+        <p>The skill turns client answers into a site plan. The template repo turns that plan into an Astro site. Sanity handles client-editable content. GitHub and Coolify publish the site. Cloudflare and Resend handle domains, protection, forms, and email.</p>
+      </div>
+      <aside class="legend" aria-label="Technology legend">
+        <div class="legend-item">
+          <div class="legend-icon" style="background:var(--soft-green)">01</div>
+          <div><strong>Plan</strong><span>Intake answers become a signed-off build plan.</span></div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-icon" style="background:var(--soft-blue)">02</div>
+          <div><strong>Build</strong><span>Astro, Sanity schemas, forms, integrations, pages.</span></div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-icon" style="background:var(--soft-gold)">03</div>
+          <div><strong>Launch</strong><span>GitHub to Coolify, Cloudflare DNS, HTTPS.</span></div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-icon" style="background:var(--soft-rose)">04</div>
+          <div><strong>Update</strong><span>Sanity edits rebuild the static site automatically.</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Technology Stack</h2>
+          <p>What each piece is responsible for.</p>
+        </div>
+      </div>
+      <div class="stack-grid">
+        <article class="tech" style="--accent:var(--green)">
+          <h3>Codex Skill</h3>
+          <p>Walks the agent through discovery, planning, build, deployment, QA, and handoff.</p>
+        </article>
+        <article class="tech" style="--accent:var(--blue)">
+          <h3>Astro</h3>
+          <p>Builds fast static pages from components, page files, styles, and Sanity data.</p>
+        </article>
+        <article class="tech" style="--accent:var(--gold)">
+          <h3>Sanity</h3>
+          <p>Client-friendly CMS for hours, menus, galleries, services, testimonials, and content.</p>
+        </article>
+        <article class="tech" style="--accent:var(--rose)">
+          <h3>Cloudflare</h3>
+          <p>DNS, Turnstile bot checks, optional email routing, and the shared form Worker.</p>
+        </article>
+        <article class="tech" style="--accent:var(--violet)">
+          <h3>Coolify</h3>
+          <p>Pulls GitHub code, runs the build, serves the static site on the VPS with HTTPS.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>System Diagram</h2>
+          <p>The main actors and how data moves between them.</p>
+        </div>
+      </div>
+      <div class="diagram-wrap">
+        <svg class="system-svg" viewBox="0 0 1080 600" role="img" aria-labelledby="diagram-title diagram-desc">
+          <title id="diagram-title">Web Foundry website factory system diagram</title>
+          <desc id="diagram-desc">Diagram showing three lanes: planning and build, content updates and deployment, and visitors with form routing.</desc>
+          <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+              <path d="M0,0 L10,4 L0,8 Z" fill="#737d77"></path>
+            </marker>
+            <marker id="arrow-soft" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+              <path d="M0,0 L10,4 L0,8 Z" fill="#a7ada6"></path>
+            </marker>
+          </defs>
+
+          <rect class="lane" x="24" y="28" width="1032" height="132"></rect>
+          <rect class="lane" x="24" y="198" width="1032" height="154"></rect>
+          <rect class="lane" x="24" y="390" width="1032" height="154"></rect>
+          <text class="lane-label" x="44" y="54">Plan and build</text>
+          <text class="lane-label" x="44" y="224">Content, code, and deploy</text>
+          <text class="lane-label" x="44" y="416">Live visitors and forms</text>
+
+          <path class="arrow" d="M184 96 H282"></path>
+          <path class="arrow" d="M422 96 H522"></path>
+          <path class="arrow" d="M672 96 H782"></path>
+          <path class="arrow" d="M890 126 V226"></path>
+          <path class="arrow" d="M820 256 H750"></path>
+          <path class="arrow" d="M610 256 H470"></path>
+          <path class="arrow" d="M400 286 V374 H132 V440"></path>
+          <path class="arrow" d="M200 470 H344"></path>
+          <path class="arrow" d="M492 470 H604"></path>
+          <path class="arrow" d="M724 470 H820"></path>
+          <path class="arrow" d="M932 470 H976"></path>
+          <path class="arrow-soft" d="M592 126 V314"></path>
+          <path class="arrow-soft" d="M672 344 H760"></path>
+          <path class="arrow-soft" d="M825 314 V302 C825 294 792 294 750 286"></path>
+
+          <text class="arrow-label" x="212" y="84">answers</text>
+          <text class="arrow-label" x="448" y="84">site plan</text>
+          <text class="arrow-label" x="704" y="84">fork repo</text>
+          <text class="arrow-label" x="904" y="184">push</text>
+          <text class="arrow-label" x="764" y="244">build trigger</text>
+          <text class="arrow-label" x="500" y="244">deploy static site</text>
+          <text class="arrow-label" x="66" y="382">browse</text>
+          <text class="arrow-label" x="236" y="458">submit JSON</text>
+          <text class="arrow-label" x="514" y="458">site_id lookup</text>
+          <text class="arrow-label" x="748" y="458">send email</text>
+          <text class="arrow-label" x="612" y="178">schemas + queries</text>
+          <text class="arrow-label" x="696" y="332">publish</text>
+          <text class="arrow-label" x="772" y="294">rebuild</text>
+
+          <g class="node plan" transform="translate(64 66)">
+            <rect width="120" height="60"></rect>
+            <text class="label" x="16" y="28">Intake</text>
+            <text class="sub" x="16" y="47">answers + assets</text>
+          </g>
+          <g class="node plan" transform="translate(282 66)">
+            <rect width="140" height="60"></rect>
+            <text class="label" x="16" y="28">Skill</text>
+            <text class="sub" x="16" y="47">site plan + steps</text>
+          </g>
+          <g class="node plan" transform="translate(522 66)">
+            <rect width="150" height="60"></rect>
+            <text class="label" x="16" y="28">Template Repo</text>
+            <text class="sub" x="16" y="47">Astro source</text>
+          </g>
+          <g class="node plan" transform="translate(782 66)">
+            <rect width="150" height="60"></rect>
+            <text class="label" x="16" y="28">Client Repo</text>
+            <text class="sub" x="16" y="47">customized site</text>
+          </g>
+
+          <g class="node deploy" transform="translate(820 226)">
+            <rect width="140" height="60"></rect>
+            <text class="label" x="16" y="28">GitHub</text>
+            <text class="sub" x="16" y="47">main branch</text>
+          </g>
+          <g class="node deploy" transform="translate(610 226)">
+            <rect width="140" height="60"></rect>
+            <text class="label" x="16" y="28">Coolify</text>
+            <text class="sub" x="16" y="47">build + deploy</text>
+          </g>
+          <g class="node deploy" transform="translate(330 226)">
+            <rect width="140" height="60"></rect>
+            <text class="label" x="16" y="28">VPS</text>
+            <text class="sub" x="16" y="47">static site + HTTPS</text>
+          </g>
+          <g class="node content" transform="translate(512 314)">
+            <rect width="160" height="60"></rect>
+            <text class="label" x="16" y="28">Sanity</text>
+            <text class="sub" x="16" y="47">client edits content</text>
+          </g>
+          <g class="node content" transform="translate(760 314)">
+            <rect width="130" height="60"></rect>
+            <text class="label" x="16" y="28">Webhook</text>
+            <text class="sub" x="16" y="47">publish event</text>
+          </g>
+
+          <g class="node form" transform="translate(64 440)">
+            <rect width="136" height="60"></rect>
+            <text class="label" x="16" y="28">Visitors</text>
+            <text class="sub" x="16" y="47">browse + submit</text>
+          </g>
+          <g class="node form" transform="translate(344 440)">
+            <rect width="148" height="60"></rect>
+            <text class="label" x="16" y="28">Worker</text>
+            <text class="sub" x="16" y="47">validate form</text>
+          </g>
+          <g class="node form" transform="translate(604 440)">
+            <rect width="120" height="60"></rect>
+            <text class="label" x="16" y="28">KV</text>
+            <text class="sub" x="16" y="47">route by site_id</text>
+          </g>
+          <g class="node form" transform="translate(820 440)">
+            <rect width="112" height="60"></rect>
+            <text class="label" x="16" y="28">Resend</text>
+            <text class="sub" x="16" y="47">email API</text>
+          </g>
+          <g class="node form" transform="translate(976 440)">
+            <rect width="66" height="60"></rect>
+            <text class="label" x="12" y="28">Inbox</text>
+            <text class="sub" x="12" y="47">client</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Operating Flows</h2>
+          <p>Four common paths through the system.</p>
+        </div>
+      </div>
+      <div class="flow-panel">
+        <div class="tabs" role="tablist" aria-label="Flow selector">
+          <button class="tab" type="button" role="tab" aria-selected="true" data-flow="build">New Website Build</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-flow="content">Client Content Update</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-flow="form">Visitor Form Submit</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-flow="code">Code Update</button>
+        </div>
+
+        <div class="flow is-active" data-flow-panel="build">
+          <div class="step"><div class="num">1</div><h3>Intake</h3><p>Business goals, pages, content, design, domain, forms, and integrations are collected.</p></div>
+          <div class="step"><div class="num">2</div><h3>Site Plan</h3><p>The skill turns answers into an approved route, schema, design, and launch plan.</p></div>
+          <div class="step"><div class="num">3</div><h3>Template</h3><p>A matching showcase pattern is harvested and the central config is filled in.</p></div>
+          <div class="step"><div class="num">4</div><h3>Build</h3><p>Astro pages, Sanity schemas, forms, content, styles, and integrations are implemented.</p></div>
+          <div class="step"><div class="num">5</div><h3>Deploy</h3><p>GitHub triggers Coolify, which builds static files and serves them from the VPS.</p></div>
+          <div class="step"><div class="num">6</div><h3>QA</h3><p>Forms, DNS, Sanity rebuilds, mobile layouts, SEO, headers, and links are verified.</p></div>
+        </div>
+
+        <div class="flow" data-flow-panel="content">
+          <div class="step"><div class="num">1</div><h3>Client Edits</h3><p>The client changes hours, menu, gallery, services, or other approved CMS content.</p></div>
+          <div class="step"><div class="num">2</div><h3>Publish</h3><p>Sanity stores the new content in that client's isolated project.</p></div>
+          <div class="step"><div class="num">3</div><h3>Webhook</h3><p>Sanity sends a deploy request to the client's Coolify resource.</p></div>
+          <div class="step"><div class="num">4</div><h3>Rebuild</h3><p>Astro fetches fresh Sanity data at build time with fallback values available.</p></div>
+          <div class="step"><div class="num">5</div><h3>Publish Site</h3><p>Coolify swaps in the newly built static files.</p></div>
+          <div class="step"><div class="num">6</div><h3>Live Update</h3><p>Visitors see the new content without any app server running.</p></div>
+        </div>
+
+        <div class="flow" data-flow-panel="form">
+          <div class="step"><div class="num">1</div><h3>Visitor</h3><p>A visitor fills a contact, quote, booking, service request, or pre-order form.</p></div>
+          <div class="step"><div class="num">2</div><h3>Turnstile</h3><p>Cloudflare verifies the submission is likely human.</p></div>
+          <div class="step"><div class="num">3</div><h3>Worker</h3><p>The form posts JSON to the shared Cloudflare Worker.</p></div>
+          <div class="step"><div class="num">4</div><h3>KV Routing</h3><p>The Worker reads `site_id` and finds the client's email and branding in KV.</p></div>
+          <div class="step"><div class="num">5</div><h3>Resend</h3><p>Notification and confirmation emails are sent from the Foundry forms address.</p></div>
+          <div class="step"><div class="num">6</div><h3>Follow Up</h3><p>The client replies from their inbox and the visitor gets confirmation.</p></div>
+        </div>
+
+        <div class="flow" data-flow-panel="code">
+          <div class="step"><div class="num">1</div><h3>Change</h3><p>Codex or Dreux edits the client repo: code, copy, styles, schemas, or config.</p></div>
+          <div class="step"><div class="num">2</div><h3>Build Check</h3><p>`npm run build` confirms the static site compiles before deployment.</p></div>
+          <div class="step"><div class="num">3</div><h3>Commit</h3><p>The finished change is committed and pushed to GitHub.</p></div>
+          <div class="step"><div class="num">4</div><h3>Coolify</h3><p>Auto-deploy pulls the latest commit and runs the build.</p></div>
+          <div class="step"><div class="num">5</div><h3>VPS</h3><p>The new static output is served behind Traefik and HTTPS.</p></div>
+          <div class="step"><div class="num">6</div><h3>Verify</h3><p>Check the changed page, form, link, or integration on the live domain.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Information the Skill Needs</h2>
+          <p>These answers determine what gets built and which services are used.</p>
+        </div>
+      </div>
+      <div class="input-panel">
+        <div class="inputs-grid">
+          <article class="input-card">
+            <h3>Business Profile</h3>
+            <ul>
+              <li>Name, type, customer, service area</li>
+              <li>Primary goal: calls, bookings, walk-ins, credibility</li>
+              <li>Existing site and content to keep</li>
+            </ul>
+          </article>
+          <article class="input-card">
+            <h3>Pages and Features</h3>
+            <ul>
+              <li>Home, About, Menu, Services, Gallery, Contact</li>
+              <li>Booking, reservations, invoice pay, gift cards</li>
+              <li>Any special forms or workflows</li>
+            </ul>
+          </article>
+          <article class="input-card">
+            <h3>Editable Content</h3>
+            <ul>
+              <li>Hours, menu, services, gallery, team, testimonials</li>
+              <li>Anything the client wants to update themselves</li>
+              <li>Everything else stays hardcoded for simplicity</li>
+            </ul>
+          </article>
+          <article class="input-card">
+            <h3>Forms</h3>
+            <ul>
+              <li>Form type and required fields</li>
+              <li>Destination email and any extra recipients</li>
+              <li>Turnstile site key and `site_id` routing</li>
+            </ul>
+          </article>
+          <article class="input-card">
+            <h3>Design Inputs</h3>
+            <ul>
+              <li>Logo, colors, photos, references</li>
+              <li>Vibe words: cozy, bold, luxe, classic, modern</li>
+              <li>Assets needed before build</li>
+            </ul>
+          </article>
+          <article class="input-card">
+            <h3>Domain and Launch</h3>
+            <ul>
+              <li>Domain name, registrar, DNS access</li>
+              <li>Email forwarding needs</li>
+              <li>Who will edit content after launch</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Decision Matrix</h2>
+          <p>How answers become implementation choices.</p>
+        </div>
+      </div>
+      <div class="decision-grid">
+        <article class="decision">
+          <strong>Menu or Ordering</strong>
+          <span>PDF in Sanity</span><span>Sanity menu schema</span><span>GloriaFood</span><span>Square Online</span>
+          <p class="small">Picked from how often the menu changes and whether customers order online.</p>
+        </article>
+        <article class="decision">
+          <strong>Booking</strong>
+          <span>Calendly</span><span>Acuity</span><span>Square</span><span>OpenTable</span>
+          <p class="small">Usually an embed or link from the client's own booking account.</p>
+        </article>
+        <article class="decision">
+          <strong>Payments</strong>
+          <span>Stripe Payment Link</span><span>Invoice pay</span><span>Gift cards</span>
+          <p class="small">Static link-out only, so money flows straight to the client.</p>
+        </article>
+        <article class="decision">
+          <strong>CMS Scope</strong>
+          <span>Hours</span><span>Gallery</span><span>Services</span><span>Testimonials</span>
+          <p class="small">Sanity is used only for content the client will really edit.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Where Sanity Fits</h2>
+          <p>Sanity is not the website host. It is the editing dashboard and content source.</p>
+        </div>
+      </div>
+      <div class="note-panel">
+        <div>
+          <ul class="checklist">
+            <li><span class="check">✓</span><span>Each client gets a separate Sanity project and `production` dataset, so client content stays isolated.</span></li>
+            <li><span class="check">✓</span><span>Astro fetches Sanity content during the build. The live site is still static and fast.</span></li>
+            <li><span class="check">✓</span><span>Publishing in Sanity triggers a webhook to Coolify, which rebuilds the site with fresh content.</span></li>
+            <li><span class="check">✓</span><span>Pages include fallback content so an empty CMS does not break the site.</span></li>
+          </ul>
+        </div>
+        <div class="mini-map">
+          <div class="mini-row"><div class="mini-key">Client edits</div><div class="mini-value">Sanity Studio</div></div>
+          <div class="mini-row"><div class="mini-key">Content stores</div><div class="mini-value">Sanity project + dataset</div></div>
+          <div class="mini-row"><div class="mini-key">Site rebuild</div><div class="mini-value">Sanity webhook to Coolify</div></div>
+          <div class="mini-row"><div class="mini-key">Public website</div><div class="mini-value">Static Astro files on VPS</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Files to Know</h2>
+          <p>The small handful of files that orient the whole system.</p>
+        </div>
+      </div>
+      <div class="split">
+        <div class="note-panel" style="grid-template-columns:1fr">
+          <ul class="checklist">
+            <li><span class="check">✓</span><span><strong>src/config/site.js</strong> stores shared site constants: domain, `site_id`, Worker URL, Turnstile key, form subjects.</span></li>
+            <li><span class="check">✓</span><span><strong>src/pages/</strong> contains site routes. Client sites use normal routes like `/`, `/services`, `/menu`, not `/showcase`.</span></li>
+            <li><span class="check">✓</span><span><strong>studio/schemaTypes/</strong> defines what the client can edit in Sanity.</span></li>
+            <li><span class="check">✓</span><span><strong>worker/index.js</strong> receives form JSON, checks Turnstile, looks up KV, and sends emails.</span></li>
+          </ul>
+        </div>
+        <div class="note-panel" style="grid-template-columns:1fr">
+          <ul class="checklist">
+            <li><span class="check">✓</span><span><strong>CLAUDE.md</strong> explains repo-specific conventions for future coding sessions.</span></li>
+            <li><span class="check">✓</span><span><strong>web-foundry-onboarding skill</strong> is the procedural launch checklist and must stay in sync with workflow changes.</span></li>
+            <li><span class="check">✓</span><span><strong>docs/intake-form.md</strong> is the raw question set that feeds the planning step.</span></li>
+            <li><span class="check">✓</span><span><strong>docs/cowork-intake-brief.md</strong> maps intake answers into build-plan decisions.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll('.tab'));
+    const panels = Array.from(document.querySelectorAll('[data-flow-panel]'));
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const flow = tab.dataset.flow;
+        tabs.forEach((item) => item.setAttribute('aria-selected', String(item === tab)));
+        panels.forEach((panel) => panel.classList.toggle('is-active', panel.dataset.flowPanel === flow));
+      });
+    });
+  </script>
+</body>
+</html>

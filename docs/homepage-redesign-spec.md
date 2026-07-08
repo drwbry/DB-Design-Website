@@ -197,8 +197,8 @@ Name*, Email*, Phone (optional, keep auto-format), Business Name*,
 border, focus border `--accent`).
 
 **Production requirements the design omits (mandatory):**
-- Hidden `botcheck` checkbox; hidden `site_id` = `web-foundry-hub`; hidden `to_email`
-  (value: current notification inbox — same one the Worker's `TO_EMAIL` uses).
+- Hidden `botcheck` checkbox; hidden `site_id` = `web-foundry-hub`; no client-supplied
+  `to_email` field.
 - Turnstile widget (`data-sitekey="0x4AAAAAACxVhhG9sxrzihaS" data-theme="light"`).
 - Submit JSON to the existing Worker URL; success UI **only when `res.ok === true`**
   (and body `success`); on failure show inline error, keep form visible, and call
@@ -218,7 +218,7 @@ proof bar wraps. No horizontal scroll at 360px width. Respect `prefers-reduced-m
 - [ ] `BaseLayout`/`index.astro` head: swap font link to Sora + Plus Jakarta Sans
 - [ ] `hub.css`: replace `:root` tokens (§1); restyle nav/buttons/footer; delete dead styles
 - [ ] `index.astro`: rebuild sections per §§3–8 (remove mission, old timeline, old cards, old CTA/footer markup)
-- [ ] Modal per §9; `main.js` form handler: `site_id`/`to_email` pass-through, `res.ok` gate, `turnstile.reset()` on failure; delete dead JS (§1)
+- [ ] Modal per §9; `main.js` form handler: `site_id` pass-through, `res.ok` gate, `turnstile.reset()` on failure; delete dead JS (§1)
 - [ ] Responsive pass per §10
 - [ ] Update CLAUDE.md "Design System → Hub Page" row: colors `#181c28` bg / `#b45a3c` terracotta / `#eee9e1` cream; fonts Sora + Plus Jakarta Sans
 - [ ] `npm run build` clean; check `/`, `/about`, `/privacy` links resolve

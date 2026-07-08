@@ -89,11 +89,11 @@ build never blocks on these.
 ### P0 — form compliance (hub + bakery + plumber + salon)
 
 Per CLAUDE.md rules, in each form/script: add hidden `site_id`
-(`web-foundry-hub` / `demo-bakery` / `demo-plumber` / `demo-salon`) and `to_email`
-inputs; gate success on `res.ok === true` (keep body-`success` check as AND); on
-failure call `turnstile.reset()` and keep form visible. Hub modal is also covered by
-the homepage spec §9 — don't double-build; do hub last, skip if the rebrand pass
-already landed it.
+(`web-foundry-hub` / `demo-bakery` / `demo-plumber` / `demo-salon`). Do not add
+client-supplied `to_email`; the Worker resolves recipients server-side. Gate success
+on `res.ok === true` (keep body-`success` check as AND); on failure call
+`turnstile.reset()` and keep form visible. Hub modal is also covered by the homepage
+spec §9 — don't double-build; do hub last, skip if the rebrand pass already landed it.
 
 ### P1a — plumber service-request form
 
@@ -165,4 +165,4 @@ Update `~/.claude/skills/web-foundry-onboarding/SKILL.md` + `docs/intake-form.md
 - Calendly embed pattern incl. color-param theming.
 - CONFIG-block fork convention as the standard for all client templates.
 - Worker form types: `service-request` (ticket_id), `pre-order` (order_id);
-  `site_id`/`to_email` now baseline in every template form.
+  `site_id` now baseline in every template form.

@@ -44,6 +44,8 @@ Then visit `http://localhost:4321`
 │   ├── scripts/
 │   │   ├── shared.js                    # IntersectionObserver scroll reveal + counter animation
 │   │   └── main.js                      # Hub-specific: 3D magnetic card tilt, nav blur, parallax
+│   ├── config/
+│   │   └── site.js                      # Central site/form/showcase constants
 │   ├── styles/
 │   │   ├── shared.css                   # Global reset, scroll-reveal utility classes, .back-btn
 │   │   └── hub.css                      # Hub page design tokens + all component styles
@@ -60,6 +62,8 @@ Then visit `http://localhost:4321`
 
 **Showcase pages** use `ShowcaseLayout`, which wraps content with `BackButton` and `DBCredit`. All page-specific styles live in a `<style>` block using CSS custom properties at `:root`.
 
+**Central config** lives in `src/config/site.js`. Use it for fork-swappable values that are shared across Astro config, pages, layouts, and client-side JS: domain, site name, contact email, Worker URL, Turnstile site key, hub `site_id`, showcase demo `site_id`s, and form subject lines. Do not hardcode those values in individual form scripts.
+
 `shared.js` auto-initializes on `DOMContentLoaded` — no manual calls needed. It wires up scroll reveal and counters automatically by querying the DOM for `.reveal` and `[data-count]`.
 
 **Sanity CMS** is used for dynamic content fetched at build time:
@@ -68,6 +72,8 @@ Then visit `http://localhost:4321`
 - Salon: gallery images with emoji fallback (max 5)
 
 A Sanity webhook triggers a Coolify rebuild on publish (Create + Update, filter: `!(_id in path("drafts.**"))`).
+
+For a visual overview of how the whole website factory fits together, open `docs/website-factory-map.html` in a browser. It maps the stack, intake inputs, build/deploy flows, form routing, and Sanity update loop.
 
 ## Shared Utilities (shared.css + shared.js)
 
@@ -197,7 +203,7 @@ This codebase is designed as a **base template** for spinning up client websites
 
 **Scaling the Worker:**
 - Add each new client domain to the Worker's `ALLOWED_ORIGINS`
-- When scaling past ~10 sites, add a `site_id` field to form payloads and store per-site config (destination email, business name) in Cloudflare KV
+- Every form must include a `site_id`; store per-site config (destination email, business name, brand colors, site URL) in Cloudflare KV
 
 **Coolify tips:**
 - Queue builds (don't run concurrent) to avoid CPU spikes from 3–4 simultaneous `npm run build`
