@@ -525,7 +525,7 @@ body {
   background: #0f2640;
 }
 .work-card__preview--salon {
-  background: linear-gradient(160deg, #f8f3ee 0%, #ede6dd 100%);
+  background: linear-gradient(165deg, #251A14 0%, #1C1410 100%);
 }
 
 .work-card__preview-nav {
@@ -592,26 +592,27 @@ body {
   font-size: 8px; font-weight: 500; color: #7ba3cc; padding: 5px 12px; border: 1px solid #2a5580; border-radius: 3px;
 }
 
-/* Salon preview detail */
+/* Salon preview detail — dark espresso + champagne editorial (matches live site) */
 .work-card__preview--salon .work-card__preview-brand {
-  font-family: var(--ff-display); font-size: 13px; color: #3d3530; font-style: italic;
+  font-family: Georgia, 'Times New Roman', serif; font-size: 14px; color: #E8D5C4; font-style: italic;
 }
-.work-card__preview--salon .work-card__preview-nav-links span { color: #9b8f85; }
-.work-card__preview--salon .work-card__preview-rule {
-  width: 32px; height: 1px; background: #b8956a; margin-bottom: 2px;
+.work-card__preview--salon .work-card__preview-nav-links span { color: rgba(232, 213, 196, 0.45); }
+.work-card__preview--salon .work-card__preview-sub {
+  font-size: 7.5px; color: #C9A96E; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 4px;
 }
 .work-card__preview--salon .work-card__preview-headline {
-  font-family: var(--ff-display); font-size: 24px; color: #3d3530; text-align: center; line-height: 1.25; font-style: italic;
+  font-family: Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 23px; color: #E8D5C4; text-align: center; line-height: 1.1;
 }
-.work-card__preview--salon .work-card__preview-sub {
-  font-size: 8px; color: #9b8f85; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 8px;
+.work-card__preview--salon .work-card__preview-headline em { font-style: italic; color: #C9A96E; }
+.work-card__preview--salon .work-card__preview-rule {
+  width: 28px; height: 1px; background: #C9A96E; margin: 8px 0 6px;
 }
 .work-card__preview--salon .work-card__preview-cta {
-  font-size: 8px; color: #3d3530; padding: 5px 12px; border: 1px solid #b8956a; margin-top: 6px; letter-spacing: 0.04em;
+  font-size: 8px; color: #1C1410; background: #C9A96E; padding: 5px 13px; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px;
 }
 .work-card__preview--salon .work-card__preview-decor {
   position: absolute; top: 12px; right: 12px; width: 50px; height: 50px;
-  border: 1px solid rgba(184, 149, 106, 0.12); border-radius: 50%;
+  border: 1px solid rgba(201, 169, 110, 0.18); border-radius: 50%;
 }
 
 .work-card__preview-body {
