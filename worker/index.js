@@ -79,7 +79,7 @@ export default {
     const subject = body.subject || `New Form Submission — ${siteBusinessName}`;
     const lines = Object.entries(body)
       .filter(([k]) => !['secret', 'botcheck', 'cf-turnstile-response', 'subject', 'site_id'].includes(k))
-      .map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;font-weight:600;vertical-align:top">${k}</td><td style="padding:4px 0">${v}</td></tr>`);
+      .map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;font-weight:600;vertical-align:top">${escapeHtml(k)}</td><td style="padding:4px 0">${escapeHtml(v)}</td></tr>`);
     const internalHtml = `<table style="font-family:sans-serif;font-size:14px;color:#333">${lines.join('')}</table>`;
 
     // ── Send internal notification to site owner ───────────────
@@ -108,6 +108,8 @@ export default {
     if (body.email) {
       const firstName = (body.name || '').split(' ')[0] || 'there';
       const displayName = siteBusinessName;
+      const safeFirstName = escapeHtml(firstName);
+      const safeDisplayName = escapeHtml(displayName);
 
       // ── Dynamic submission summary rows ─────────────────────
       const hiddenFields = ['secret', 'botcheck', 'cf-turnstile-response', 'subject', 'site_id', 'email'];
@@ -120,7 +122,7 @@ export default {
         .map(([k, v], i, arr) => {
           const label = fieldLabels[k] || k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
           const border = i < arr.length - 1 ? 'border-bottom:1px solid #EEEEEE;' : '';
-          return `<tr><td style="padding:10px 16px;${border}font-size:13px;color:#888888;width:36%;">${label}</td><td style="padding:10px 16px;${border}font-size:13px;color:#111111;">${v}</td></tr>`;
+          return `<tr><td style="padding:10px 16px;${border}font-size:13px;color:#888888;width:36%;">${escapeHtml(label)}</td><td style="padding:10px 16px;${border}font-size:13px;color:#111111;">${escapeHtml(v)}</td></tr>`;
         })
         .join('');
 
@@ -140,7 +142,7 @@ export default {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>We received your message — ${displayName}</title>
+  <title>We received your message — ${safeDisplayName}</title>
 </head>
 <body style="margin:0;padding:0;background-color:#F2F2F2;font-family:Arial,Helvetica,sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F2F2F2;">
@@ -154,7 +156,7 @@ export default {
               <table width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td>
-                    <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:20px;color:${brandColor};font-weight:700;letter-spacing:0.02em;">${displayName}</p>
+                    <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:20px;color:${brandColor};font-weight:700;letter-spacing:0.02em;">${safeDisplayName}</p>
                   </td>
                   <td align="right" valign="middle">
                     <p style="margin:0;font-size:11px;color:rgba(240,235,224,0.35);letter-spacing:0.1em;text-transform:uppercase;">Confirmation</p>
@@ -173,7 +175,7 @@ export default {
           <tr>
             <td style="background-color:#FFFFFF;padding:48px 44px 40px;">
 
-              <p style="margin:0 0 10px;font-size:12px;color:#AAAAAA;letter-spacing:0.12em;text-transform:uppercase;">Hi ${firstName},</p>
+              <p style="margin:0 0 10px;font-size:12px;color:#AAAAAA;letter-spacing:0.12em;text-transform:uppercase;">Hi ${safeFirstName},</p>
               <h1 style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:30px;color:${headerBg};font-weight:700;line-height:1.2;letter-spacing:-0.01em;">We've got your<br/>message.</h1>
               <p style="margin:0 0 ${isClientSite ? '36px' : '16px'};font-size:15px;color:#555555;line-height:1.75;">We'll review your inquiry and be in touch within <strong style="color:#111111;">24 hours</strong>.</p>
 ${isClientSite ? '' : `              <p style="margin:0 0 36px;font-size:15px;color:#555555;line-height:1.75;">In the meantime, take a look at what we've built for other Cincinnati small businesses.</p>
@@ -200,7 +202,7 @@ ${ctaBlock}
               <table width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td valign="top">
-                    <p style="margin:0 0 3px;font-size:12px;color:#888888;font-weight:700;">${displayName}</p>
+                    <p style="margin:0 0 3px;font-size:12px;color:#888888;font-weight:700;">${safeDisplayName}</p>
                   </td>
                   <td align="right" valign="top">
                     <p style="margin:0;font-size:11px;color:#CCCCCC;line-height:1.6;">You received this because<br/>you submitted a contact form.</p>
@@ -249,4 +251,14 @@ function corsHeaders(origin) {
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  })[char]);
 }
