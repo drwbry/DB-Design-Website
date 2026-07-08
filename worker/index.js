@@ -32,33 +32,16 @@ export default {
       return json({ success: true }, 200, origin);
     }
 
-    // ── Turnstile verification ─────────────────────────────────
-    const turnstileToken = body['cf-turnstile-response'];
-    if (!turnstileToken) {
-      return json({ success: false, message: 'Verification required' }, 400, origin);
-    }
-
-    const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        secret: env.TURNSTILE_SECRET_KEY,
-        response: turnstileToken,
-        remoteip: request.headers.get('CF-Connecting-IP') || '',
-      }),
-    });
-    const verify = await verifyRes.json();
-    if (!verify.success) {
-      return json({ success: false, message: 'Verification failed' }, 403, origin);
-    }
-
     // ── KV lookup: resolve site config from site_id ───────────
+    // Done before Turnstile verification so per-site enforceTurnstile
+    // can actually gate it below.
     let toEmail = env.TO_EMAIL;
     let siteBusinessName = 'The Web Foundry';
     let brandColor = '#b45a3c';   // Web Foundry terracotta
     let headerBg = '#181c28';    // Web Foundry ink
     let siteUrl = 'https://cincinnatiwebfoundry.com';
     let isClientSite = false;
+    let siteEnforceTurnstile = false;
     const siteId = body.site_id || '';
     if (siteId && env.WEB_FOUNDRY_SITES) {
       const raw = await env.WEB_FOUNDRY_SITES.get(siteId);
@@ -70,8 +53,36 @@ export default {
           if (config.brandColor) brandColor = config.brandColor;
           if (config.headerBg) headerBg = config.headerBg;
           if (config.siteUrl) siteUrl = config.siteUrl;
+          if (config.enforceTurnstile === true) siteEnforceTurnstile = true;
           isClientSite = true;
         } catch {}
+      }
+    }
+
+    // ── Turnstile verification ─────────────────────────────────
+    // Mandatory only when the global env override or the resolved
+    // site's KV config opts in. Otherwise this fails open: a missing
+    // or failed token is tolerated so a glitched widget never hard-
+    // blocks a legitimate submission during a site's soft launch.
+    const turnstileRequired = env.ENFORCE_TURNSTILE === 'true' || siteEnforceTurnstile;
+    const turnstileToken = body['cf-turnstile-response'];
+
+    if (turnstileRequired) {
+      if (!turnstileToken) {
+        return json({ success: false, message: 'Verification required' }, 400, origin);
+      }
+      const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          secret: env.TURNSTILE_SECRET_KEY,
+          response: turnstileToken,
+          remoteip: request.headers.get('CF-Connecting-IP') || '',
+        }),
+      });
+      const verify = await verifyRes.json();
+      if (!verify.success) {
+        return json({ success: false, message: 'Verification failed' }, 403, origin);
       }
     }
 
