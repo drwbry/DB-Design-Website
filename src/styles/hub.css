@@ -166,15 +166,8 @@ body {
 .nav__logo-mark {
   width: 30px;
   height: 30px;
-  border: 2px solid var(--accent);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--ff-display);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--accent);
+  object-fit: contain;
+  display: block;
   flex-shrink: 0;
 }
 
@@ -249,12 +242,108 @@ body {
    ============================================================ */
 .hero {
   padding: 6.5rem 0;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 460px);
+  align-items: center;
+  gap: 2.5rem;
 }
 
 .hero__inner {
   max-width: 720px;
   opacity: 0;
   animation: slideUp 0.5s var(--ease-out-quart) forwards;
+}
+
+/* ── Hero branded visual (right column) ── */
+.hero__visual {
+  position: relative;
+  height: 440px;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  animation: slideUp 0.6s var(--ease-out-quart) 0.15s forwards;
+}
+
+.hero__grid-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(circle, #000 36%, transparent 70%);
+          mask-image: radial-gradient(circle, #000 36%, transparent 70%);
+}
+
+.hero__glow {
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  max-width: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(180, 90, 60, 0.38) 0%, rgba(180, 90, 60, 0.10) 44%, transparent 68%);
+  filter: blur(6px);
+  animation: heroGlowPulse 6s ease-in-out infinite;
+}
+
+.hero__ring {
+  position: absolute;
+  border-radius: 50%;
+}
+.hero__ring--inner {
+  width: 300px;
+  height: 300px;
+  border: 1px solid rgba(180, 90, 60, 0.20);
+}
+.hero__ring--outer {
+  width: 390px;
+  height: 390px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.hero__mark {
+  position: relative;
+  width: 270px;
+  height: auto;
+  filter: drop-shadow(0 14px 34px rgba(180, 90, 60, 0.42));
+}
+
+/* Embers rising off the flame */
+.hero__embers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.hero__embers span {
+  position: absolute;
+  top: 34%;
+  border-radius: 50%;
+  background: #e8a072;
+  box-shadow: 0 0 6px 1px rgba(232, 160, 114, 0.85);
+  opacity: 0;
+  animation: heroEmber linear infinite;
+}
+.hero__embers span:nth-child(1) { left: 47%; width: 5px; height: 5px; --sway: -14px; animation-duration: 5.5s; animation-delay: 0s; }
+.hero__embers span:nth-child(2) { left: 52%; width: 3px; height: 3px; --sway: 12px;  animation-duration: 7s;   animation-delay: 1.1s; background: #d9773f; }
+.hero__embers span:nth-child(3) { left: 49%; width: 4px; height: 4px; --sway: 18px;  animation-duration: 6.2s; animation-delay: 2.3s; }
+.hero__embers span:nth-child(4) { left: 44%; width: 3px; height: 3px; --sway: -20px; animation-duration: 7.8s; animation-delay: 0.6s; background: #d9773f; }
+.hero__embers span:nth-child(5) { left: 54%; width: 5px; height: 5px; --sway: 10px;  animation-duration: 5.8s; animation-delay: 3.1s; }
+.hero__embers span:nth-child(6) { left: 50%; width: 2px; height: 2px; --sway: -8px;  animation-duration: 8.5s; animation-delay: 1.8s; }
+.hero__embers span:nth-child(7) { left: 46%; width: 3px; height: 3px; --sway: 16px;  animation-duration: 6.6s; animation-delay: 4s;   background: #d9773f; }
+.hero__embers span:nth-child(8) { left: 51%; width: 4px; height: 4px; --sway: -16px; animation-duration: 7.2s; animation-delay: 2.7s; }
+
+@keyframes heroGlowPulse {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.06); }
+}
+@keyframes heroEmber {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0; }
+  10%  { opacity: 1; }
+  50%  { transform: translate(var(--sway), -120px) scale(0.9); opacity: 0.9; }
+  100% { transform: translate(calc(var(--sway) * -1), -250px) scale(0.3); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__glow { animation: none; }
+  .hero__embers { display: none; }
 }
 
 .hero__dash {
@@ -332,6 +421,15 @@ body {
   height: 28px;
   background: var(--border-card);
   flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+  .hero__visual {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
