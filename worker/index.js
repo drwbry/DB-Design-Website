@@ -55,8 +55,8 @@ export default {
     // ── KV lookup: resolve site config from site_id ───────────
     let toEmail = env.TO_EMAIL;
     let siteBusinessName = 'The Web Foundry';
-    let brandColor = '#D4A853';   // Web Foundry gold
-    let headerBg = '#0A0A0A';    // Web Foundry black
+    let brandColor = '#b45a3c';   // Web Foundry terracotta
+    let headerBg = '#181c28';    // Web Foundry ink
     let siteUrl = 'https://cincinnatiwebfoundry.com';
     let isClientSite = false;
     const siteId = body.site_id || '';
@@ -132,7 +132,7 @@ export default {
               <table cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td style="background-color:${brandColor};border-radius:4px;">
-                    <a href="${siteUrl}" style="display:inline-block;padding:14px 30px;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:${headerBg};text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">View Our Work &rarr;</a>
+                    <a href="${siteUrl}" style="display:inline-block;padding:14px 30px;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#FFFFFF;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;">View Our Work &rarr;</a>
                   </td>
                 </tr>
               </table>`;
@@ -156,7 +156,7 @@ export default {
               <table width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td>
-                    <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:20px;color:${brandColor};font-weight:700;letter-spacing:0.02em;">${safeDisplayName}</p>
+                    <p style="margin:0;font-family:'Helvetica Neue',Arial,sans-serif;font-size:20px;color:${brandColor};font-weight:700;letter-spacing:0.01em;">${safeDisplayName}</p>
                   </td>
                   <td align="right" valign="middle">
                     <p style="margin:0;font-size:11px;color:rgba(240,235,224,0.35);letter-spacing:0.1em;text-transform:uppercase;">Confirmation</p>
@@ -176,7 +176,7 @@ export default {
             <td style="background-color:#FFFFFF;padding:48px 44px 40px;">
 
               <p style="margin:0 0 10px;font-size:12px;color:#AAAAAA;letter-spacing:0.12em;text-transform:uppercase;">Hi ${safeFirstName},</p>
-              <h1 style="margin:0 0 20px;font-family:Georgia,'Times New Roman',serif;font-size:30px;color:${headerBg};font-weight:700;line-height:1.2;letter-spacing:-0.01em;">We've got your<br/>message.</h1>
+              <h1 style="margin:0 0 20px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:30px;color:${headerBg};font-weight:700;line-height:1.2;letter-spacing:-0.01em;">We've got your<br/>message.</h1>
               <p style="margin:0 0 ${isClientSite ? '36px' : '16px'};font-size:15px;color:#555555;line-height:1.75;">We'll review your inquiry and be in touch within <strong style="color:#111111;">24 hours</strong>.</p>
 ${isClientSite ? '' : `              <p style="margin:0 0 36px;font-size:15px;color:#555555;line-height:1.75;">In the meantime, take a look at what we've built for other Cincinnati small businesses.</p>
 `}
