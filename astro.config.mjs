@@ -1,9 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { siteConfig } from './src/config/site.js';
 
 export default defineConfig({
   output: 'static',
-  site: 'https://cincinnatiwebfoundry.com',
+  site: siteConfig.domain,
   integrations: [sitemap()],
 });

@@ -1,8 +1,9 @@
 ---
 import '../styles/shared.css';
+import { siteConfig } from '../config/site.js';
 
 const { title, description } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://cincinnatiwebfoundry.com');
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || siteConfig.domain);
 ---
 <html lang="en">
   <head>
@@ -20,7 +21,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://cincinna
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL.href} />
-    <meta property="og:site_name" content="The Web Foundry" />
+    <meta property="og:site_name" content={siteConfig.name} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />

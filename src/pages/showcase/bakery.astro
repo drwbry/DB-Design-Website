@@ -1,6 +1,7 @@
 ---
 import ShowcaseLayout from '../../layouts/ShowcaseLayout.astro';
 import { sanityClient } from '../../lib/sanityClient';
+import { siteConfig } from '../../config/site.js';
 
 const menu = await sanityClient.fetch<{ pdfUrl?: string } | null>(`
   *[_type == "bakeryMenu"][0] { "pdfUrl": menuPdf.asset->url }
@@ -649,6 +650,7 @@ const categories: { name: string; items: { name: string; description?: string; p
       </div>
       <form id="bakery-contact-form" class="contact-form reveal reveal-delay-1" novalidate>
         <input type="checkbox" name="botcheck" style="display:none">
+        <input type="hidden" name="site_id" value={siteConfig.showcase.bakery.siteId}>
         <div class="form-group">
           <label for="b-name">Your Name *</label>
           <input type="text" id="b-name" name="name" required placeholder="Your name">
@@ -663,13 +665,13 @@ const categories: { name: string; items: { name: string; description?: string; p
         </div>
         <div class="bakery-form-error" id="bakery-form-error" hidden></div>
         <div class="bakery-form-success" id="bakery-form-success" hidden>Thank you! We'll be in touch soon.</div>
-        <div class="cf-turnstile" data-sitekey="0x4AAAAAACxVhhG9sxrzihaS" data-theme="auto"></div>
+        <div class="cf-turnstile" data-sitekey={siteConfig.turnstileSiteKey} data-theme="auto"></div>
         <button type="submit" class="btn-primary contact-submit" id="bakery-submit">Send Message</button>
       </form>
     </div>
   </section>
 
-  <script is:inline>
+  <script is:inline define:vars={{ workerUrl: siteConfig.formWorkerUrl, formSubject: siteConfig.showcase.bakery.formSubject }}>
     // Nav scroll
     const nav = document.querySelector('.bakery-nav');
     window.addEventListener('scroll', () => {
@@ -745,19 +747,20 @@ const categories: { name: string; items: { name: string; description?: string; p
         btn.disabled = true; btn.textContent = 'Sending…';
         errorEl.hidden = true; successEl.hidden = true;
         const payload = Object.fromEntries(new FormData(form));
-        payload.subject = 'New Inquiry — Sweet Crumb Bakery';
+        payload.subject = formSubject;
         try {
-          const res = await fetch('https://web-foundry-form-relay.cincinnati-web-foundry.workers.dev', {
+          const res = await fetch(workerUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
             body: JSON.stringify(payload),
           });
           const data = await res.json();
-          if (data.success) { form.reset(); successEl.hidden = false; btn.textContent = 'Sent!'; }
+          if (res.ok && data.success) { form.reset(); successEl.hidden = false; btn.textContent = 'Sent!'; }
           else throw new Error(data.message || 'Something went wrong.');
         } catch (err) {
           errorEl.textContent = err.message; errorEl.hidden = false;
           btn.disabled = false; btn.textContent = 'Send Message';
+          if (window.turnstile) window.turnstile.reset();
         }
       });
     })();

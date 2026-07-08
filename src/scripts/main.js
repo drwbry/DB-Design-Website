@@ -1,4 +1,5 @@
 /* main.js — The Web Foundry hub page interactivity */
+import { siteConfig } from '../config/site.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -107,10 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
     formError.hidden = true;
 
     const payload = Object.fromEntries(new FormData(form));
-    payload.subject = 'New Website Inquiry — The Web Foundry';
+    payload.subject = siteConfig.formSubjects.hub;
 
     try {
-      const res = await fetch('https://web-foundry-form-relay.cincinnati-web-foundry.workers.dev', {
+      const res = await fetch(siteConfig.formWorkerUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
@@ -124,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error(result.message || 'Something went wrong.');
       }
     } catch (err) {
-      formError.textContent = err.message || 'Could not send message. Please email hello@cincinnatiwebfoundry.com directly.';
+      formError.textContent = err.message || `Could not send message. Please email ${siteConfig.contactEmail} directly.`;
       formError.hidden = false;
       submitBtn.disabled = false;
       submitBtn.innerHTML = 'Send Message <span class="btn-arrow">→</span>';

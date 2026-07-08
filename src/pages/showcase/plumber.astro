@@ -1,6 +1,7 @@
 ---
 import ShowcaseLayout from '../../layouts/ShowcaseLayout.astro';
 import { sanityClient } from '../../lib/sanityClient';
+import { siteConfig } from '../../config/site.js';
 
 interface DayHours { day: string; closed: boolean; open?: string; close?: string; }
 
@@ -277,6 +278,7 @@ const hours = (plumberData?.hours && plumberData.hours.length > 0)
         </div>
         <form id="plumber-contact-form" class="contact-form" novalidate>
           <input type="checkbox" name="botcheck" style="display:none">
+          <input type="hidden" name="site_id" value={siteConfig.showcase.plumber.siteId}>
           <div class="form-group">
             <label for="p-name">Your Name *</label>
             <input type="text" id="p-name" name="name" required placeholder="Your name">
@@ -291,14 +293,14 @@ const hours = (plumberData?.hours && plumberData.hours.length > 0)
           </div>
           <div class="plumber-form-error" id="plumber-form-error" hidden></div>
           <div class="plumber-form-success" id="plumber-form-success" hidden>Got it — we'll be in touch soon!</div>
-          <div class="cf-turnstile" data-sitekey="0x4AAAAAACxVhhG9sxrzihaS" data-theme="auto"></div>
+          <div class="cf-turnstile" data-sitekey={siteConfig.turnstileSiteKey} data-theme="auto"></div>
           <button type="submit" class="btn-call contact-submit" id="plumber-submit">Send Message ➜</button>
         </form>
       </div>
     </div>
   </section>
 
-<script is:inline>
+<script is:inline define:vars={{ workerUrl: siteConfig.formWorkerUrl, formSubject: siteConfig.showcase.plumber.formSubject }}>
 (function() {
   const form = document.getElementById('plumber-contact-form');
   const btn = document.getElementById('plumber-submit');
@@ -310,19 +312,20 @@ const hours = (plumberData?.hours && plumberData.hours.length > 0)
     btn.disabled = true; btn.textContent = 'Sending…';
     errorEl.hidden = true; successEl.hidden = true;
     const payload = Object.fromEntries(new FormData(form));
-    payload.subject = 'New Inquiry — Peak Flow Plumbing';
+    payload.subject = formSubject;
     try {
-      const res = await fetch('https://web-foundry-form-relay.cincinnati-web-foundry.workers.dev', {
+      const res = await fetch(workerUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
       });
       const data = await res.json();
-      if (data.success) { form.reset(); successEl.hidden = false; btn.textContent = 'Sent!'; }
+      if (res.ok && data.success) { form.reset(); successEl.hidden = false; btn.textContent = 'Sent!'; }
       else throw new Error(data.message || 'Something went wrong.');
     } catch (err) {
       errorEl.textContent = err.message; errorEl.hidden = false;
       btn.disabled = false; btn.textContent = 'Send Message ➜';
+      if (window.turnstile) window.turnstile.reset();
     }
   });
 })();

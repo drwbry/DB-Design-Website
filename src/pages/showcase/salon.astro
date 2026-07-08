@@ -2,6 +2,7 @@
 import ShowcaseLayout from '../../layouts/ShowcaseLayout.astro';
 import { sanityClient } from '../../lib/sanityClient';
 import { urlFor } from '../../lib/imageUrl';
+import { siteConfig } from '../../config/site.js';
 
 interface GalleryItem { image: object; alt?: string; }
 
@@ -274,6 +275,7 @@ const galleryImages = salonData?.gallery ?? [];
       <p class="book-sub">Every appointment opens with a complimentary consultation and a glass of something lovely. Reserve your spot today.</p>
       <form id="salon-contact-form" class="contact-form" novalidate>
         <input type="checkbox" name="botcheck" style="display:none">
+        <input type="hidden" name="site_id" value={siteConfig.showcase.salon.siteId}>
         <div class="form-group">
           <label for="s-name">Your Name *</label>
           <input type="text" id="s-name" name="name" required placeholder="Your name">
@@ -288,14 +290,14 @@ const galleryImages = salonData?.gallery ?? [];
         </div>
         <div class="salon-form-error" id="salon-form-error" hidden></div>
         <div class="salon-form-success" id="salon-form-success" hidden>Thank you — we'll be in touch shortly.</div>
-        <div class="cf-turnstile" data-sitekey="0x4AAAAAACxVhhG9sxrzihaS" data-theme="auto"></div>
+        <div class="cf-turnstile" data-sitekey={siteConfig.turnstileSiteKey} data-theme="auto"></div>
         <button type="submit" class="btn-primary contact-submit" id="salon-submit">Send Inquiry</button>
       </form>
       <p style="margin-top:2rem;font-size:.8rem;color:var(--blush-muted);text-align:center">456 Willow Lane · Open Tue–Sat, 9am–7pm</p>
     </div>
   </section>
 
-  <script is:inline>
+  <script is:inline define:vars={{ workerUrl: siteConfig.formWorkerUrl, formSubject: siteConfig.showcase.salon.formSubject }}>
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 40);
@@ -313,19 +315,20 @@ const galleryImages = salonData?.gallery ?? [];
         btn.disabled = true; btn.textContent = 'Sending…';
         errorEl.hidden = true; successEl.hidden = true;
         const payload = Object.fromEntries(new FormData(form));
-        payload.subject = 'New Inquiry — Lumière Salon & Spa';
+        payload.subject = formSubject;
         try {
-          const res = await fetch('https://web-foundry-form-relay.cincinnati-web-foundry.workers.dev', {
+          const res = await fetch(workerUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
             body: JSON.stringify(payload),
           });
           const data = await res.json();
-          if (data.success) { form.reset(); successEl.hidden = false; btn.textContent = 'Sent'; }
+          if (res.ok && data.success) { form.reset(); successEl.hidden = false; btn.textContent = 'Sent'; }
           else throw new Error(data.message || 'Something went wrong.');
         } catch (err) {
           errorEl.textContent = err.message; errorEl.hidden = false;
           btn.disabled = false; btn.textContent = 'Send Inquiry';
+          if (window.turnstile) window.turnstile.reset();
         }
       });
     })();
