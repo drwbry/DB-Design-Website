@@ -1,5 +1,13 @@
 # Facebook Daily-Special Auto-Post Implementation Plan
 
+> **SUPERSEDED (2026-07-10):** The spec this plan was built from was revised —
+> the feature now also drives on-site display and runs on a Cron Trigger
+> schedule instead of a manual publish-time checkbox. See
+> `docs/superpowers/specs/2026-07-09-facebook-daily-special-autopost-design.md`
+> for the current design. This plan describes the earlier, narrower version
+> and should not be executed as-is; a new plan needs to be written from the
+> revised spec before implementation resumes.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** When a client publishes a `dailySpecial` document in Sanity with `postToFacebook` checked, the shared Cloudflare Worker automatically posts it (text or photo) to that client's Facebook Page via the Graph API, resets the flag, and emails TWF on failure.
