@@ -30,6 +30,19 @@ for (const client of siteConfig.clients) {
     await page.goto(client.url, { waitUntil: 'load', timeout: 45000 });
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(1500);
+    // Client sites use the same IntersectionObserver scroll-reveal as this
+    // template, so anything below the fold is still opacity:0 on first paint
+    // and captures as a blank band. Step through the page to fire every
+    // reveal, then return to the top before shooting.
+    await page.evaluate(async () => {
+      const step = window.innerHeight * 0.8;
+      for (let y = 0; y < document.body.scrollHeight; y += step) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 250));
+      }
+      window.scrollTo(0, 0);
+    });
+    await page.waitForTimeout(1200);
     await page.screenshot({
       path: path.join(OUT_DIR, `${client.slug}.png`),
       type: 'png',
