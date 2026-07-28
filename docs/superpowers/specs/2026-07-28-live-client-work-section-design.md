@@ -49,17 +49,21 @@ things you can drive.
 
 | Order | Section id | Tag | Heading | Contents |
 |---|---|---|---|---|
-| 1 | `#work` | Our Clients | Real Cincinnati businesses. Live today. | MAB Assets, Terry's Lawncare, ITA Data |
+| 1 | `#work` | Our Clients | Real Cincinnati businesses. Live today. | MAB Properties, Terry's Lawncare, ITA Data |
 | 2 | `#concepts` | Concepts | What we can build for you. | Sweet Crumb, Peak Flow, Lumière (unchanged) |
 
 Ordering rationale: the real row answers "are these people legit"; the concepts row
 answers "what could mine look like." Proof, then range.
 
 Both sections sit above `#process` (`index.astro:212`). The concepts section reuses the
-`.work` section styles — same `--surface` background, same `.work-grid`, same
-`.section-header` markup. Alternating the two section backgrounds is a visual decision
-deferred to implementation; if both use `--surface` they will read as one long block and
-need a divider or a background swap on the second.
+`.work-grid` and `.section-header` markup.
+
+**Background treatment (decided):** `#work` keeps `background: var(--surface)` (#1e2333,
+as `.work` is today); `#concepts` uses `background: var(--ink)` (#181c28) with
+`border-top: 1px solid var(--hairline)`. That gives a real tonal step between the two so
+they don't read as one long block. `.process` below is already `--ink` with its own
+hairline top (`hub.css:706`), so an ink→hairline→ink transition is the established
+pattern on this page, not a new one.
 
 ### 2. Honesty labelling (required)
 
@@ -95,10 +99,11 @@ third-party sites being reachable.
 
 - Uses the existing `playwright` devDependency (`package.json`, v1.61.1; chromium
   already present in `~/.cache/ms-playwright`). No new packages.
-- Viewport 1440×900, `deviceScaleFactor: 2`.
-- Wait for network idle **and** `document.fonts.ready` before capture, so webfonts are
-  not missing from the shot.
-- Clip to the top 900px (not full-page).
+- **Viewport 1024×640, `deviceScaleFactor: 2`** — see the legibility test below.
+- `waitUntil: 'load'` plus `document.fonts.ready` plus a short settle delay.
+  **Not `networkidle`** — it timed out against a real client site during the test
+  capture (embedded third-party widgets keep connections open indefinitely).
+- Viewport-sized capture, not `fullPage`.
 - Output `src/assets/work/<slug>.png`, rendered through Astro's `<Image>` from
   `astro:assets` (sharp already present via Astro) so the build emits optimized webp
   with explicit width/height — no layout shift.
@@ -106,6 +111,22 @@ third-party sites being reachable.
   without a forced crop.
 - Committed screenshots are refreshed manually by re-running the script when a client
   site changes materially.
+
+**Legibility test (run 2026-07-28, decided the viewport):** `.work-grid` is 3 columns in
+a 1200px container, so each preview slot is roughly 383×250 CSS px. A 1440px-wide capture
+downscaled into that slot is a ~3.8× reduction — body text lands around 4px and the row
+would read as blurry thumbnails sitting next to the sharp, card-scale-authored concept
+mocks, inverting the credibility hierarchy this whole design exists to establish.
+
+All three sites were captured at both 1440 and 1024 and composited into a 383×250 slot.
+At **1024 the hero headline, nav, and CTA buttons are all cleanly legible** on all three;
+at 1440 they are not. 1024 also crops to roughly the hero, which is the right thing for a
+thumbnail to show. Test artifacts are throwaway (scratchpad, not committed).
+
+Caveat to watch during implementation: 1024 is wide enough that all three current sites
+still render their desktop nav, but a future client site could collapse to a hamburger at
+that width. If one does, bump that site to 1280 and accept the slight legibility cost
+rather than shipping a mobile-looking nav in a desktop-framed card.
 
 ### 5. Config
 
@@ -139,7 +160,34 @@ url: 'https://itadata.site',
 Post-cutover this is a two-line edit in one file. The screenshot must be re-captured at
 the same time if the cutover changes anything visible.
 
-### 7. Navigation
+### 7. MAB pre-capture blockers
+
+Two problems found while test-capturing `mabassets.com` on 2026-07-28. Both are on the
+**client** repo, not this one, and both must be resolved before the MAB screenshot is
+taken — a screenshot bakes them in permanently.
+
+**a. The live site shows an "under construction" banner.** The homepage renders a
+Sanity-driven announcement bar (`clients/mabassets-website/src/pages/index.astro:39`)
+currently reading *"Welcome! This site is under construction – come back soon!"* — the
+seeded announcement document noted in that repo's CLAUDE.md. Featuring it under a
+heading that says "Live today" while the screenshot says "under construction" is
+self-defeating.
+
+Fix: publish a real announcement in the MAB Sanity Studio (`mabassets.sanity.studio`),
+or delete the seeded doc so the hardcoded fallback — *"New listings are added here as
+they become available — check back soon."* — takes over. Either is a content change with
+no code involved. Wait for the Coolify rebuild, then capture.
+
+**b. The brand name is "MAB Properties", not "MAB Assets".** `mabassets` is the domain
+and client slug; the live site's title is *"MAB Properties — Well-Kept Rental Homes"* and
+that repo's CLAUDE.md describes the client as **MAB Properties**. The card's `name` must
+read **MAB Properties**, with `mabassets.com` only as the domain/URL. Using the slug as a
+display name in public marketing gets the client's own name wrong.
+
+Terry's Lawncare and ITA Data were captured the same way and are clean — no equivalent
+blockers.
+
+### 8. Navigation
 
 `index.astro:22` nav gains a second entry so both sections are reachable:
 
@@ -149,13 +197,22 @@ the same time if the cutover changes anything visible.
 Hero CTA (`index.astro:47`) and footer link (`index.astro:368`) keep pointing at
 `#work`, which now lands on real client work — an improvement, not a regression.
 
+**Showcase back button:** `BackButton.astro:4` currently links to `/` (site root), so a
+visitor who clicks into a concept page and hits back lands at the top of the homepage.
+With the split, it should return to `/#concepts` — the row they came from — instead of
+dumping them above the fold to re-scroll. One-line change; the component takes only
+`color`/`background` props, so the href can be hardcoded.
+
 ## Client sites featured
 
-| Client | Domain | Verified live 2026-07-28 | Notes |
+Each domain was checked for HTTP status **and** for whether it actually serves the Web
+Foundry build — a 200 alone proves nothing, as `itadata.com` demonstrated.
+
+| Client | Domain | Live title (2026-07-28) | Status |
 |---|---|---|---|
-| MAB Assets | mabassets.com | HTTP 200 | Fully launched per `clients/mabassets-website/CLAUDE.md` |
-| Terry's Lawncare | terryslawncare.us | HTTP 200 | |
-| ITA Data Solutions | itadata.site | HTTP 200 | `.com` cutover pending — see §6 |
+| MAB Properties | mabassets.com | MAB Properties — Well-Kept Rental Homes | Ours. Blocked on §7 fixes before capture |
+| Terry's Lawncare | terryslawncare.us | Terry's Lawncare — Neighborhood Lawn Care You Can Count On | Ours, clean, ready |
+| ITA Data Solutions | itadata.site | ITA Data Solutions: SAP Supply Chain Experts | Ours, clean, ready. `.com` cutover pending — see §6 |
 
 **Excluded deliberately:** Megan Brys and Winnie's World are personal sites for private
 individuals, not businesses. They stay off the marketing site.
@@ -175,3 +232,7 @@ giveaway. Applies to any new section copy written here.
 - Automating screenshot refresh in CI or on a schedule.
 - Any change to the three showcase pages' own content or the Batch 1 features in
   `docs/showcase-enhancements-proposal.md`.
+- Onboarding-skill updates. Nothing here changes how a client site is spun up, so the
+  `CLAUDE.md:150` "keep the skill current" rule is not triggered. Note for whoever forks
+  next: the `clients` array and the `#work` section are **hub-only** — a client fork
+  inherits and must delete them, same as the `showcase` config block already works.
