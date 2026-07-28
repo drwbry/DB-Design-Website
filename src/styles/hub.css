@@ -528,6 +528,21 @@ body {
   background: linear-gradient(165deg, #251A14 0%, #1C1410 100%);
 }
 
+/* Real client cards: a screenshot fills the preview slot instead of the
+   hand-built mock markup the concept cards use. */
+.work-card__preview--shot {
+  padding: 0;
+  background: #11141d;
+}
+
+.work-card__preview--shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
 .work-card__preview-nav {
   display: flex;
   justify-content: space-between;

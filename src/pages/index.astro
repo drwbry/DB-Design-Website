@@ -1,7 +1,22 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
 import '../styles/hub.css';
 import { siteConfig } from '../config/site.js';
+
+// Screenshots are imported here rather than referenced from site.js: that
+// config is also loaded by astro.config.mjs, by client-side JS, and by
+// scripts/capture-shots.mjs under plain Node, none of which can resolve
+// image imports. Keyed by client slug.
+import shotMabassets from '../assets/work/mabassets.png';
+import shotTerrys from '../assets/work/terrys-lawncare.png';
+import shotItadata from '../assets/work/itadata.png';
+
+const clientShots = {
+  'mabassets': shotMabassets,
+  'terrys-lawncare': shotTerrys,
+  'itadata': shotItadata,
+};
 ---
 <BaseLayout
   title="The Web Foundry — Modern Websites for Cincinnati Small Businesses"
@@ -88,7 +103,36 @@ import { siteConfig } from '../config/site.js';
       </div>
 
       <div class="work-grid">
-        <!-- Real client cards render here in Task 4 -->
+        {siteConfig.clients.map((client, i) => (
+          <a
+            href={client.url}
+            target="_blank"
+            rel="noopener"
+            class={`work-card reveal reveal-delay-${i + 1}`}
+            aria-label={`Visit ${client.name} at ${client.domain} (opens in a new tab)`}
+          >
+            <div class="work-card__bar">
+              <div class="work-card__dots">
+                <span class="work-card__dot work-card__dot--red"></span>
+                <span class="work-card__dot work-card__dot--yellow"></span>
+                <span class="work-card__dot work-card__dot--green"></span>
+              </div>
+              <div class="work-card__url">{client.domain}</div>
+            </div>
+            <div class="work-card__preview work-card__preview--shot">
+              <Image src={clientShots[client.slug]} alt="" width={766} height={479} loading="lazy" />
+            </div>
+            <div class="work-card__info">
+              <div class="work-card__tag">{client.industry}</div>
+              <h3 class="work-card__name">{client.name}</h3>
+              <p class="work-card__desc">{client.blurb}</p>
+              <div class="work-card__chips">
+                {client.chips.map((chip) => <span class="chip">{chip}</span>)}
+              </div>
+              <span class="work-card__link">Visit the live site ↗</span>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </section>
