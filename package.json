@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "shots": "node scripts/capture-shots.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.1",
