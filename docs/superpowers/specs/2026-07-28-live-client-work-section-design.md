@@ -1,7 +1,7 @@
 # Live Client Work Section — Design
 
 **Date:** 2026-07-28
-**Status:** Approved by Dreux (pending spec review)
+**Status:** Implemented 2026-07-28 — see docs/superpowers/plans/2026-07-28-live-client-work-section.md
 **Repo:** `db-design-website` (cincinnatiwebfoundry.com hub)
 
 ## Problem
