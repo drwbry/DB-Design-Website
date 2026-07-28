@@ -543,13 +543,15 @@ body {
   display: block;
 }
 
-/* At and below the single-column breakpoint (768px — where .work-grid drops to
-   one column) the fixed 250px slot is far taller relative to its width than the
-   16:10 capture, so `cover` crops ~18% of the screenshot's width and clips each
-   client's headline mid-word. Give the slot the screenshot's own aspect ratio
-   so it shows uncropped. The cards are stacked at this width, so there is no
-   neighbouring card to match height with. Desktop is untouched. */
-@media (max-width: 768px) {
+/* `cover` only crops a shot horizontally where the 250px slot is narrower than
+   250 x 1.6 = 400px — i.e. on phones. At 375px the slot is 327x250 (ratio 1.31)
+   and loses ~18% of the screenshot's width, clipping each client's left-aligned
+   headline mid-word; by ~480px the slot is wider than 1.6 and the crop has moved
+   to the vertical axis, which never touches the headline. So this override is
+   scoped to the narrow band only: give the slot the screenshot's own aspect
+   ratio there so it shows uncropped. Cards are single-column at that width, so
+   no neighbouring card has to match height. 421px and up are untouched. */
+@media (max-width: 420px) {
   .work-card__preview--shot {
     height: auto;
     aspect-ratio: 1.6;
