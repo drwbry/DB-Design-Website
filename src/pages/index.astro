@@ -20,6 +20,7 @@ import { siteConfig } from '../config/site.js';
       </a>
       <ul class="nav__links">
         <li><a href="#work" class="nav__link">Our Work</a></li>
+        <li><a href="#concepts" class="nav__link">Concepts</a></li>
         <li><a href="#process" class="nav__link">How It Works</a></li>
         <li><a href="/about" class="nav__link">About</a></li>
         <li><button class="nav__cta js-open-modal">Get in Touch</button></li>
@@ -77,13 +78,28 @@ import { siteConfig } from '../config/site.js';
     </div>
   </section>
 
-  <!-- ── Featured Work ── -->
+  <!-- ── Real client work ── -->
   <section class="work" id="work">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-tag">Featured Work</span>
-        <h2 class="section-title">See what's possible.</h2>
-        <p class="section-sub">Different businesses, different aesthetics. Each one custom-designed to match.</p>
+        <span class="section-tag">Our Clients</span>
+        <h2 class="section-title">Real Cincinnati businesses. Live today.</h2>
+        <p class="section-sub">Sites we built, launched, and still maintain. Click any one to visit it.</p>
+      </div>
+
+      <div class="work-grid">
+        <!-- Real client cards render here in Task 4 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Concept builds ── -->
+  <section class="concepts" id="concepts">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Concepts</span>
+        <h2 class="section-title">What we could build for you.</h2>
+        <p class="section-sub">Demonstration builds for invented businesses — different trades, different aesthetics. Every feature in them works: book a slot, send a request, pay a test invoice.</p>
       </div>
 
       <div class="work-grid">
@@ -114,7 +130,10 @@ import { siteConfig } from '../config/site.js';
             <div class="work-card__preview-decor work-card__preview-decor--2" aria-hidden="true"></div>
           </div>
           <div class="work-card__info">
-            <div class="work-card__tag">Bakery &amp; Café</div>
+            <div class="work-card__tagrow">
+              <span class="work-card__tag">Bakery &amp; Café</span>
+              <span class="work-card__badge">Concept</span>
+            </div>
             <h3 class="work-card__name">Sweet Crumb Bakery</h3>
             <p class="work-card__desc">Warm artisan aesthetic with online menu and daily specials.</p>
             <div class="work-card__chips">
@@ -154,7 +173,10 @@ import { siteConfig } from '../config/site.js';
             </div>
           </div>
           <div class="work-card__info">
-            <div class="work-card__tag">Home Services</div>
+            <div class="work-card__tagrow">
+              <span class="work-card__tag">Home Services</span>
+              <span class="work-card__badge">Concept</span>
+            </div>
             <h3 class="work-card__name">Peak Flow Plumbing</h3>
             <p class="work-card__desc">Bold, conversion-focused design with emergency CTAs and trust signals.</p>
             <div class="work-card__chips">
@@ -192,7 +214,10 @@ import { siteConfig } from '../config/site.js';
             <div class="work-card__preview-decor" aria-hidden="true"></div>
           </div>
           <div class="work-card__info">
-            <div class="work-card__tag">Beauty &amp; Wellness</div>
+            <div class="work-card__tagrow">
+              <span class="work-card__tag">Beauty &amp; Wellness</span>
+              <span class="work-card__badge">Concept</span>
+            </div>
             <h3 class="work-card__name">Lumière Salon &amp; Spa</h3>
             <p class="work-card__desc">Luxe editorial aesthetic with elegant booking and gallery.</p>
             <div class="work-card__chips">

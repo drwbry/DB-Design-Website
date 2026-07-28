@@ -685,6 +685,39 @@ body {
   color: var(--accent);
 }
 
+/* ============================================================
+   CONCEPTS (demonstration builds)
+   ============================================================ */
+.concepts {
+  background: var(--ink);
+  border-top: 1px solid var(--hairline);
+  padding: 5.5rem 0 6rem;
+}
+
+.work-card__tagrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+/* .work-card__tag carries its own margin-bottom for the real-client cards,
+   which have no badge; inside a tagrow the row owns the spacing. */
+.work-card__tagrow .work-card__tag {
+  margin-bottom: 0;
+}
+
+.work-card__badge {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8a94a4;
+  background: #f0eee9;
+  border-radius: 100px;
+  padding: 0.15rem 0.5rem;
+}
+
 @media (max-width: 1024px) {
   .work-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -692,7 +725,8 @@ body {
 }
 
 @media (max-width: 768px) {
-  .work {
+  .work,
+  .concepts {
     padding: 4rem 0 4.5rem;
   }
   .work-grid {
