@@ -543,6 +543,19 @@ body {
   display: block;
 }
 
+/* At and below the single-column breakpoint (768px — where .work-grid drops to
+   one column) the fixed 250px slot is far taller relative to its width than the
+   16:10 capture, so `cover` crops ~18% of the screenshot's width and clips each
+   client's headline mid-word. Give the slot the screenshot's own aspect ratio
+   so it shows uncropped. The cards are stacked at this width, so there is no
+   neighbouring card to match height with. Desktop is untouched. */
+@media (max-width: 768px) {
+  .work-card__preview--shot {
+    height: auto;
+    aspect-ratio: 1.6;
+  }
+}
+
 .work-card__preview-nav {
   display: flex;
   justify-content: space-between;
