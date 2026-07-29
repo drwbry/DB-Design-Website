@@ -4,7 +4,7 @@ compatibility_date = "2024-01-01"
 account_id = "4b67510725d20a66bec0794b2dad9122"
 
 [vars]
-ALLOWED_ORIGINS = "https://cincinnatiwebfoundry.com,http://localhost:4321,https://terryslawncare.us,https://www.terryslawncare.us,https://mabassets.com,https://www.mabassets.com"
+ALLOWED_ORIGINS = "https://cincinnatiwebfoundry.com,http://localhost:4321,https://terryslawncare.us,https://www.terryslawncare.us,https://mabassets.com,https://www.mabassets.com,https://itadata.site,https://www.itadata.site,https://itadata.com,https://www.itadata.com"
 
 [[kv_namespaces]]
 binding = "WEB_FOUNDRY_SITES"
