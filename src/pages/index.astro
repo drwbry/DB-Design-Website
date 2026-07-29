@@ -109,7 +109,6 @@ const clientShots = {
             target="_blank"
             rel="noopener"
             class={`work-card reveal reveal-delay-${i + 1}`}
-            aria-label={`Visit ${client.name} at ${client.domain} (opens in a new tab)`}
           >
             <div class="work-card__bar">
               <div class="work-card__dots">
@@ -120,7 +119,7 @@ const clientShots = {
               <div class="work-card__url">{client.domain}</div>
             </div>
             <div class="work-card__preview work-card__preview--shot">
-              <Image src={clientShots[client.slug]} alt="" width={766} height={479} loading="lazy" />
+              <Image src={clientShots[client.slug]} alt={`Preview of ${client.name} website`} width={766} height={479} loading="lazy" />
             </div>
             <div class="work-card__info">
               <div class="work-card__tag">{client.industry}</div>
@@ -457,7 +456,7 @@ const clientShots = {
         <p class="modal-sub">Tell us about your business and we'll be in touch within 24 hours.</p>
 
         <form id="contact-form" novalidate>
-          <div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
+          <div inert style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
             <label for="hub-botcheck">Leave this field blank</label>
             <input type="text" id="hub-botcheck" name="botcheck" tabindex="-1" autocomplete="off">
           </div>
