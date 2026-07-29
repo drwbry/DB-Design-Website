@@ -539,18 +539,20 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: top left;
   display: block;
 }
 
-/* `cover` only crops a shot horizontally where the 250px slot is narrower than
-   250 x 1.6 = 400px — i.e. on phones. At 375px the slot is 327x250 (ratio 1.31)
-   and loses ~18% of the screenshot's width, clipping each client's left-aligned
-   headline mid-word; by ~480px the slot is wider than 1.6 and the crop has moved
-   to the vertical axis, which never touches the headline. So this override is
-   scoped to the narrow band only: give the slot the screenshot's own aspect
-   ratio there so it shows uncropped. Cards are single-column at that width, so
-   no neighbouring card has to match height. 421px and up are untouched. */
+/* `cover` crops a shot horizontally wherever the card is narrower than
+   250 x 1.6 = 400px — that includes the 368px three-column desktop card, not
+   just phones. `object-position: top left` on .work-card__preview--shot img
+   handles that case by anchoring the crop to the right edge, keeping each
+   client's left-aligned headline intact. This media query exists for the
+   narrower phone case specifically: at 375px the slot is 327x250 (ratio 1.31),
+   narrow enough that even left-anchored content no longer fits at a fixed
+   250px height, so give the slot the screenshot's own aspect ratio there to
+   show it uncropped. Cards are single-column at that width, so no neighbouring
+   card has to match height. 421px and up are untouched by this rule. */
 @media (max-width: 420px) {
   .work-card__preview--shot {
     height: auto;
