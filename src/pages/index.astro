@@ -19,7 +19,7 @@ const clientShots = {
 };
 ---
 <BaseLayout
-  title="The Web Foundry — Modern Websites for Cincinnati Small Businesses"
+  title="Cincinnati Website Design | The Web Foundry"
   description="The Web Foundry designs and builds modern, custom websites for Cincinnati small businesses. Latest technology, zero templates, real results."
 >
   <Fragment slot="head">
@@ -30,7 +30,7 @@ const clientShots = {
   <nav class="nav" id="nav">
     <div class="container nav__inner">
       <a href="#" class="nav__logo" id="nav-logo">
-        <img class="nav__logo-mark" src="/brand/foundry-mark.png" alt="" width="30" height="30" aria-hidden="true" />
+        <img class="nav__logo-mark" src="/brand/foundry-mark.png" alt="The Web Foundry mark" width="30" height="30" />
         <span class="nav__logo-name">The Web Foundry</span>
       </a>
       <ul class="nav__links">
@@ -85,7 +85,7 @@ const clientShots = {
       <div class="hero__glow"></div>
       <div class="hero__ring hero__ring--outer"></div>
       <div class="hero__ring hero__ring--inner"></div>
-      <img class="hero__mark" src="/brand/foundry-mark.png" alt="" width="270" height="267" />
+      <img class="hero__mark" src="/brand/foundry-mark.png" alt="The Web Foundry mark" width="270" height="267" />
       <div class="hero__embers">
         <span></span><span></span><span></span><span></span>
         <span></span><span></span><span></span><span></span>
@@ -457,7 +457,10 @@ const clientShots = {
         <p class="modal-sub">Tell us about your business and we'll be in touch within 24 hours.</p>
 
         <form id="contact-form" novalidate>
-          <input type="checkbox" name="botcheck" style="display:none">
+          <div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
+            <label for="hub-botcheck">Leave this field blank</label>
+            <input type="text" id="hub-botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+          </div>
           <input type="hidden" name="site_id" value={siteConfig.siteId}>
 
           <div class="form-group">

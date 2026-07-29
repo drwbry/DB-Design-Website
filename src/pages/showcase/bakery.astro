@@ -18,6 +18,7 @@ const categories: { name: string; items: { name: string; description?: string; p
 >
   <Fragment slot="head">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&q=80" />
   </Fragment>
 
   <style is:global>
@@ -486,6 +487,8 @@ const categories: { name: string; items: { name: string; description?: string; p
           alt="Fresh croissants and pastries cooling on a rack at Sweet Crumb Bakery"
           width="800"
           height="600"
+          loading="eager"
+          fetchpriority="high"
         />
         <div class="hero__img-caption">Fresh from the oven daily</div>
       </div>
@@ -649,7 +652,10 @@ const categories: { name: string; items: { name: string; description?: string; p
         <p class="contact-sub">Have a question, a catering inquiry, or just want to say hi? We'd love to hear from you.</p>
       </div>
       <form id="bakery-contact-form" class="contact-form reveal reveal-delay-1" novalidate>
-        <input type="checkbox" name="botcheck" style="display:none">
+        <div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
+          <label for="bakery-botcheck">Leave this field blank</label>
+          <input type="text" id="bakery-botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+        </div>
         <input type="hidden" name="site_id" value={siteConfig.showcase.bakery.siteId}>
         <div class="form-group">
           <label for="b-name">Your Name *</label>

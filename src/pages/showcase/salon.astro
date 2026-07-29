@@ -251,16 +251,18 @@ const galleryImages = salonData?.gallery ?? [];
               src={urlFor(item.image).width(600).height(600).fit('crop').auto('format').url()}
               alt={item.alt ?? ''}
               class="gallery-photo"
+              width="600"
+              height="600"
               loading="lazy"
             />
           </div>
         )) : (
           <>
-            <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&h=600&fit=crop&auto=format" alt="Hair styling" class="gallery-photo" loading="lazy"/></div>
-            <div class="gallery-item reveal reveal-delay-1"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&h=300&fit=crop&auto=format" alt="Nail care" class="gallery-photo" loading="lazy"/></div>
-            <div class="gallery-item reveal reveal-delay-2"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400&h=300&fit=crop&auto=format" alt="Facial treatment" class="gallery-photo" loading="lazy"/></div>
-            <div class="gallery-item reveal reveal-delay-3"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&h=300&fit=crop&auto=format" alt="Salon interior" class="gallery-photo" loading="lazy"/></div>
-            <div class="gallery-item reveal reveal-delay-4"><img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=400&h=300&fit=crop&auto=format" alt="Hair styling tools" class="gallery-photo" loading="lazy"/></div>
+            <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&h=600&fit=crop&auto=format" alt="Hair styling" class="gallery-photo" width="800" height="600" loading="lazy"/></div>
+            <div class="gallery-item reveal reveal-delay-1"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&h=300&fit=crop&auto=format" alt="Nail care" class="gallery-photo" width="400" height="300" loading="lazy"/></div>
+            <div class="gallery-item reveal reveal-delay-2"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400&h=300&fit=crop&auto=format" alt="Facial treatment" class="gallery-photo" width="400" height="300" loading="lazy"/></div>
+            <div class="gallery-item reveal reveal-delay-3"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&h=300&fit=crop&auto=format" alt="Salon interior" class="gallery-photo" width="400" height="300" loading="lazy"/></div>
+            <div class="gallery-item reveal reveal-delay-4"><img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=400&h=300&fit=crop&auto=format" alt="Hair styling tools" class="gallery-photo" width="400" height="300" loading="lazy"/></div>
           </>
         )}
       </div>
@@ -274,7 +276,10 @@ const galleryImages = salonData?.gallery ?? [];
       <h2 class="book-title">You deserve<br/><em>this.</em></h2>
       <p class="book-sub">Every appointment opens with a complimentary consultation and a glass of something lovely. Reserve your spot today.</p>
       <form id="salon-contact-form" class="contact-form" novalidate>
-        <input type="checkbox" name="botcheck" style="display:none">
+        <div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
+          <label for="salon-botcheck">Leave this field blank</label>
+          <input type="text" id="salon-botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+        </div>
         <input type="hidden" name="site_id" value={siteConfig.showcase.salon.siteId}>
         <div class="form-group">
           <label for="s-name">Your Name *</label>

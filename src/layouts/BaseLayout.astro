@@ -2,8 +2,10 @@
 import '../styles/shared.css';
 import { siteConfig } from '../config/site.js';
 
-const { title, description } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || siteConfig.domain);
+const { title, description, ogImage = '/brand/foundry-mark.png' } = Astro.props;
+const canonicalPath = Astro.url.pathname === '/' ? '/' : Astro.url.pathname.replace(/\/$/, '');
+const canonicalURL = new URL(canonicalPath, Astro.site || siteConfig.domain);
+const ogImageURL = new URL(ogImage, canonicalURL);
 ---
 <html lang="en">
   <head>
@@ -24,11 +26,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || siteConfig.domain
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL.href} />
     <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:image" content={ogImageURL.href} />
+    <meta property="og:image:alt" content={`${siteConfig.name} mark`} />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={ogImageURL.href} />
 
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <slot name="head" />

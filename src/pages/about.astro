@@ -55,7 +55,7 @@ const founder = (aboutData?.teamMembers ?? [
 const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves better?";
 ---
 <BaseLayout
-  title="About — The Web Foundry"
+  title="About The Web Foundry | Cincinnati Website Design"
   description="The Web Foundry is a Cincinnati community initiative using AI vibe coding to rebuild outdated local business websites. Meet the founder behind the mission."
 >
   <Fragment slot="head">
@@ -100,7 +100,7 @@ const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves bet
         <div class="about-founder__inner reveal">
           <div class="about-founder__photo-wrap">
             {founder.photo
-              ? <img class="about-founder__photo" src={urlFor(founder.photo as object).width(480).height(560).fit('crop').url()} alt={founder.name} />
+              ? <img class="about-founder__photo" src={urlFor(founder.photo as object).width(480).height(560).fit('crop').url()} alt={founder.name} width="480" height="560" loading="lazy" />
               : <div class="about-founder__photo-placeholder" aria-label={`${founder.name} photo placeholder`}></div>
             }
           </div>

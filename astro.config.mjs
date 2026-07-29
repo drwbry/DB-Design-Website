@@ -6,5 +6,12 @@ import { siteConfig } from './src/config/site.js';
 export default defineConfig({
   output: 'static',
   site: siteConfig.domain,
-  integrations: [sitemap()],
+  integrations: [sitemap({
+    serialize(item) {
+      return {
+        ...item,
+        url: item.url === `${siteConfig.domain}/` ? item.url : item.url.replace(/\/$/, ''),
+      };
+    },
+  })],
 });
