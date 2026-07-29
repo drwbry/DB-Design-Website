@@ -24,6 +24,7 @@ const clientShots = {
 >
   <Fragment slot="head">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="preload" as="image" href="/brand/foundry-mark.png" />
   </Fragment>
 
   <!-- ── Navigation ── -->
@@ -85,7 +86,7 @@ const clientShots = {
       <div class="hero__glow"></div>
       <div class="hero__ring hero__ring--outer"></div>
       <div class="hero__ring hero__ring--inner"></div>
-      <img class="hero__mark" src="/brand/foundry-mark.png" alt="The Web Foundry mark" width="270" height="267" />
+      <img class="hero__mark" src="/brand/foundry-mark.png" alt="The Web Foundry mark" width="270" height="267" fetchpriority="high" />
       <div class="hero__embers">
         <span></span><span></span><span></span><span></span>
         <span></span><span></span><span></span><span></span>
@@ -435,6 +436,7 @@ const clientShots = {
       <nav class="footer__links" aria-label="Footer">
         <a href="#work">Work</a>
         <a href="/about">About</a>
+        <a href="/contact">Contact</a>
         <a href="/privacy">Privacy</a>
       </nav>
     </div>

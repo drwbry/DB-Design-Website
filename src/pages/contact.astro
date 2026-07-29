@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/hub.css';
+import { siteConfig } from '../config/site.js';
+---
+<BaseLayout
+  title="Contact The Web Foundry | Cincinnati Website Design"
+  description="Contact The Web Foundry to discuss a practical, modern website for your Cincinnati small business."
+>
+  <Fragment slot="head">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  </Fragment>
+
+  <nav class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="/" class="nav__logo">
+        <span class="nav__logo-mark">W</span>
+        <span class="nav__logo-name">The Web Foundry</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="/#work" class="nav__link">Our Work</a></li>
+        <li><a href="/about" class="nav__link">About</a></li>
+        <li><a href="/contact" class="nav__cta">Get in Touch</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <section class="contact-page">
+      <div class="container">
+        <div class="contact-page__inner reveal">
+          <span class="section-tag">Contact</span>
+          <h1 class="contact-page__title">Let’s build something useful.</h1>
+          <p class="contact-page__copy">Tell us about your business, the customers you want to reach, and what your current website is missing. We’ll respond within one business day with a practical next step.</p>
+          <a class="contact-page__email" href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
+          <p class="contact-page__note">Prefer a quick conversation? Include your phone number and a good time to call in your email.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="footer__mark">W</span>
+        <span class="footer__label">The Web Foundry · Cincinnati, OH</span>
+      </div>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="/#work">Work</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/privacy">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+
+  <style is:global>
+    .contact-page { padding: 7rem 0 5rem; min-height: 65vh; background: var(--ink); }
+    .contact-page__inner { max-width: 680px; }
+    .contact-page__title { margin: 0.75rem 0 1.25rem; color: var(--cream); font-family: var(--ff-display); font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.05; letter-spacing: -0.03em; }
+    .contact-page__copy { max-width: 620px; color: var(--muted); font-size: 1.08rem; line-height: 1.8; }
+    .contact-page__email { display: inline-block; margin-top: 2rem; color: var(--accent); font-size: clamp(1.15rem, 3vw, 1.55rem); font-weight: 700; text-decoration: underline; text-underline-offset: 0.2em; }
+    .contact-page__email:hover { color: var(--cream); }
+    .contact-page__note { margin-top: 1rem; color: var(--muted); font-size: 0.9rem; }
+  </style>
+
+  <script>
+    import '../scripts/main.js';
+  </script>
+</BaseLayout>

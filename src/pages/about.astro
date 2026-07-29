@@ -52,6 +52,9 @@ const howBody = aboutData?.howBody ?? "We call it AI vibe coding — using moder
 const founder = (aboutData?.teamMembers ?? [
   { name: "Dreux Brys", title: "Founder, Norwood", photo: undefined, bio: "Cincinnati-based technologist passionate about putting modern tools to work for the community." },
 ])[0];
+const founderImageUrl = founder.photo
+  ? urlFor(founder.photo as object).width(480).height(560).fit('crop').url()
+  : null;
 const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves better?";
 ---
 <BaseLayout
@@ -60,6 +63,7 @@ const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves bet
 >
   <Fragment slot="head">
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    {founderImageUrl && <link rel="preload" as="image" href={founderImageUrl} />}
   </Fragment>
 
   <nav class="nav" id="nav">
@@ -100,7 +104,7 @@ const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves bet
         <div class="about-founder__inner reveal">
           <div class="about-founder__photo-wrap">
             {founder.photo
-              ? <img class="about-founder__photo" src={urlFor(founder.photo as object).width(480).height(560).fit('crop').url()} alt={founder.name} width="480" height="560" loading="lazy" />
+              ? <img class="about-founder__photo" src={founderImageUrl} alt={founder.name} width="480" height="560" loading="eager" fetchpriority="high" />
               : <div class="about-founder__photo-placeholder" aria-label={`${founder.name} photo placeholder`}></div>
             }
           </div>
@@ -136,11 +140,21 @@ const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves bet
       </div>
     </section>
 
+    <section class="about-commitment">
+      <div class="container">
+        <div class="about-why__inner reveal">
+          <span class="section-tag">Our Commitment</span>
+          <h2 class="about-section-title">A practical partner after launch.</h2>
+          <p class="about-body-text">A better website should keep working long after launch day. We stay available for the ordinary changes that matter: new services, seasonal announcements, updated photos, and the small details that keep information accurate. The goal is a dependable digital front door that makes it easier for customers to choose a local business with confidence.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="about-cta">
       <div class="container">
         <div class="about-cta__inner reveal">
           <h2 class="about-cta__title">{ctaHeadline}</h2>
-          <a href="/#contact" class="btn btn--primary">Get in Touch <span class="btn-arrow">→</span></a>
+          <a href="/contact" class="btn btn--primary">Get in Touch <span class="btn-arrow">→</span></a>
         </div>
       </div>
     </section>
@@ -156,6 +170,7 @@ const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves bet
       <nav class="footer__links" aria-label="Footer">
         <a href="/#work">Work</a>
         <a href="/about">About</a>
+        <a href="/contact">Contact</a>
         <a href="/privacy">Privacy</a>
       </nav>
     </div>
@@ -253,7 +268,8 @@ const ctaHeadline = aboutData?.ctaHeadline ?? "Know a business that deserves bet
 
     /* Why / How sections */
     .about-why,
-    .about-how {
+    .about-how,
+    .about-commitment {
       padding: 4.5rem 0;
       border-top: 1px solid var(--hairline);
     }
