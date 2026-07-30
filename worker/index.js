@@ -108,7 +108,7 @@ export default {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Web Foundry Forms <forms@cincinnatiwebfoundry.com>',
+        from: 'Web Foundry Forms <noreply@cincinnatiwebfoundry.com>',
         to: [toEmail],
         subject,
         html: internalHtml,
@@ -244,7 +244,7 @@ ${ctaBlock}
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'The Web Foundry <forms@cincinnatiwebfoundry.com>',
+          from: 'The Web Foundry <noreply@cincinnatiwebfoundry.com>',
           to: [body.email],
           subject: `We received your message — ${displayName}`,
           html: confirmationHtml,
