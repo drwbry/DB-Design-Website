@@ -127,11 +127,26 @@ All forms POST to a **shared Cloudflare Worker** (`worker/index.js`) deployed at
 - **Honeypot** — hidden `botcheck` checkbox catches naive bots
 
 **Worker env vars** (set via `wrangler secret put`):
-- `TURNSTILE_SECRET_KEY` — Cloudflare Turnstile server key
+- `TURNSTILE_SECRET_KEY` — fallback Turnstile server key, used only for sites with no
+  per-site secret in KV (e.g. the Foundry hub's own form). **Not shared across client
+  widgets** — see the KV `turnstileSecretKey` field below for why this matters.
 - `ALLOWED_ORIGINS` — comma-separated allowed domains (e.g. `https://cincinnatiwebfoundry.com,http://localhost:4321`)
 - `RESEND_API_KEY` — Resend email API key
 - `TO_EMAIL` — internal notification recipient
 - `ENFORCE_TURNSTILE` — optional strict mode (`true` to hard-fail invalid/missing Turnstile; default launch-safe mode is unset/false)
+
+**Per-site Turnstile secret (`turnstileSecretKey` in KV, fixed 2026-07-29):** Each Cloudflare
+Turnstile widget (site key) has its **own distinct secret key** — secrets are not shared across
+widgets in an account, even under the same Cloudflare login. Every client gets their own widget
+(Phase 5d), so every client needs their own secret stored in their `WEB_FOUNDRY_SITES` KV entry
+as `turnstileSecretKey`. The Worker uses `config.turnstileSecretKey` when present, falling back
+to the global `TURNSTILE_SECRET_KEY` only if it's missing. Get the value from **Cloudflare
+Dashboard → Turnstile → [widget] → Edit Widget → Secret Key**. Until a client's KV entry has
+this field, flipping `enforceTurnstile:true` for them will fail every submission with
+`invalid-input-secret` — this went undetected platform-wide for months because
+`enforceTurnstile` defaulted to `false` everywhere, so siteverify was never actually exercised
+for any client. Before flipping the flag for **any** client, confirm `turnstileSecretKey` is
+set in their KV entry first.
 
 **Deploy Worker:** `cd worker && npx wrangler deploy`
 

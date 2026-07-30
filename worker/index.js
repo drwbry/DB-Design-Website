@@ -42,6 +42,7 @@ export default {
     let siteUrl = 'https://cincinnatiwebfoundry.com';
     let isClientSite = false;
     let siteEnforceTurnstile = false;
+    let siteTurnstileSecretKey = '';
     const siteId = body.site_id || '';
     if (siteId && env.WEB_FOUNDRY_SITES) {
       const raw = await env.WEB_FOUNDRY_SITES.get(siteId);
@@ -54,6 +55,7 @@ export default {
           if (config.headerBg) headerBg = config.headerBg;
           if (config.siteUrl) siteUrl = config.siteUrl;
           if (config.enforceTurnstile === true) siteEnforceTurnstile = true;
+          if (config.turnstileSecretKey) siteTurnstileSecretKey = config.turnstileSecretKey;
           isClientSite = true;
         } catch {}
       }
@@ -71,17 +73,22 @@ export default {
       if (!turnstileToken) {
         return json({ success: false, message: 'Verification required' }, 400, origin);
       }
+      // Each Turnstile widget (site key) has its own distinct secret key — they are
+      // NOT shared across widgets in a Cloudflare account. Use the per-site secret
+      // from KV when the client has their own widget; fall back to the global env
+      // secret only for sites without a dedicated widget (e.g. the Foundry hub).
       const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({
-          secret: env.TURNSTILE_SECRET_KEY,
+          secret: siteTurnstileSecretKey || env.TURNSTILE_SECRET_KEY,
           response: turnstileToken,
           remoteip: request.headers.get('CF-Connecting-IP') || '',
         }),
       });
       const verify = await verifyRes.json();
       if (!verify.success) {
+        console.log('Turnstile siteverify rejected token:', JSON.stringify(verify));
         return json({ success: false, message: 'Verification failed' }, 403, origin);
       }
     }
