@@ -22,6 +22,12 @@ const DEFAULT_HOURS: DayHours[] = [
 const hours = (plumberData?.hours && plumberData.hours.length > 0)
   ? plumberData.hours
   : DEFAULT_HOURS;
+
+// Gate the Stripe section on a real Payment Link being configured. A Concept page
+// must never show a prospect a dead or "coming soon" CTA, so when this is unset the
+// whole section AND its nav entry are omitted and the page still reads complete.
+const stripeLink = siteConfig.showcase.plumber.integrations.stripePaymentLink;
+const payReady = stripeLink !== 'REPLACE_ME';
 ---
 <ShowcaseLayout
   title="Peak Flow Plumbing — Rebuilt by The Web Foundry"
@@ -145,11 +151,27 @@ const hours = (plumberData?.hours && plumberData.hours.length > 0)
     .db-credit{text-align:center;padding:2rem;background:var(--navy);font-size:.78rem;color:rgba(255,255,255,0.3)}
     .db-credit a{color:var(--orange);font-weight:700}
 
+    /* PAY INVOICE */
+    .pay-section{padding:6rem 2rem;background:var(--navy);border-top:1px solid rgba(255,255,255,0.07)}
+    .pay-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center}
+    .pay-copy .section-title{color:white;margin-bottom:1rem}
+    .pay-copy .section-sub{color:rgba(255,255,255,0.55)}
+    .pay-trust{display:flex;align-items:center;gap:.6rem;margin-top:1.8rem;font-size:.85rem;color:rgba(255,255,255,0.45)}
+    .pay-trust__icon{font-size:1.1rem;flex-shrink:0}
+    .pay-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid var(--orange);border-radius:4px;padding:2.5rem}
+    .pay-card__label{font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin-bottom:.7rem}
+    .pay-card__title{font-family:var(--ff-display);font-size:2rem;letter-spacing:.02em;color:white;line-height:1;margin-bottom:1.6rem}
+    .pay-card .btn-call{width:100%}
+    .pay-card__fine{margin-top:1.1rem;font-size:.76rem;line-height:1.6;color:rgba(255,255,255,0.35)}
+    .pay-card__fine code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:rgba(255,255,255,0.55)}
+
     @media(max-width:768px){
       .hero__inner{grid-template-columns:1fr}
       .hero__trust{display:none}
       .stats-bar-inner{grid-template-columns:repeat(2,1fr)}
       .services-grid{grid-template-columns:1fr}
+      .pay-inner{grid-template-columns:1fr;gap:2.5rem}
+      .pay-card{padding:2rem}
     }
 
     /* ── Contact ── */
@@ -183,7 +205,8 @@ const hours = (plumberData?.hours && plumberData.hours.length > 0)
       </a>
       <ul class="nav__links">
         <li><a href="#services" class="nav__link">Services</a></li>
-        <li><a href="#contact" class="nav__link">Contact</a></li>
+        {payReady && <li><a href="#pay" class="nav__link">Pay Invoice</a></li>}
+        <li><a href="#contact-form" class="nav__link">Contact</a></li>
         <li><a href="tel:+15551234567" class="nav__call">📞 (555) 123-4567</a></li>
       </ul>
     </div>
@@ -259,7 +282,32 @@ const hours = (plumberData?.hours && plumberData.hours.length > 0)
     </div>
   </section>
 
-  <section class="emergency" id="contact">
+  {payReady && (
+    <section class="pay-section" id="pay">
+      <div class="pay-inner">
+        <div class="pay-copy reveal">
+          <span class="section-tag">Settle Up Online</span>
+          <h2 class="section-title">PAY YOUR<br/>INVOICE</h2>
+          <p class="section-sub">Have an invoice from us? Pay it online in under a minute. No account, no phone call, no cheque in the mail. Secure checkout handled by Stripe.</p>
+          <div class="pay-trust">
+            <span class="pay-trust__icon" aria-hidden="true">🔒</span>
+            <span>Cards and digital wallets — PCI-compliant, we never see your card details.</span>
+          </div>
+        </div>
+        <div class="pay-card reveal reveal-delay-1">
+          <div class="pay-card__label">Invoice Payment</div>
+          <div class="pay-card__title">READY WHEN<br/>YOU ARE.</div>
+          <a href={stripeLink} class="btn-call" target="_blank" rel="noopener">Pay Invoice ➜</a>
+          <p class="pay-card__fine">
+            Demo checkout running in Stripe test mode — no real charge is made.
+            Try card <code>4242 4242 4242 4242</code> with any future expiry and any CVC.
+          </p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="emergency" id="emergency">
     <div class="emergency__inner">
       <div class="emergency__label">🔴 Emergency Line</div>
       <h2 class="emergency__title">PIPE BURST?<br/>WE'RE COMING.</h2>
@@ -303,7 +351,7 @@ const hours = (plumberData?.hours && plumberData.hours.length > 0)
     </div>
   </section>
 
-<script is:inline define:vars={{ workerUrl: siteConfig.formWorkerUrl, formSubject: siteConfig.showcase.plumber.formSubject }}>
+<script is:inline define:vars={{ workerUrl: siteConfig.formWorkerUrl, formSubject: siteConfig.showcase.plumber.formSubjects.contact }}>
 (function() {
   const form = document.getElementById('plumber-contact-form');
   const btn = document.getElementById('plumber-submit');

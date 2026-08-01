@@ -86,8 +86,8 @@ These are the questions we ask every new client before building their website. D
 
 13b. **Would you like customers to order online?**
     - No — menu is view-only
-    - Yes — order online, pay at pickup _(we set this up at no monthly cost)_
-    - Yes — order and pay online _(small monthly cost from the ordering provider)_
+    - Yes — order ahead, pay at pickup _(we build this into your site; no monthly cost, no third-party account)_
+    - Yes — order and pay online _(no monthly fee either, but the payment provider takes a small percentage of each order)_
     - I already use an ordering system: ___
 
 ---

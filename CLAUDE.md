@@ -62,7 +62,27 @@ Then visit `http://localhost:4321`
 
 **Showcase pages** use `ShowcaseLayout`, which wraps content with `BackButton` and `DBCredit`. All page-specific styles live in a `<style>` block using CSS custom properties at `:root`.
 
-**Central config** lives in `src/config/site.js`. Use it for fork-swappable values that are shared across Astro config, pages, layouts, and client-side JS: domain, site name, contact email, Worker URL, Turnstile site key, hub `site_id`, showcase demo `site_id`s, and form subject lines. Do not hardcode those values in individual form scripts.
+**Central config** lives in `src/config/site.js`. Use it for fork-swappable values that are shared across Astro config, pages, layouts, and client-side JS: domain, site name, contact email, Worker URL, Turnstile site key, hub `site_id`, showcase demo `site_id`s, form subject lines, and third-party integration URLs. Do not hardcode those values in individual form scripts.
+
+### Showcase integrations
+
+Each demo carries the signature mechanism for its industry, so a fork inherits a working reference implementation:
+
+| Demo | Mechanism | Config key |
+|------|-----------|-----------|
+| bakery | Pre-order form (our own Worker — no third party) | none needed |
+| plumber | "Pay Your Invoice" Stripe Payment Link | `showcase.plumber.integrations.stripePaymentLink` |
+| salon | Calendly booking embed, lazy-loaded | `showcase.salon.integrations.calendlyUrl` |
+
+Three rules govern these:
+
+- **Gate on `REPLACE_ME`.** Unconfigured integrations are omitted entirely — section *and* nav entry — so the page still reads as complete. Never render a "coming soon" placeholder on a Concept page; a prospect is looking at it.
+- **Forking lifts the block.** Moving a demo into a client site means copying that demo's `integrations` block up to a top-level `siteConfig.integrations`, the flat shape the client repos use.
+- **The salon's Calendly event is shared with MAB Properties** (`calendly.com/foundrysolutionsllc/30min`). Calendly's free tier allows exactly one event type. Renaming it is fine; **changing its URL slug breaks MAB's `/rentals` page.**
+
+**The demos deliberately have no `WEB_FOUNDRY_SITES` KV entry.** With no entry, the Worker's fallback path brands demo confirmation emails as The Web Foundry and appends the Foundry CTA block — so a prospect who tests a demo form gets a sales touch. This is intentional; do not "fix" it by adding KV entries. One consequence: the bakery pre-order's `order_id` appears in the internal notification but not in the submitter's confirmation, which uses the generic template.
+
+For online ordering generally, see the ladder in `docs/features.md`. **GloriaFood is discontinued** (Oracle; retires 30 Apr 2027) — do not recommend it to any client.
 
 `shared.js` auto-initializes on `DOMContentLoaded` — no manual calls needed. It wires up scroll reveal and counters automatically by querying the DOM for `.reveal` and `[data-count]`.
 

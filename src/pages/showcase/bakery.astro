@@ -448,6 +448,30 @@ const categories: { name: string; items: { name: string; description?: string; p
     .contact-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
     .bakery-form-error { color: #c0392b; font-size: 0.82rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: rgba(192,57,43,0.06); border: 1px solid rgba(192,57,43,0.2); border-radius: 6px; }
     .bakery-form-success { color: var(--sage); font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem; padding: 0.75rem 1rem; background: var(--sage-light); border: 1px solid rgba(122,158,130,0.3); border-radius: 6px; }
+
+    /* ── Pre-order ── */
+    .order-section { padding: 7rem 2rem; background: var(--cream-dark); }
+    .order-inner { max-width: 640px; margin: 0 auto; }
+    .order-title {
+      font-family: var(--ff-display); font-style: italic;
+      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700;
+      color: var(--cocoa); margin-bottom: 0.6rem;
+    }
+    .order-sub { font-size: 0.97rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 2.5rem; }
+    .order-form select {
+      background: var(--cream-card); border: 1.5px solid var(--border); border-radius: 8px;
+      color: var(--text); font-family: var(--ff-body); font-size: 0.95rem;
+      padding: 0.8rem 1rem; width: 100%; transition: border-color 0.2s;
+    }
+    .order-form select:focus { outline: none; border-color: var(--terra); }
+    .order-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .order-note {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      font-size: 0.82rem; color: var(--text-mid); line-height: 1.6;
+      background: var(--sage-light); border-radius: 8px; padding: 0.8rem 1rem; margin-bottom: 1.6rem;
+    }
+    .order-ref { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 700; letter-spacing: 0.03em; }
+    @media (max-width: 768px) { .order-row { grid-template-columns: 1fr; gap: 0; } }
   </style>
 
   <!-- NAV -->
@@ -459,7 +483,7 @@ const categories: { name: string; items: { name: string; description?: string; p
         <li><a href="#about" class="nav__link">Our Story</a></li>
         <li><a href="#hours" class="nav__link">Hours</a></li>
         <li><a href="#contact" class="nav__link">Contact</a></li>
-        <li><a href="#hours" class="nav__order">Order Now</a></li>
+        <li><a href="#order" class="nav__order">Order Now</a></li>
       </ul>
     </div>
   </nav>
@@ -646,6 +670,82 @@ const categories: { name: string; items: { name: string; description?: string; p
     </div>
   </section>
 
+  <!-- ── PRE-ORDER ── -->
+  <section class="order-section" id="order">
+    <div class="order-inner">
+      <div class="reveal">
+        <span class="section-tag">Order Ahead</span>
+        <h2 class="order-title">Reserve your box</h2>
+        <p class="order-sub">Tell us what you'd like and when you're coming. We'll bag it up, keep it fresh, and have it waiting at the counter — no queue, no guesswork.</p>
+      </div>
+
+      <div class="order-note reveal">
+        <span aria-hidden="true">🎂</span>
+        <span>Custom cakes and large catering orders need <strong>72 hours'</strong> notice. Everything else we'll confirm same day.</span>
+      </div>
+
+      <form id="bakery-order-form" class="contact-form order-form reveal reveal-delay-1" novalidate>
+        <div inert style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
+          <label for="order-botcheck">Leave this field blank</label>
+          <input type="text" id="order-botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+        </div>
+        <input type="hidden" name="site_id" value={siteConfig.showcase.bakery.siteId}>
+
+        <div class="form-group">
+          <label for="o-name">Your Name *</label>
+          <input type="text" id="o-name" name="name" required placeholder="Your name">
+        </div>
+        <div class="order-row">
+          <div class="form-group">
+            <label for="o-phone">Phone *</label>
+            <input type="tel" id="o-phone" name="phone" required placeholder="(555) 123-4567">
+          </div>
+          <div class="form-group">
+            <label for="o-email">Email *</label>
+            <input type="email" id="o-email" name="email" required placeholder="your@email.com">
+          </div>
+        </div>
+        <div class="order-row">
+          <div class="form-group">
+            <label for="o-date">Pickup Date *</label>
+            <input type="date" id="o-date" name="pickup_date" required>
+          </div>
+          <div class="form-group">
+            <label for="o-time">Pickup Window</label>
+            <select id="o-time" name="pickup_time">
+              <option value="Morning (7–10am)">Morning · 7–10am</option>
+              <option value="Midday (10am–1pm)">Midday · 10am–1pm</option>
+              <option value="Afternoon (1–4pm)">Afternoon · 1–4pm</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="o-items">What would you like? *</label>
+          <textarea id="o-items" name="items" rows="4" required placeholder="2 dozen croissants, one 8-inch lemon cake, a loaf of sourdough…"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="o-occasion">Occasion</label>
+          <select id="o-occasion" name="occasion">
+            <option value="Just because">Just because</option>
+            <option value="Birthday">Birthday</option>
+            <option value="Wedding">Wedding</option>
+            <option value="Corporate">Corporate</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="o-notes">Allergies or Special Requests</label>
+          <textarea id="o-notes" name="notes" rows="3" placeholder="Nut allergy, gluten-free, writing on the cake…"></textarea>
+        </div>
+
+        <div class="bakery-form-error" id="order-form-error" hidden></div>
+        <div class="bakery-form-success" id="order-form-success" hidden></div>
+        <div class="cf-turnstile" data-sitekey={siteConfig.turnstileSiteKey} data-theme="auto"></div>
+        <button type="submit" class="btn-primary contact-submit" id="order-submit">Place Pre-Order</button>
+      </form>
+    </div>
+  </section>
+
   <!-- ── CONTACT ── -->
   <section class="contact-section" id="contact">
     <div class="contact-inner">
@@ -680,7 +780,7 @@ const categories: { name: string; items: { name: string; description?: string; p
     </div>
   </section>
 
-  <script is:inline define:vars={{ workerUrl: siteConfig.formWorkerUrl, formSubject: siteConfig.showcase.bakery.formSubject }}>
+  <script is:inline define:vars={{ workerUrl: siteConfig.formWorkerUrl, formSubject: siteConfig.showcase.bakery.formSubjects.contact, preorderSubject: siteConfig.showcase.bakery.formSubjects.preorder }}>
     // Nav scroll
     const nav = document.querySelector('.bakery-nav');
     window.addEventListener('scroll', () => {
@@ -769,6 +869,54 @@ const categories: { name: string; items: { name: string; description?: string; p
         } catch (err) {
           errorEl.textContent = err.message; errorEl.hidden = false;
           btn.disabled = false; btn.textContent = 'Send Message';
+          if (window.turnstile) window.turnstile.reset();
+        }
+      });
+    })();
+
+    // ── Pre-Order Form ──
+    // Same Worker pipeline as the contact form, plus a customer-facing order
+    // reference. order_id survives the Worker's field filter, so it lands in the
+    // internal notification email. It does NOT appear in the submitter's
+    // confirmation — that uses the generic Foundry template, which is expected
+    // for a demo site with no KV entry.
+    (function() {
+      const form = document.getElementById('bakery-order-form');
+      const btn = document.getElementById('order-submit');
+      const errorEl = document.getElementById('order-form-error');
+      const successEl = document.getElementById('order-form-success');
+
+      // Custom cakes need 72h; block obviously-past pickup dates in the picker.
+      const dateInput = document.getElementById('o-date');
+      if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
+
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+        btn.disabled = true; btn.textContent = 'Placing order…';
+        errorEl.hidden = true; successEl.hidden = true;
+        const payload = Object.fromEntries(new FormData(form));
+        const orderId = 'SC-' + Date.now().toString(36).toUpperCase();
+        payload.order_id = orderId;
+        payload.subject = preorderSubject;
+        try {
+          const res = await fetch(workerUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            form.reset();
+            successEl.innerHTML =
+              'Order received — reference <span class="order-ref">' + orderId +
+              '</span>. We\'ll confirm your pickup time by email.';
+            successEl.hidden = false;
+            btn.textContent = 'Order placed!';
+          } else throw new Error(data.message || 'Something went wrong.');
+        } catch (err) {
+          errorEl.textContent = err.message; errorEl.hidden = false;
+          btn.disabled = false; btn.textContent = 'Place Pre-Order';
           if (window.turnstile) window.turnstile.reset();
         }
       });

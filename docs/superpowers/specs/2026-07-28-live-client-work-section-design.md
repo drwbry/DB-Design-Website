@@ -26,7 +26,7 @@ exemplars spanning the service categories:
 
 | Page | Mechanism class demonstrated |
 |------|------------------------------|
-| bakery | Sanity-driven menu + specials, ordering embed (GloriaFood) |
+| bakery | Sanity-driven menu + specials, pre-order form (built 2026-08-01; GloriaFood was planned here but is discontinued) |
 | plumber | Service-request ticket form, Stripe Payment Link |
 | salon | Calendly booking embed, Sanity gallery |
 
