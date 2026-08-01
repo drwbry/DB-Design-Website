@@ -41,21 +41,53 @@ export const siteConfig = {
       chips: ['White Paper Library', 'Sanity CMS', 'Lead Capture'],
     },
   ],
+  // Concept/demo builds for invented businesses. HUB-ONLY — a client fork inherits
+  // this and should delete it, same as the `clients` block above.
+  //
+  // These deliberately have NO entry in the WEB_FOUNDRY_SITES KV namespace. The
+  // Worker's fallback path then brands demo confirmation emails as The Web Foundry
+  // and appends the Foundry CTA block, which is what we want: a prospect who tests
+  // a demo form gets a Foundry sales touch. Do not "fix" this by adding KV entries.
+  //
+  // Forking a demo into a client site: lift that demo's `integrations` block up to
+  // a top-level `siteConfig.integrations`, the flat shape the client sites use.
   showcase: {
     bakery: {
       siteId: 'demo-bakery',
       name: 'Sweet Crumb Bakery',
-      formSubject: 'New Inquiry - Sweet Crumb Bakery',
+      formSubjects: {
+        contact: 'New Inquiry - Sweet Crumb Bakery',
+        preorder: 'Pre-Order - Sweet Crumb Bakery',
+      },
+      // No integrations: the pre-order form runs on our own Worker pipeline, with
+      // no third-party dependency. See docs/features.md for the ordering ladder.
     },
     plumber: {
       siteId: 'demo-plumber',
       name: 'Peak Flow Plumbing',
-      formSubject: 'New Inquiry - Peak Flow Plumbing',
+      formSubjects: {
+        contact: 'New Inquiry - Peak Flow Plumbing',
+      },
+      integrations: {
+        // TODO(dreux): Stripe TEST-mode Payment Link, "Peak Flow Plumbing — Invoice
+        // Payment": customer chooses amount + custom text field "Invoice #".
+        // Until this is set, the Pay Your Invoice section and its nav entry are omitted.
+        stripePaymentLink: 'REPLACE_ME',
+      },
     },
     salon: {
       siteId: 'demo-salon',
       name: 'Lumiere Salon & Spa',
-      formSubject: 'New Inquiry - Lumiere Salon & Spa',
+      formSubjects: {
+        contact: 'New Inquiry - Lumiere Salon & Spa',
+      },
+      integrations: {
+        // TODO(dreux): Calendly scheduling URL. NOTE this is the single free-tier
+        // event type, shared with MAB Properties (clients/mabassets-website).
+        // Renaming the event is fine; changing its URL slug breaks MAB's /rentals.
+        // Until this is set, the Calendly column is omitted and #book stays single-column.
+        calendlyUrl: 'REPLACE_ME',
+      },
     },
   },
 };

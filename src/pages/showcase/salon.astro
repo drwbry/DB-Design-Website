@@ -10,6 +10,14 @@ const salonData = await sanityClient.fetch<{ gallery: GalleryItem[] } | null>(
   `*[_type == "salonPage"][0] { gallery[] { image, alt } }`
 );
 const galleryImages = salonData?.gallery ?? [];
+
+// Gate the Calendly column on a real scheduling URL. When unset, #book falls back to
+// its original single-column inquiry-form layout rather than showing an empty frame —
+// a Concept page must never look half-built to a prospect.
+// Colour params theme the widget to the salon palette; Calendly wants hex WITHOUT '#'.
+const calendlyUrl = siteConfig.showcase.salon.integrations.calendlyUrl;
+const bookingReady = calendlyUrl !== 'REPLACE_ME';
+const calendlyEmbedUrl = `${calendlyUrl}?hide_gdpr_banner=1&background_color=1c1410&text_color=e8d5c4&primary_color=c9a96e`;
 ---
 <ShowcaseLayout
   title="Lumière Salon &amp; Spa — Rebuilt by The Web Foundry"
@@ -125,6 +133,20 @@ const galleryImages = salonData?.gallery ?? [];
     .book-title{font-family:var(--ff-display);font-size:clamp(2.5rem,6vw,5rem);font-weight:900;line-height:1.1;color:var(--blush);margin-bottom:1.5rem}
     .book-title em{font-style:italic;color:var(--champagne)}
     .book-sub{font-size:1rem;color:var(--blush-dim);line-height:1.8;font-weight:300;margin-bottom:2.5rem}
+    /* Two-column booking: live calendar on the left, inquiry form on the right.
+       .book-inner keeps its 700px cap in the single-column (ungated) fallback. */
+    .book-inner--split{max-width:1100px}
+    .book-cols{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;text-align:left;margin-top:.5rem}
+    .book-cols--single{grid-template-columns:1fr;max-width:640px;margin-left:auto;margin-right:auto}
+    .book-col__head{font-family:var(--ff-display);font-size:1.5rem;font-style:italic;color:var(--blush);margin-bottom:1.2rem}
+    .book-embed{border:1px solid var(--border-gold);background:var(--espresso);padding:.25rem}
+    .book-embed .calendly-inline-widget{min-width:280px;height:660px}
+    .book-embed__fallback{display:flex;align-items:center;justify-content:center;height:660px;font-size:.85rem;color:var(--blush-muted)}
+    .book-caption{margin-top:.9rem;font-size:.8rem;color:var(--blush-muted);text-align:center}
+    @media(max-width:768px){
+      .book-cols{grid-template-columns:1fr;gap:3.5rem}
+      .book-embed .calendly-inline-widget,.book-embed__fallback{height:580px}
+    }
 
     .db-credit{text-align:center;padding:2rem;border-top:1px solid var(--border);font-size:.76rem;color:var(--blush-muted)}
     .db-credit a{color:var(--champagne);font-weight:600}
@@ -272,38 +294,81 @@ const galleryImages = salonData?.gallery ?? [];
 
   <!-- BOOK CTA -->
   <section class="book-section" id="book">
-    <div class="book-inner reveal">
+    <div class={`book-inner reveal${bookingReady ? ' book-inner--split' : ''}`}>
       <span class="section-tag">Book Your Visit</span>
       <h2 class="book-title">You deserve<br/><em>this.</em></h2>
       <p class="book-sub">Every appointment opens with a complimentary consultation and a glass of something lovely. Reserve your spot today.</p>
-      <form id="salon-contact-form" class="contact-form" novalidate>
-        <div inert style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
-          <label for="salon-botcheck">Leave this field blank</label>
-          <input type="text" id="salon-botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+
+      <div class={`book-cols${bookingReady ? '' : ' book-cols--single'}`}>
+        {bookingReady && (
+          <div class="book-col">
+            <h3 class="book-col__head">Book instantly</h3>
+            <div class="book-embed">
+              <div class="calendly-inline-widget" data-url={calendlyEmbedUrl}></div>
+            </div>
+            <p class="book-caption">Demo calendar — go ahead, book a slot.</p>
+          </div>
+        )}
+
+        <div class="book-col">
+          {bookingReady && <h3 class="book-col__head">Prefer to ask first?</h3>}
+          <form id="salon-contact-form" class="contact-form" novalidate>
+            <div inert style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
+              <label for="salon-botcheck">Leave this field blank</label>
+              <input type="text" id="salon-botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+            </div>
+            <input type="hidden" name="site_id" value={siteConfig.showcase.salon.siteId}>
+            <div class="form-group">
+              <label for="s-name">Your Name *</label>
+              <input type="text" id="s-name" name="name" required placeholder="Your name">
+            </div>
+            <div class="form-group">
+              <label for="s-email">Email Address *</label>
+              <input type="email" id="s-email" name="email" required placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+              <label for="s-message">Your Inquiry</label>
+              <textarea id="s-message" name="message" rows="5" placeholder="Tell us what you're looking for..."></textarea>
+            </div>
+            <div class="salon-form-error" id="salon-form-error" hidden></div>
+            <div class="salon-form-success" id="salon-form-success" hidden>Thank you — we'll be in touch shortly.</div>
+            <div class="cf-turnstile" data-sitekey={siteConfig.turnstileSiteKey} data-theme="auto"></div>
+            <button type="submit" class="btn-primary contact-submit" id="salon-submit">Send Inquiry</button>
+          </form>
         </div>
-        <input type="hidden" name="site_id" value={siteConfig.showcase.salon.siteId}>
-        <div class="form-group">
-          <label for="s-name">Your Name *</label>
-          <input type="text" id="s-name" name="name" required placeholder="Your name">
-        </div>
-        <div class="form-group">
-          <label for="s-email">Email Address *</label>
-          <input type="email" id="s-email" name="email" required placeholder="your@email.com">
-        </div>
-        <div class="form-group">
-          <label for="s-message">Your Inquiry</label>
-          <textarea id="s-message" name="message" rows="5" placeholder="Tell us what you're looking for..."></textarea>
-        </div>
-        <div class="salon-form-error" id="salon-form-error" hidden></div>
-        <div class="salon-form-success" id="salon-form-success" hidden>Thank you — we'll be in touch shortly.</div>
-        <div class="cf-turnstile" data-sitekey={siteConfig.turnstileSiteKey} data-theme="auto"></div>
-        <button type="submit" class="btn-primary contact-submit" id="salon-submit">Send Inquiry</button>
-      </form>
+      </div>
       <p style="margin-top:2rem;font-size:.8rem;color:var(--blush-muted);text-align:center">456 Willow Lane · Open Tue–Sat, 9am–7pm</p>
     </div>
   </section>
 
-  <script is:inline define:vars={{ workerUrl: siteConfig.formWorkerUrl, formSubject: siteConfig.showcase.salon.formSubject }}>
+  <!-- Calendly loads lazily so the espresso hero stays fast. widget.js initialises any
+       .calendly-inline-widget it finds on load, so injecting the script late is enough —
+       no manual init call needed. No-ops when the booking URL is unconfigured, since
+       the widget element is not rendered at all in that case. -->
+  <script is:inline>
+    (function () {
+      const widget = document.querySelector('.calendly-inline-widget');
+      if (!widget) return;
+
+      let loaded = false;
+      const load = () => {
+        if (loaded) return;
+        loaded = true;
+        const s = document.createElement('script');
+        s.src = 'https://assets.calendly.com/assets/external/widget.js';
+        s.async = true;
+        document.body.appendChild(s);
+      };
+
+      if (!('IntersectionObserver' in window)) { load(); return; }
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) { load(); io.disconnect(); }
+      }, { rootMargin: '400px' });
+      io.observe(widget);
+    })();
+  </script>
+
+  <script is:inline define:vars={{ workerUrl: siteConfig.formWorkerUrl, formSubject: siteConfig.showcase.salon.formSubjects.contact }}>
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 40);

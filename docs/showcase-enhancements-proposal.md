@@ -1,7 +1,20 @@
 # Showcase Enhancements — Plan v2 (Stripe & Calendly APPROVED)
 
+> **Status update 2026-08-01 — Batch 1 built.** P1b (plumber Stripe), P1d (salon
+> Calendly), and P2a (bakery pre-order form) are implemented and live in the template.
+> **P2b (GloriaFood) is cancelled** — the product is discontinued; see the superseded
+> notice below. Two conventions in this document have also been overruled by what
+> actually shipped:
+>
+> - **The per-page `CONFIG` block is superseded.** All fork-swappable values live in
+>   central `src/config/site.js`, per the onboarding skill and as proven on MAB
+>   Properties. Demo integrations sit at `siteConfig.showcase.<demo>.integrations.*`;
+>   forking lifts that block up to a top-level `siteConfig.integrations`.
+> - **Ungated integrations omit their section entirely** rather than rendering a
+>   "coming soon" card. A Concept page must never look half-built to a prospect.
+
 **Status:** Stripe + Calendly integrations approved by Dreux (2026-07-06).
-GloriaFood embed pending Dreux account setup (free — see research below).
+~~GloriaFood embed pending Dreux account setup (free — see research below).~~ *(cancelled — product discontinued)*
 **Stripe account:** `foundrysolutionsllc@gmail.com` (use **test mode** for demo links).
 
 **Constraints (unchanged):** static Astro only; every feature = (a) JSON form to the
@@ -18,7 +31,14 @@ markup/JS below the CONFIG block.** Forking a client site = edit CONFIG + brandi
 
 ---
 
-## Ordering-solution research (answers "is GloriaMenus free?")
+## ~~Ordering-solution research (answers "is GloriaMenus free?")~~ — SUPERSEDED 2026-08-01
+
+> **This entire section is obsolete. Do not act on it.** GloriaFood was discontinued by
+> Oracle and retires 30 April 2027; it accepts no new signups. The whole recommendation
+> ladder below (GloriaFood free → GloriaFood + card payments → Square Online) is dead at
+> rung one and two. The current ladder lives in `docs/features.md` under
+> "Ordering — which rung to reach for": Foundry-built pre-order form → Square Online free
+> plan → paid SaaS. Kept here only so the reasoning trail stays readable.
 
 The intake brief's "GloriaMenus ~$30/mo" was wrong on both name and price. The product
 is **GloriaFood** — and its **core online ordering (and table reservations) is free
@@ -52,13 +72,16 @@ Sources: [gloriafood.com/pricing](https://www.gloriafood.com/pricing),
 |---|------|---------|-----------|-------------------|
 | P0 | all 4 forms | Form-reliability compliance | Worker | no |
 | P1a | plumber | Service-request ticket form | Worker | no |
-| P1b | plumber | "Pay Your Invoice" — Stripe Payment Link | link-out | yes — create link (5 min, below) |
+| P1b ✅ | plumber | "Pay Your Invoice" — Stripe Payment Link | link-out | yes — create link (5 min, below) |
 | P1c | bakery | Specials → Sanity-driven | Sanity | no |
-| P1d | salon | Calendly booking embed | embed | yes — create event (10 min, below) |
+| P1d ✅ | salon | Calendly booking embed | embed | yes — create event (10 min, below) |
 
-Later: P2a bakery pre-order form (Worker, no deps) · P2b bakery GloriaFood embed
-(after Dreux makes free account) · P3 salon gift-card Payment Link · P3 salon
-services→Sanity · P3 bakery dead menu-tab scaffold cleanup (`bakery.astro:10`).
+**✅ = built 2026-08-01.** P2a (bakery pre-order form) was also built in that pass and
+is now the bakery's ordering mechanism. **P2b (GloriaFood embed) is cancelled** — see
+the superseded notice above.
+
+Later: P3 salon gift-card Payment Link · P3 salon services→Sanity · P3 bakery dead
+menu-tab scaffold cleanup (`bakery.astro:10`).
 
 **Decision recorded — no `restaurant.astro`:** bakery is the food-service exemplar.
 Every food pattern (CMS menu, specials, ordering embed, pre-orders) fits it; a fourth
@@ -75,8 +98,11 @@ restaurant prospects become a real segment.
    field "Invoice #". Paste URL into plumber CONFIG (`STRIPE_PAYMENT_LINK`).
 2. **Calendly (free account):** event "Lumière Salon — Consultation", 30 min, cap
    ~3/day. Paste scheduling URL into salon CONFIG (`CALENDLY_URL`).
-3. *(Later, P2b)* GloriaFood free account + "Sweet Crumb Bakery" demo menu; grab the
-   ordering-widget snippet.
+3. ~~*(Later, P2b)* GloriaFood free account + "Sweet Crumb Bakery" demo menu; grab the
+   ordering-widget snippet.~~ **Cancelled** — GloriaFood is discontinued. The bakery
+   now uses a Foundry-built pre-order form (P2a), which needs no account at all.
+   Optionally set up a free Square Online storefront as a standalone sales asset;
+   record its URL in `docs/features.md`.
 
 Sonnet must build every integration against CONFIG constants with placeholder values
 (`"REPLACE_ME_STRIPE_LINK"` etc.) and a loud `<!-- TODO(dreux) -->` comment, so the
@@ -159,7 +185,7 @@ has a small fee — community-project pricing, not a giveaway.
 
 Update `~/.claude/skills/web-foundry-onboarding/SKILL.md` + `docs/intake-form.md`:
 
-- GloriaMenus → **GloriaFood**, free core tier; recommendation ladder above.
+- ~~GloriaMenus → **GloriaFood**, free core tier; recommendation ladder above.~~ *(Done differently: GloriaFood is discontinued. The skill now carries the pre-order form → Square Online → paid SaaS ladder instead.)*
 - Stripe Payment Link pattern (invoice pay / gift cards): client creates link in their
   Stripe (or we assist), we paste one URL into CONFIG.
 - Calendly embed pattern incl. color-param theming.

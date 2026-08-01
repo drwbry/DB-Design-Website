@@ -30,8 +30,12 @@ Map the client's intake answers to one of these:
 |---------------|-----------|
 | Menu rarely changes + has a PDF | **PDF in Sanity** — simple upload, client replaces when needed |
 | Menu changes often + wants one login | **Custom Sanity menu schema** — we build it, client edits in CMS |
-| Menu changes often + wants QR codes or a dedicated tool | **GloriaFood** (free core ordering/reservations; optional $29/mo online-card-payments add-on) — we embed it on the site |
+| Wants customers to order ahead for pickup | **Foundry-built pre-order form** — items, pickup date/window, allergy notes, emailed to the client with an order reference. $0, no third-party account, pay at pickup |
+| Wants a real cart and online payment at order time | **Square Online free plan** — $0/mo, 2.9% + $0.30 per order. A hosted store we link out to, not an embed. Client must activate a real Square account (business + banking details) |
 | No menu | Skip entirely |
+
+> **GloriaFood is discontinued** (Oracle; retires 30 Apr 2027, no new signups). Do not
+> recommend it. Full ordering ladder in `docs/features.md`.
 
 ### Sanity Content Types
 For each content type the client checked as "I want to update myself," include it in the Build Plan as a Sanity schema. Common ones:
@@ -79,7 +83,7 @@ After reviewing a client's intake form, Cowork generates this structured documen
 ## Pages
 [List all routes with a brief description of purpose]
 - / (home) — hero, about blurb, [hours/gallery/services], contact form
-- /menu — [PDF embed / GloriaFood embed / structured menu]
+- /menu — [PDF embed / structured menu] (+ /order — [pre-order form / Square Online link-out])
 - /services — [service list with prices]
 - /about — [team, story]
 - [etc.]
@@ -87,7 +91,8 @@ After reviewing a client's intake form, Cowork generates this structured documen
 ## Sanity Content Types to Build
 - hours: yes/no
 - gallery: yes/no
-- menu: none | pdf | sanity-schema | gloriaMenus
+- menu: none | pdf | sanity-schema
+- ordering: none | preorder-form | square-online
 - services: yes/no
 - team: yes/no
 - testimonials: yes/no

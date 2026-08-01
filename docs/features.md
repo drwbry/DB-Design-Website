@@ -60,17 +60,39 @@ check here first before treating it as new work.
   booking pages per service. Free tier also has no automated reminder workflows and
   keeps Calendly branding on the widget.
 - **Cost:** $0 to us; $0–16/mo to the client depending on their service complexity.
+- **Our own free event type is spoken for.** TWF's single free-tier event
+  (`calendly.com/foundrysolutionsllc/30min`) is shared between the MAB Properties
+  showing scheduler and the Lumière salon demo. Renaming it is fine; **changing its
+  URL slug breaks both**. A second TWF-owned event type would mean a paid seat.
 - **Alternative if the limitation bites:** see Cal.com under Future Consideration.
 - **Spec:** `docs/showcase-enhancements-proposal.md` (P1d — salon Calendly embed,
   incl. color theming); `docs/cowork-intake-brief.md` (Booking / Reservations).
 
-### Online ordering — GloriaFood (embed)
-- **What it does:** Full ordering/reservations widget for restaurants/cafés/bakeries
-  with menus that change often or that want QR-code table ordering.
-- **Limitations:** Core ordering is free forever; online card payments (vs.
-  pay-at-pickup) cost the client $29/mo add-on.
-- **Cost:** $0 core; $29/mo to client only if they want online payment.
-- **Spec:** `docs/cowork-intake-brief.md` (Menu Approach table).
+### Online ordering — Foundry-built pre-order form
+- **What it does:** A structured pre-order form on our own Cloudflare Worker pipeline
+  — items, pickup date, pickup window, occasion, allergy notes — that emails the
+  client a ticketed order with a customer-facing reference (`SC-XXXXXX`). Same
+  Turnstile + honeypot + JSON-POST pattern as every other form we ship.
+- **Limitations:** Not a cart and not a checkout. No line-item pricing, no inventory,
+  no payment — the customer pays at pickup. Best for menus where the client wants to
+  confirm each order by hand anyway. Pair with a Stripe Payment Link if they want
+  prepayment for large or custom orders.
+- **Cost:** $0 forever. No third-party account, no vendor risk, and we own the whole
+  path — which is exactly why it now leads the ordering ladder (see below).
+- **Spec:** `src/pages/showcase/bakery.astro` (`#order` section) — the reference
+  implementation.
+
+### Ordering — which rung to reach for
+
+Recommend in this order:
+
+1. **Foundry-built pre-order form** (above) — the default. Right for bakeries, cafés,
+   caterers, and any client with a small or stable menu who confirms orders manually.
+2. **Square Online free plan** — when the client wants a genuine cart, real online
+   payment, or already runs Square POS in-store. See Future Consideration below.
+3. **Paid ordering SaaS** (Flipdish, UpMenu, ChowNow, Toast) — only when the client
+   needs delivery dispatch or deep POS integration *and* will pay for it. None of
+   these has a built/tested embed pattern here yet.
 
 ### Menu — PDF in Sanity
 - **What it does:** Client uploads a PDF via Sanity, site links/embeds it. Best for
@@ -136,12 +158,34 @@ check here first before treating it as new work.
   once proven.
 
 ### Online ordering — Square Online
-- **What it would add:** Alternative to GloriaFood when the client already runs
-  Square POS in-store — keeps their menu/inventory in one system.
-- **Why it's not Integrated:** Mentioned as an alternative but no embed has been
-  built/tested against it yet.
-- **When to reach for it:** Client already uses Square POS and doesn't want a second
-  system (GloriaFood) to keep in sync.
+- **What it would add:** A genuine cart and real online payment — the rung above our
+  own pre-order form. Free plan, $0/mo, 2.9% + $0.30 per order, no commissions on
+  direct orders. Especially good when the client already runs Square POS in-store,
+  since menu and inventory stay in one system.
+- **Why it's not Integrated:** No pattern has been built/tested here yet. Note it is a
+  **link-out, not an embed** — Square Online is a hosted store on its own URL, so it
+  works like our Stripe Payment Link pattern rather than a widget dropped into a page.
+  It also requires the client to activate a real Square account with business and
+  banking details, which is a heavier lift than pasting a snippet.
+- **When to reach for it:** Client wants customers to pay online at order time, wants
+  a real cart, or already uses Square POS.
+- **TWF demo storefront:** *(record the `*.square.site` URL here once it exists.)* It
+  is a standalone sales asset to open alongside the bakery demo — deliberately **not**
+  linked from the Concept page, since Sweet Crumb is fictional and that store takes
+  real orders.
+
+---
+
+## Discontinued
+
+### Online ordering — GloriaFood *(dead — do not propose)*
+- **Status:** Oracle acquired GloriaFood and is **retiring it on 30 April 2027**. It no
+  longer accepts new signups, so it is unavailable to us and to any new client.
+- **Why this entry still exists:** GloriaFood was previously the *default* ordering
+  recommendation across this doc, the onboarding skill, `cowork-intake-brief.md`, and
+  `intake-form.md`. It is kept here so nobody rediscovers the old advice and re-proposes
+  it. If a client already uses GloriaFood, they need a migration plan before Apr 2027.
+- **What replaced it:** the ordering ladder under "Ordering — which rung to reach for".
 
 ### Blog / news section
 - **What it would add:** Ongoing posts (news, specials, updates).

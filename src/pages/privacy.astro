@@ -51,10 +51,21 @@ import '../styles/hub.css';
               <li><strong>Google Fonts</strong> — for web typography. Google may collect usage data per their privacy policy.</li>
               <li><strong>Sanity.io</strong> — for content management. Content is fetched at build time; no visitor data is sent to Sanity.</li>
               <li><strong>Unsplash</strong> — for stock photography on showcase pages. Images are loaded directly from Unsplash's CDN.</li>
+              <li><strong>Cloudflare Turnstile</strong> — bot verification on every form. Cloudflare receives the verification token and your IP address to confirm you are not an automated script.</li>
+              <li><strong>Resend</strong> — delivers form submissions to us by email, and sends you a confirmation.</li>
+              <li><strong>Calendly</strong> — powers the booking calendar on the salon showcase page. If you book a slot, Calendly receives the name, email, and any details you enter.</li>
+              <li><strong>Stripe</strong> — powers the "Pay Your Invoice" demo on the plumber showcase page. Stripe runs in test mode there and receives whatever card details you enter into their checkout page. We never see or store them.</li>
             </ul>
 
             <h2>Showcase Sites</h2>
-            <p>The showcase pages on this website (bakery, plumber, salon) are fictional demonstrations created to illustrate our web design capabilities. They are not real businesses and do not collect any data.</p>
+            <p>The showcase pages on this website (bakery, plumber, salon) are fictional demonstrations created to illustrate our web design capabilities. Sweet Crumb Bakery, Peak Flow Plumbing, and Lumière Salon &amp; Spa are not real businesses, and the addresses, phone numbers, and hours shown on them are invented.</p>
+            <p>The booking, ordering, and payment tools on those pages are real and fully working, because the point of a demonstration is that you can try it. That means anything you type into them is genuinely submitted:</p>
+            <ul>
+              <li>Showcase contact and pre-order forms send what you enter to our own inbox, through the same Cloudflare Worker and Resend pipeline our client sites use.</li>
+              <li>Booking a slot on the salon page creates a real appointment on a real Calendly calendar belonging to The Web Foundry.</li>
+              <li>The plumber page's payment button opens Stripe in <strong>test mode</strong>. No money moves and no real card is ever charged — please use Stripe's test card <code>4242 4242 4242 4242</code> rather than a real one.</li>
+            </ul>
+            <p>We use these submissions only to see that the demos are working and to reply if you are getting in touch. We do not sell them or pass them on.</p>
 
             <h2>Hosting</h2>
             <p>This site is hosted on a virtual private server managed by us. Standard server logs (IP address, browser type, pages requested) may be collected by the hosting infrastructure for security and operational purposes. These logs are not used for tracking or marketing.</p>
