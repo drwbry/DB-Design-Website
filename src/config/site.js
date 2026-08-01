@@ -32,14 +32,11 @@ export const siteConfig = {
       chips: ['Mowing Schedule', 'Sanity CMS', 'Estimate Form'],
     },
     {
-      // TODO(dreux): after the itadata.com cutover completes, swap `domain` and
-      // `url` to itadata.com and re-run `npm run shots`. Do NOT swap early —
-      // .com still serves the client's old, pre-Foundry site.
       slug: 'itadata',
       name: 'ITA Data Solutions',
       industry: 'SAP Consulting',
-      domain: 'itadata.site',
-      url: 'https://itadata.site',
+      domain: 'itadata.com',
+      url: 'https://itadata.com',
       blurb: 'Enterprise B2B site with gated white papers and a discovery-call funnel.',
       chips: ['White Paper Library', 'Sanity CMS', 'Lead Capture'],
     },
