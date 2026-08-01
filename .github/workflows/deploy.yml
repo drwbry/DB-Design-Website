@@ -13,4 +13,4 @@ jobs:
         run: |
           curl -s -f -X POST \
             -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
-            "http://148.113.196.32:8000/api/v1/deploy?uuid=a403himylznyz8az7hyqruqs&force=false"
+            "https://coolify.thewebfoundry.org/api/v1/deploy?uuid=a403himylznyz8az7hyqruqs&force=false"
