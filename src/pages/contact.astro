@@ -20,7 +20,7 @@ import { siteConfig } from '../config/site.js';
       <ul class="nav__links">
         <li><a href="/#work" class="nav__link">Our Work</a></li>
         <li><a href="/about" class="nav__link">About</a></li>
-        <li><a href="/contact" class="nav__cta">Get in Touch</a></li>
+        <li><a href="#contact-form-card" class="nav__cta">Get in Touch</a></li>
       </ul>
       <button class="nav__hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -31,12 +31,72 @@ import { siteConfig } from '../config/site.js';
   <main id="main-content">
     <section class="contact-page">
       <div class="container">
-        <div class="contact-page__inner reveal">
-          <span class="section-tag">Contact</span>
-          <h1 class="contact-page__title">Let’s build something useful.</h1>
-          <p class="contact-page__copy">Tell us about your business, the customers you want to reach, and what your current website is missing. We’ll respond within one business day with a practical next step.</p>
-          <a class="contact-page__email" href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
-          <p class="contact-page__note">Prefer a quick conversation? Include your phone number and a good time to call in your email.</p>
+        <div class="contact-page__grid">
+          <div class="contact-page__intro reveal">
+            <span class="section-tag">Contact</span>
+            <h1 class="contact-page__title">Let’s build something useful.</h1>
+            <p class="contact-page__copy">Tell us about your business, the customers you want to reach, and what your current website is missing. We’ll respond within one business day with a practical next step.</p>
+            <div class="contact-page__email-block">
+              <span>Prefer email?</span>
+              <a class="contact-page__email" href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
+            </div>
+          </div>
+
+          <div class="contact-form-card reveal reveal-delay-1" id="contact-form-card" tabindex="-1">
+            <div id="modal-body">
+              <h2 class="contact-form-card__title">Tell us about your project.</h2>
+              <p class="contact-form-card__sub">A few details are all we need to get the conversation started.</p>
+
+              <form id="contact-form" novalidate>
+                <div inert style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
+                  <label for="hub-botcheck">Leave this field blank</label>
+                  <input type="text" id="hub-botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+                </div>
+                <input type="hidden" name="site_id" value={siteConfig.siteId}>
+
+                <div class="form-group">
+                  <label for="f-name">Your Name</label>
+                  <input type="text" id="f-name" name="name" required autocomplete="name" placeholder="Jane Smith">
+                </div>
+
+                <div class="form-group">
+                  <label for="f-email">Email Address</label>
+                  <input type="email" id="f-email" name="email" required autocomplete="email" placeholder="jane@example.com">
+                </div>
+
+                <div class="form-group">
+                  <label for="f-phone">Phone <span class="optional">(optional)</span></label>
+                  <input type="tel" id="f-phone" name="phone" autocomplete="tel" placeholder="(513) 555-0100">
+                </div>
+
+                <div class="form-group">
+                  <label for="f-business">Business Name</label>
+                  <input type="text" id="f-business" name="business_name" required placeholder="Your business">
+                </div>
+
+                <div class="form-group">
+                  <label for="f-message">Anything else? <span class="optional">(optional)</span></label>
+                  <textarea id="f-message" name="message" rows="3" placeholder="Tell us a bit about what you're looking for..."></textarea>
+                </div>
+
+                <div class="form-error" id="form-error" hidden></div>
+
+                <div class="cf-turnstile" data-sitekey={siteConfig.turnstileSiteKey} data-theme="light"></div>
+
+                <button type="submit" class="btn btn--primary form-submit" id="form-submit-btn">
+                  Send Message <span class="btn-arrow">→</span>
+                </button>
+              </form>
+            </div>
+
+            <div class="modal-success contact-form-success" id="modal-success" aria-live="polite" hidden>
+              <div class="modal-success__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <h2 class="modal-success__title">Message received.</h2>
+              <p class="modal-success__sub">We’ll be in touch within 24 hours.<br/>Looking forward to learning about your business.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -58,13 +118,35 @@ import { siteConfig } from '../config/site.js';
   </footer>
 
   <style is:global>
-    .contact-page { padding: 7rem 0 5rem; min-height: 65vh; background: var(--ink); }
-    .contact-page__inner { max-width: 680px; }
-    .contact-page__title { margin: 0.75rem 0 1.25rem; color: var(--cream); font-family: var(--ff-display); font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.05; letter-spacing: -0.03em; }
+    .contact-page { padding: 6.5rem 0 5rem; min-height: 75vh; background: var(--ink); }
+    .contact-page__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(420px, 520px); gap: clamp(3rem, 7vw, 7rem); align-items: start; }
+    .contact-page__intro { padding-top: 2.25rem; }
+    .contact-page__title { max-width: 700px; margin: 0.75rem 0 1.25rem; color: var(--cream); font-family: var(--ff-display); font-size: clamp(2.75rem, 5vw, 4.75rem); line-height: 1.04; letter-spacing: -0.04em; }
     .contact-page__copy { max-width: 620px; color: var(--muted); font-size: 1.08rem; line-height: 1.8; }
-    .contact-page__email { display: inline-block; margin-top: 2rem; color: var(--accent); font-size: clamp(1.15rem, 3vw, 1.55rem); font-weight: 700; text-decoration: underline; text-underline-offset: 0.2em; }
+    .contact-page__email-block { display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem; margin-top: 2rem; color: var(--muted-deep); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+    .contact-page__email { color: var(--accent); font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 700; letter-spacing: 0; text-decoration: underline; text-transform: none; text-underline-offset: 0.2em; }
     .contact-page__email:hover { color: var(--cream); }
-    .contact-page__note { margin-top: 1rem; color: var(--muted); font-size: 0.9rem; }
+    .contact-form-card { scroll-margin-top: 6rem; background: var(--modal-bg); border-radius: 12px; padding: clamp(1.5rem, 3vw, 2.5rem); box-shadow: 0 28px 70px rgba(0, 0, 0, 0.22); }
+    .contact-form-card:focus { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .contact-form-card__title { margin: 0 0 0.4rem; color: #2a3240; font-family: var(--ff-display); font-size: clamp(1.5rem, 3vw, 1.85rem); line-height: 1.2; letter-spacing: -0.025em; }
+    .contact-form-card__sub { margin-bottom: 1.75rem; color: #6b7888; font-size: 0.875rem; line-height: 1.6; }
+    .contact-form-card .cf-turnstile { margin: 0.25rem 0 1rem; }
+    .contact-form-success { display: flex; min-height: 430px; flex-direction: column; align-items: center; justify-content: center; }
+    .contact-form-success[hidden] { display: none; }
+
+    @media (max-width: 900px) {
+      .contact-page { padding-top: 4.5rem; }
+      .contact-page__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .contact-page__intro { max-width: 720px; padding-top: 0; }
+      .contact-form-card { max-width: 620px; width: 100%; }
+    }
+
+    @media (max-width: 560px) {
+      .contact-page { padding: 3.5rem 0 4rem; }
+      .contact-page__title { font-size: clamp(2.4rem, 13vw, 3.5rem); }
+      .contact-page__copy { font-size: 1rem; }
+      .contact-form-card { border-radius: 10px; }
+    }
   </style>
 
   <script>
