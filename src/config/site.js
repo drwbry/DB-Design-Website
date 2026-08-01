@@ -69,10 +69,13 @@ export const siteConfig = {
         contact: 'New Inquiry - Peak Flow Plumbing',
       },
       integrations: {
-        // TODO(dreux): Stripe TEST-mode Payment Link, "Peak Flow Plumbing — Invoice
-        // Payment": customer chooses amount + custom text field "Invoice #".
-        // Until this is set, the Pay Your Invoice section and its nav entry are omitted.
-        stripePaymentLink: 'REPLACE_ME',
+        // Stripe SANDBOX (test-mode) Payment Link on the Foundry Solutions LLC
+        // account: "Peak Flow Plumbing — Invoice Payment [DEMO ONLY]", customer
+        // chooses the amount, with an "Invoice #" custom text field.
+        // The `test_` segment in the URL is what makes this safe to expose — no
+        // real card is ever charged. A real client's link lives in THEIR Stripe
+        // account so money flows to them; never point a live site at this one.
+        stripePaymentLink: 'https://buy.stripe.com/test_4gM00i74gfm1a5v6UP5J600',
       },
     },
     salon: {
