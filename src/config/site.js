@@ -82,11 +82,13 @@ export const siteConfig = {
         contact: 'New Inquiry - Lumiere Salon & Spa',
       },
       integrations: {
-        // TODO(dreux): Calendly scheduling URL. NOTE this is the single free-tier
-        // event type, shared with MAB Properties (clients/mabassets-website).
-        // Renaming the event is fine; changing its URL slug breaks MAB's /rentals.
-        // Until this is set, the Calendly column is omitted and #book stays single-column.
-        calendlyUrl: 'REPLACE_ME',
+        // NOTE this is the single free-tier event type, shared with MAB Properties
+        // (clients/mabassets-website/src/config/site.js). Renamed to the neutral
+        // "Book Appointment" 2026-08-01 so it reads correctly on both a salon demo
+        // and a property-showing page. The `/30min` slug is deliberately unchanged —
+        // changing it breaks MAB's /rentals. Free tier shows the account owner's
+        // name ("Dreux Brys") as host; removing that needs a paid seat.
+        calendlyUrl: 'https://calendly.com/foundrysolutionsllc/30min',
       },
     },
   },
