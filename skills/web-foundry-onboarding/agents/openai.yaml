@@ -1,0 +1,7 @@
+interface:
+  display_name: "Web Foundry Onboarding"
+  short_description: "Guide a client website from discovery to launch"
+  default_prompt: "Use $web-foundry-onboarding to start or resume this client website onboarding."
+
+policy:
+  allow_implicit_invocation: true
