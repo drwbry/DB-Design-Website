@@ -12,6 +12,14 @@ import shotMabassets from '../assets/work/mabassets.png';
 import shotTerrys from '../assets/work/terrys-lawncare.png';
 import shotItadata from '../assets/work/itadata.png';
 
+// Concept cards are screenshots too, for the same reason the client cards are:
+// a hand-built CSS mock of each demo is a second copy of that design, and it
+// silently drifts every time the demo page changes. `npm run shots` recaptures
+// both sets. Never hand-edit a preview back into markup here.
+import shotBakery from '../assets/concepts/bakery.png';
+import shotPlumber from '../assets/concepts/plumber.png';
+import shotSalon from '../assets/concepts/salon.png';
+
 const clientShots = {
   'mabassets': shotMabassets,
   'terrys-lawncare': shotTerrys,
@@ -158,20 +166,8 @@ const clientShots = {
             </div>
             <div class="work-card__url">sweetcrumbbakery.com</div>
           </div>
-          <div class="work-card__preview work-card__preview--bakery">
-            <div class="work-card__preview-nav">
-              <span class="work-card__preview-brand">Sweet Crumb</span>
-              <div class="work-card__preview-nav-links">
-                <span>MENU</span><span>STORY</span><span>HOURS</span>
-              </div>
-            </div>
-            <div class="work-card__preview-body">
-              <span class="work-card__preview-headline">Baked with love,<br/><em>every morning.</em></span>
-              <span class="work-card__preview-sub">Fresh pastries · Artisan breads · Coffee</span>
-              <span class="work-card__preview-cta">View Menu</span>
-            </div>
-            <div class="work-card__preview-decor" aria-hidden="true"></div>
-            <div class="work-card__preview-decor work-card__preview-decor--2" aria-hidden="true"></div>
+          <div class="work-card__preview work-card__preview--shot">
+            <Image src={shotBakery} alt="Preview of the Sweet Crumb Bakery concept site" width={766} height={479} loading="lazy" />
           </div>
           <div class="work-card__info">
             <div class="work-card__tagrow">
@@ -199,22 +195,8 @@ const clientShots = {
             </div>
             <div class="work-card__url">peakflowplumbing.com</div>
           </div>
-          <div class="work-card__preview work-card__preview--plumber">
-            <div class="work-card__preview-nav">
-              <span class="work-card__preview-brand">PEAK FLOW</span>
-              <div class="work-card__preview-nav-links">
-                <span>SERVICES</span><span>ABOUT</span><span class="is-alert">EMERGENCY</span>
-              </div>
-            </div>
-            <div class="work-card__preview-body work-card__preview-body--left">
-              <span class="work-card__preview-badge">Licensed &amp; Insured · Cincinnati, OH</span>
-              <span class="work-card__preview-headline">Your Local<br/>Plumbing Experts</span>
-              <span class="work-card__preview-sub">Residential &amp; commercial plumbing you can trust.</span>
-              <div class="work-card__preview-actions">
-                <span class="work-card__preview-cta">Call Now</span>
-                <span class="work-card__preview-cta--outline">Our Services</span>
-              </div>
-            </div>
+          <div class="work-card__preview work-card__preview--shot">
+            <Image src={shotPlumber} alt="Preview of the Peak Flow Plumbing concept site" width={766} height={479} loading="lazy" />
           </div>
           <div class="work-card__info">
             <div class="work-card__tagrow">
@@ -242,20 +224,8 @@ const clientShots = {
             </div>
             <div class="work-card__url">lumieresalon.com</div>
           </div>
-          <div class="work-card__preview work-card__preview--salon">
-            <div class="work-card__preview-nav">
-              <span class="work-card__preview-brand">Lumière</span>
-              <div class="work-card__preview-nav-links">
-                <span>SERVICES</span><span>GALLERY</span><span>BOOK</span>
-              </div>
-            </div>
-            <div class="work-card__preview-body">
-              <span class="work-card__preview-sub">Salon &amp; Spa · Est. 2014</span>
-              <span class="work-card__preview-headline">Where beauty<br/>becomes <em>art.</em></span>
-              <div class="work-card__preview-rule" aria-hidden="true"></div>
-              <span class="work-card__preview-cta">Book an Appointment</span>
-            </div>
-            <div class="work-card__preview-decor" aria-hidden="true"></div>
+          <div class="work-card__preview work-card__preview--shot">
+            <Image src={shotSalon} alt="Preview of the Lumière Salon &amp; Spa concept site" width={766} height={479} loading="lazy" />
           </div>
           <div class="work-card__info">
             <div class="work-card__tagrow">

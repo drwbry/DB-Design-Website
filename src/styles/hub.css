@@ -518,18 +518,10 @@ body {
   overflow: hidden;
 }
 
-.work-card__preview--bakery {
-  background: linear-gradient(160deg, #f7ede3 0%, #ecdccc 100%);
-}
-.work-card__preview--plumber {
-  background: #0f2640;
-}
-.work-card__preview--salon {
-  background: linear-gradient(165deg, #251A14 0%, #1C1410 100%);
-}
-
-/* Real client cards: a screenshot fills the preview slot instead of the
-   hand-built mock markup the concept cards use. */
+/* Every work card — real client and concept demo alike — fills its preview slot
+   with a screenshot of the actual page. The concept cards used to carry
+   hand-built CSS mocks of each demo; those were a second copy of the design and
+   drifted out of sync with the real pages, so they were removed. */
 .work-card__preview--shot {
   padding: 0;
   background: #11141d;
@@ -558,105 +550,6 @@ body {
     height: auto;
     aspect-ratio: 1.6;
   }
-}
-
-.work-card__preview-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.work-card__preview-nav-links {
-  display: flex;
-  gap: 10px;
-}
-.work-card__preview-nav-links span {
-  font-size: 8px;
-  letter-spacing: 0.05em;
-}
-
-/* Bakery preview detail */
-.work-card__preview--bakery .work-card__preview-brand {
-  font-family: var(--ff-display); font-size: 13px; color: #5c3d2e;
-}
-.work-card__preview--bakery .work-card__preview-nav-links span { color: #9b8575; }
-.work-card__preview--bakery .work-card__preview-headline {
-  font-family: var(--ff-display); font-size: 22px; color: #5c3d2e; text-align: center; line-height: 1.25;
-}
-.work-card__preview--bakery .work-card__preview-headline em { font-style: italic; }
-.work-card__preview--bakery .work-card__preview-sub {
-  font-size: 8px; color: #9b8575; letter-spacing: 0.04em; margin-top: 8px;
-}
-.work-card__preview--bakery .work-card__preview-cta {
-  font-size: 8px; color: #fff; background: #8b5e3c; padding: 5px 12px; border-radius: 3px; margin-top: 4px;
-}
-.work-card__preview--bakery .work-card__preview-decor {
-  position: absolute; border-radius: 50%; background: rgba(139, 94, 60, 0.08);
-  bottom: -30px; right: -30px; width: 100px; height: 100px;
-}
-.work-card__preview--bakery .work-card__preview-decor--2 {
-  bottom: 15px; right: 30px; width: 40px; height: 40px; background: rgba(212, 165, 116, 0.1);
-}
-
-/* Plumber preview detail */
-.work-card__preview--plumber .work-card__preview-brand {
-  font-family: var(--ff-body); font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 0.04em;
-}
-.work-card__preview--plumber .work-card__preview-nav-links span { color: #7ba3cc; }
-.work-card__preview--plumber .work-card__preview-nav-links span.is-alert { color: #e67e22; font-weight: 600; }
-.work-card__preview--plumber .work-card__preview-badge {
-  font-size: 8px; font-weight: 600; color: #e67e22; text-transform: uppercase; letter-spacing: 0.1em;
-}
-.work-card__preview--plumber .work-card__preview-headline {
-  font-size: 22px; font-weight: 700; color: #fff; line-height: 1.15; margin-top: 8px;
-}
-.work-card__preview--plumber .work-card__preview-sub {
-  font-size: 8px; color: #7ba3cc; line-height: 1.5; margin-top: 8px;
-}
-.work-card__preview--plumber .work-card__preview-actions {
-  display: flex; gap: 6px; margin-top: 8px;
-}
-.work-card__preview--plumber .work-card__preview-cta {
-  font-size: 8px; font-weight: 600; color: #fff; background: #e67e22; padding: 5px 12px; border-radius: 3px;
-}
-.work-card__preview--plumber .work-card__preview-cta--outline {
-  font-size: 8px; font-weight: 500; color: #7ba3cc; padding: 5px 12px; border: 1px solid #2a5580; border-radius: 3px;
-}
-
-/* Salon preview detail — dark espresso + champagne editorial (matches live site) */
-.work-card__preview--salon .work-card__preview-brand {
-  font-family: Georgia, 'Times New Roman', serif; font-size: 14px; color: #E8D5C4; font-style: italic;
-}
-.work-card__preview--salon .work-card__preview-nav-links span { color: rgba(232, 213, 196, 0.45); }
-.work-card__preview--salon .work-card__preview-sub {
-  font-size: 7.5px; color: #C9A96E; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 4px;
-}
-.work-card__preview--salon .work-card__preview-headline {
-  font-family: Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 23px; color: #E8D5C4; text-align: center; line-height: 1.1;
-}
-.work-card__preview--salon .work-card__preview-headline em { font-style: italic; color: #C9A96E; }
-.work-card__preview--salon .work-card__preview-rule {
-  width: 28px; height: 1px; background: #C9A96E; margin: 8px 0 6px;
-}
-.work-card__preview--salon .work-card__preview-cta {
-  font-size: 8px; color: #1C1410; background: #C9A96E; padding: 5px 13px; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px;
-}
-.work-card__preview--salon .work-card__preview-decor {
-  position: absolute; top: 12px; right: 12px; width: 50px; height: 50px;
-  border: 1px solid rgba(201, 169, 110, 0.18); border-radius: 50%;
-}
-
-.work-card__preview-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.work-card__preview-body--left {
-  align-items: flex-start;
 }
 
 .work-card__info {
