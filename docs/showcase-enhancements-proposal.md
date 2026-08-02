@@ -114,7 +114,7 @@ build never blocks on these.
 
 ### P0 — form compliance (hub + bakery + plumber + salon)
 
-Per CLAUDE.md rules, in each form/script: add hidden `site_id`
+Per `docs/operations-runbook.md`, in each form/script: add hidden `site_id`
 (`web-foundry-hub` / `demo-bakery` / `demo-plumber` / `demo-salon`). Do not add
 client-supplied `to_email`; the Worker resolves recipients server-side. Gate success
 on `res.ok === true` (keep body-`success` check as AND); on failure call
@@ -181,7 +181,7 @@ has a small fee — community-project pricing, not a giveaway.
 
 ---
 
-## Onboarding-skill updates (same PR as the build, per CLAUDE.md)
+## Onboarding-skill updates (same PR as the build, per `docs/operations-runbook.md`)
 
 Update `~/.claude/skills/web-foundry-onboarding/SKILL.md` + `docs/intake-form.md`:
 

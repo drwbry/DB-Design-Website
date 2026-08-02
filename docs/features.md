@@ -29,7 +29,7 @@ check here first before treating it as new work.
   time. No user accounts/logins.
 - **Cost:** $0 marginal — one VPS hosts 20–30 sites. No per-site hosting bill to pass
   through beyond the standard hosting/support invoice.
-- **Spec:** `CLAUDE.md` (Stack, Multi-Tenant Architecture).
+- **Spec:** `AGENTS.md` (Stack); `docs/operations-runbook.md` (Multi-Tenant Architecture).
 
 ### Sanity CMS (client self-editing)
 - **What it does:** Client edits specific content types (hours, gallery, services,
@@ -39,7 +39,7 @@ check here first before treating it as new work.
   everything else is hardcoded to keep the Studio simple. Not a general-purpose CMS;
   no page-builder, no arbitrary new page types without a code change.
 - **Cost:** Free tier covers all current client sites.
-- **Spec:** `CLAUDE.md` (Architecture, Sanity CMS); `cowork-intake-brief.md` (Sanity
+- **Spec:** `AGENTS.md` (Architecture, Sanity CMS); `cowork-intake-brief.md` (Sanity
   Content Types).
 
 ### Contact forms (Cloudflare Worker)
@@ -50,7 +50,7 @@ check here first before treating it as new work.
 - **Limitations:** JSON POST only (no multipart/file uploads through this path). No
   `to_email` override — destination is resolved server-side to prevent spoofing.
 - **Cost:** $0 — one Worker + Resend account serves every client.
-- **Spec:** `CLAUDE.md` (Contact Forms & Security).
+- **Spec:** `docs/operations-runbook.md` (Contact Forms & Security).
 
 ### Booking — Calendly (embed)
 - **What it does:** Inline or popup Calendly widget, theme-matched to the client's
@@ -126,7 +126,7 @@ Recommend in this order:
 - **Limitations:** No catch-all — only explicitly configured addresses forward, to
   avoid spam/typo inboxes.
 - **Cost:** $0 (Cloudflare free tier).
-- **Spec:** `CLAUDE.md` (DNS & Email Setup).
+- **Spec:** `docs/operations-runbook.md` (DNS & Email Setup).
 
 ---
 

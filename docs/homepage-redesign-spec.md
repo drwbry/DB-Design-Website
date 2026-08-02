@@ -220,9 +220,9 @@ proof bar wraps. No horizontal scroll at 360px width. Respect `prefers-reduced-m
 - [ ] `index.astro`: rebuild sections per §§3–8 (remove mission, old timeline, old cards, old CTA/footer markup)
 - [ ] Modal per §9; `main.js` form handler: `site_id` pass-through, `res.ok` gate, `turnstile.reset()` on failure; delete dead JS (§1)
 - [ ] Responsive pass per §10
-- [ ] Update CLAUDE.md "Design System → Hub Page" row: colors `#181c28` bg / `#b45a3c` terracotta / `#eee9e1` cream; fonts Sora + Plus Jakarta Sans
+- [ ] Update `AGENTS.md` "Design System → Hub Page" row: colors `#181c28` bg / `#b45a3c` terracotta / `#eee9e1` cream; fonts Sora + Plus Jakarta Sans
 - [ ] `npm run build` clean; check `/`, `/about`, `/privacy` links resolve
-- [ ] Post-deploy: live form smoke test per CLAUDE.md
+- [ ] Post-deploy: live form smoke test per `docs/operations-runbook.md`
 
 **Out of scope this pass:** about/privacy restyle, showcase pages, any new imagery,
 sitewide copy beyond sections above.
