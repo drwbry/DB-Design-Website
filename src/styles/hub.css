@@ -389,38 +389,18 @@ body {
   flex-wrap: wrap;
 }
 
-.hero__proof {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
+.hero__pitch {
   margin-top: 3rem;
-  flex-wrap: wrap;
-}
-
-.hero__proof-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.hero__proof-num {
+  max-width: 32rem;
   font-family: var(--ff-display);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 600;
+  line-height: 1.5;
   color: var(--cream);
 }
 
-.hero__proof-label {
-  font-size: 0.72rem;
-  color: var(--muted);
-  letter-spacing: 0.02em;
-}
-
-.hero__proof-rule {
-  width: 1px;
-  height: 28px;
-  background: var(--border-card);
-  flex-shrink: 0;
+.hero__pitch-price {
+  color: var(--accent);
 }
 
 @media (max-width: 900px) {
@@ -435,12 +415,6 @@ body {
 @media (max-width: 768px) {
   .hero {
     padding: 4rem 0;
-  }
-  .hero__proof {
-    gap: 1.25rem;
-  }
-  .hero__proof-rule {
-    display: none;
   }
 }
 
