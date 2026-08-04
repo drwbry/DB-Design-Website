@@ -241,7 +241,7 @@ body {
    HERO
    ============================================================ */
 .hero {
-  padding: 6.5rem 0;
+  padding-block: 6.5rem;
   display: grid;
   grid-template-columns: 1fr minmax(0, 460px);
   align-items: center;
@@ -389,18 +389,64 @@ body {
   flex-wrap: wrap;
 }
 
-.hero__pitch {
-  margin-top: 3rem;
-  max-width: 32rem;
-  font-family: var(--ff-display);
-  font-size: 1.15rem;
-  font-weight: 600;
-  line-height: 1.5;
-  color: var(--cream);
+.hero__price {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 2.75rem;
+  padding: 1rem 1.5rem;
+  background: var(--accent-dim);
+  border: 1px solid var(--border-card);
+  border-radius: 14px;
 }
 
-.hero__pitch-price {
+.hero__price-tag {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.hero__price-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hero__price-figure {
+  display: flex;
+  align-items: baseline;
+  gap: 0.2rem;
+  font-family: var(--ff-display);
+}
+
+.hero__price-amount {
+  font-size: clamp(2.25rem, 6vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--accent);
+  line-height: 1;
+}
+
+.hero__price-unit {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.hero__price-rule {
+  width: 1px;
+  align-self: stretch;
+  background: var(--border-card);
+  flex-shrink: 0;
+}
+
+.hero__price-note {
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--cream);
 }
 
 @media (max-width: 900px) {
@@ -414,7 +460,7 @@ body {
 
 @media (max-width: 768px) {
   .hero {
-    padding: 4rem 0;
+    padding-block: 4rem;
   }
 }
 
